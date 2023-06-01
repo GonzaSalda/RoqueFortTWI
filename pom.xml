@@ -210,6 +210,11 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.28</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.maps</groupId>
+			<artifactId>google-maps-services</artifactId>
+			<version>0.17.0</version>
+		</dependency>
 	</dependencies>
 
 </project>
