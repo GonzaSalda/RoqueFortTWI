@@ -17,7 +17,7 @@ public class ServicioPizzaImpl implements ServicioPizza {
         List<Pizza> lista_pizzas = pizzaDao.obtenerListaTotalPizzas();
         return lista_pizzas;
     }
-   @Override
+    @Override
     public Pizza buscarPizzaPorId(int id){
        if (pizzaDao.obtenerPizzaPorID(id) != null) {
            return pizzaDao.obtenerPizzaPorID(id);
@@ -26,7 +26,6 @@ public class ServicioPizzaImpl implements ServicioPizza {
            throw new PizzaInexistenteException();
        }
    }
-
 
     @Override
     public void actualizarPizza(int idPizza, String nombre, String descripcion, Double precio) {

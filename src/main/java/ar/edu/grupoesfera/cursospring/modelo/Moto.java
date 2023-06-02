@@ -12,26 +12,10 @@ public class Moto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Identificador")
-    private int id;
+    private Long id;
     @Column(name = "Marca")
     private String marca;
-    private int cantidadDisponible;
+    private Long cantidadDisponible;
 
-    public Moto() {
-    }
 
-    public Moto(int id, String marca, int cantidadDisponible) {
-        this.id = id;
-        this.marca = marca;
-        this.cantidadDisponible = cantidadDisponible;
-    }
-
-    @Override
-    public String toString() {
-        return "Moto{" +
-                "id=" + id +
-                ", marca='" + marca + '\'' +
-                ", cantidadDisponible=" + cantidadDisponible +
-                '}';
-    }
 }
