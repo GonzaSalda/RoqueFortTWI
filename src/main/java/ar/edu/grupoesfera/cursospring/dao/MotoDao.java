@@ -11,4 +11,7 @@ public interface MotoDao {
     Moto obtenerMotoPorID(Long id);
 
     void actualizarMoto(Moto moto);
+
+    Moto findMotoDisponible();
+
 }

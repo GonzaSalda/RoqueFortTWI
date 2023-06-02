@@ -20,7 +20,8 @@
 	<main class="container mx-auto my-6">
 		<div class="text-white text-xl tracking-[0.12em] w-full h-full flex flex-col items-center justify-center ">
 			<h3 class="text-4xl font-bold">Resumen</h3>
-			<form class="bg-[#1C1919] bg-opacity-80 w-[500px] h-[500px] rounded-2xl flex items-center justify-center flex-col gap-6 my-6" action="verificarCompra" method="post">
+			<form class="bg-[#1C1919] bg-opacity-80 w-[500px] h-[500px] rounded-2xl flex items-center justify-center flex-col gap-6 my-6"
+				  action="verificarCompra" method="post">
 				<input type="hidden" name="pizzaId" value="${idPizza}"> <%--Obtengo el idpizza del metodo verificacionCompra y luego
 				llamo como quiera en el name para pasarselo a otra vista con el model.put--%>
 				<div>
@@ -31,7 +32,7 @@
 				</div>
 				<h3 id="pagarTarjeta">Pagar con tarjeta</h3>
 				<label for="nroTarjeta">Número de tarjeta</label>
-				<input id="nroTarjeta" type="number" name="nroTarjeta">
+				<input class="text-black font-semibold p-2" id="nroTarjeta" type="number" name="nroTarjeta">
 				<input class="bg-black rounded-xl p-2 text-white " id="comprar" type="submit" value="Realizar compra">
 			</form>
 

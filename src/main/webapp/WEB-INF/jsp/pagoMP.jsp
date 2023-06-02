@@ -32,6 +32,11 @@
                     <span>Total:</span>
                     <p class="text-white font-bold text-[16px]">${precioTotal}$</p>
                 </div>
+
+                <div>
+                    <label for="delivery">Entrega a domicilio:</label>
+                    <input type="checkbox" name="delivery" id="delivery" value="true">
+                </div>
             </form>
 
             <form class="text-white font-semibold text-2xl" action="pagoRealizadoMP" method="get" class="d-inline">
