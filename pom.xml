@@ -215,6 +215,7 @@
 			<artifactId>google-maps-services</artifactId>
 			<version>0.17.0</version>
 		</dependency>
+
 	</dependencies>
 
 </project>
