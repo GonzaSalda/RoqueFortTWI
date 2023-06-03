@@ -98,8 +98,8 @@ public class ControladorCompra {
                 Moto motoAsignada = servicioMoto.asignarMotoDisponible();
                 if (motoAsignada != null) {
                     boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion);
-                    String informacionGeografica = servicioGoogleMaps.GoogleMapsAPIConfiguration();
-                    model.addAttribute("informacionGeografica", informacionGeografica);
+                    String informacionDeEntrega = servicioGoogleMaps.GoogleMapsAPIConfiguration(direccion);
+                    model.addAttribute("informacionDeEntrega", informacionDeEntrega);
                     model.addAttribute("entregaExitosa", entregaExitosa);
                     servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
                     viewName = "resultadoEntrega";
@@ -128,6 +128,8 @@ public class ControladorCompra {
 
         return new ModelAndView(viewName, model);
     }
+
+
 
 
     @RequestMapping(path = "/pagoMP", method = RequestMethod.GET)

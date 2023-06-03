@@ -1,52 +1,55 @@
-
-<input class="w-96 mb-2" type="text" id="direccion-input" name="direccion" placeholder="Ingresa una dirección">
-  <div id="map" class="w-5/6" style="height: 400px;"></div>
-
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgPKYfbfkbP1nYnUMZO4LPV4neuoYOyrY&libraries=places"></script>
-  <script>
+<input class="text-black w-96 p-2 outline-0 rounded-2xl" type="text" id="direccion-input" name="direccion"
+       placeholder="Ingresa una direccion"><br>
+<div  id="map"  class="hidden" style="height: 400px;"></div>
+<%--
+--%>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgPKYfbfkbP1nYnUMZO4LPV4neuoYOyrY&libraries=places"></script><script>
     function initMap() {
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12
-      });
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12
+        });
 
-      fetch('https://ipapi.co/json/')
-        .then(response => response.json())
-        .then(data => {
-          var location = data.city + ', ' + data.region + ', ' + data.country;
-          document.getElementById('direccion-input').value = location;
+        var input = document.getElementById('direccion-input');
+        var autocomplete = new google.maps.places.Autocomplete(input);
 
-          var geocoder = new google.maps.Geocoder();
-          geocoder.geocode({'address': location}, function(results, status) {
-            if (status === 'OK') {
-              map.setCenter(results[0].geometry.location);
-              var marker = new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location
-              });
+        autocomplete.addListener('place_changed', function () {
+            var place = autocomplete.getPlace();
 
-              map.addListener('click', function(event) {
-                geocoder.geocode({'location': event.latLng}, function(results, status) {
-                  if (status === 'OK') {
-                    if (results[0]) {
-                      document.getElementById('direccion-input').value = results[0].formatted_address;
-                      marker.setPosition(event.latLng);
-                    } else {
-                      alert('No se encontraron resultados');
-                    }
-                  } else {
-                    alert('Geocoder falló debido a: ' + status);
-                  }
-                });
-              });
-            } else {
-              alert('Geocode falló debido a: ' + status);
+            if (!place.geometry) {
+                window.alert('No se encontraron detalles para el lugar ingresado');
+                return;
             }
-          });
-        })
-        .catch(error => {
-          console.error('Error al obtener la ubicación: ', error);
+
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);
+            }
+
+            var marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location
+            });
+
+            map.addListener('click', function (event) {
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({'location': event.latLng}, function (results, status) {
+                    if (status === 'OK') {
+                        if (results[0]) {
+                            input.value = results[0].formatted_address;
+                            marker.setPosition(event.latLng);
+                        } else {
+                            alert('No se encontraron resultados');
+                        }
+                    } else {
+                        alert('Geocoder falló debido a: ' + status);
+                    }
+                });
+            });
         });
     }
 
-    google.maps.event.addDomListener(window, 'load', initMap);
-  </script>
+    document.addEventListener('DOMContentLoaded', initMap);
+</script>
+

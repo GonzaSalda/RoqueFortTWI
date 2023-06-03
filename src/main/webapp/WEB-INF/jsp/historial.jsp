@@ -15,7 +15,6 @@
 <body>
 
 <%@ include file="header.jsp"%>
-<%@ include file="mapaInput.jsp"%>
 
 <main class="container w-full rounded-xl bg-[#1C1919] bg-opacity-80 text-white m-auto pb-2">
     <h1 class="text-4xl font-bold m-4  text-center" >Historial</h1>

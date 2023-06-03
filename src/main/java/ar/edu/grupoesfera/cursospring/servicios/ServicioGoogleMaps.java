@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class ServicioGoogleMaps {
 
-    public String GoogleMapsAPIConfiguration() throws InterruptedException, ApiException, IOException {
+    public String GoogleMapsAPIConfiguration(String direccion) throws InterruptedException, ApiException, IOException {
         try {
             // Crea el contexto de la API de Google Maps con tu clave de API
             GeoApiContext context = new GeoApiContext.Builder()
@@ -18,7 +18,7 @@ public class ServicioGoogleMaps {
                     .build();
 
             // Realiza la geocodificación inversa para obtener la información geográfica
-            GeocodingResult[] results = GeocodingApi.geocode(context, "Los Angeles, CA").await();
+            GeocodingResult[] results = GeocodingApi.geocode(context, direccion).await();
 
             // Verifica si se encontraron resultados
             if (results.length > 0) {
@@ -28,8 +28,8 @@ public class ServicioGoogleMaps {
 
                 // Realiza la llamada a la API de distancia de Google Maps para obtener el tiempo de viaje
                 DistanceMatrix distanceMatrix = DistanceMatrixApi.newRequest(context)
-                        .origins("New York, NY")
-                        .destinations("Los Angeles, CA")
+                        .origins("San Justo, Buenos Aires, AR")
+                        .destinations(direccion)
                         .await();
 
                 // Verifica si se encontraron resultados en la matriz de distancias
@@ -43,7 +43,7 @@ public class ServicioGoogleMaps {
                     // Convierte el tiempo a minutos
                     long tiempoViajeMinutos = tiempoViajeSegundos / 60;
 
-                    return "Tiempo estimado de viaje: " + tiempoViajeMinutos + " minutos.";
+                    return "Tiempo estimado de entrega: " + tiempoViajeMinutos + " minutos.";
                 } else {
                     return "No se encontraron resultados para la dirección proporcionada.";
                 }
