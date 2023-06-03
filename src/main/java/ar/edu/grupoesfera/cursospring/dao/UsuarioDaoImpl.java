@@ -66,8 +66,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
         Session sesion = sessionFactory.getCurrentSession();
         Usuario_Pizza usuarioPizza = (Usuario_Pizza) sesion.createCriteria(Usuario_Pizza.class)
                 .add(Restrictions.eq("usuario", usuario))
-                .add(Restrictions.eq("pizza", Pizza_obtenida))
-                .uniqueResult();
+                .add(Restrictions.eq("pizza", Pizza_obtenida));
         return usuarioPizza;
     }
 

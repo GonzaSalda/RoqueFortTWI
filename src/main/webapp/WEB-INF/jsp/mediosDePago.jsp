@@ -24,11 +24,11 @@
         </div>
         <div class=" flex flex-col gap-2">
             <a class="font-semibold text-2xl p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[350px]"
-               href="comprar?id_pizza=${pizza.id}&precio=${precioPizza}">
+               href="comprar?id_pizza=${pizza.id}&precio=${precioPizza}&delivery=true">
                 Pagar con tarjeta
             </a>
             <a class="font-semibold text-2xl p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[350px]"
-               href="pagoMP?idPizza=${pizza.id}&precioTotal=${precioPizza}">
+               href="pagoMP?idPizza=${pizza.id}&precioTotal=${precioPizza}&delivery=true">
                 Pagar con mercado pago
             </a>
         </div>

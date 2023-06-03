@@ -30,6 +30,12 @@
 					<p>Pizza:${precioPizza}$</p>
 					<p>Total:${totalFinalizado}$</p>
 				</div>
+				<div>
+					<label for="direccion">Dirección:</label>
+					<input type="text" name="direccion" id="direccion">
+					<label for="delivery">Entrega a domicilio:</label>
+					<input type="checkbox" name="delivery" id="delivery" value="true">
+				</div>
 				<h3 id="pagarTarjeta">Pagar con tarjeta</h3>
 				<label for="nroTarjeta">Número de tarjeta</label>
 				<input class="text-black font-semibold p-2" id="nroTarjeta" type="number" name="nroTarjeta">
