@@ -12,10 +12,33 @@ public class Moto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Identificador")
-    private Long id;
+    private int id;
     @Column(name = "Marca")
     private String marca;
-    private Long cantidadDisponible;
+    private boolean disponible = true;
 
+
+    public Moto() {
+    }
+
+    public Moto(int id, String marca,  boolean disponible) {
+        this.id = id;
+        this.marca = marca;
+        this.disponible= disponible;
+    }
+
+    public Moto(String marca,  boolean disponible) {
+        this.marca = marca;
+        this.disponible= disponible;
+    }
+
+    @Override
+    public String toString() {
+        return "Moto{" +
+                "id=" + id +
+                ", marca='" + marca + '\'' +
+                ", disponible='" + disponible + '\'' +
+                '}';
+    }
 
 }

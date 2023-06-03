@@ -1,12 +1,7 @@
 package ar.edu.grupoesfera.cursospring.controladores;
 
-import ar.edu.grupoesfera.cursospring.modelo.Pizza;
-import ar.edu.grupoesfera.cursospring.modelo.Extras;
-import ar.edu.grupoesfera.cursospring.modelo.Usuario;
-import ar.edu.grupoesfera.cursospring.modelo.Usuario_Pizza;
-import ar.edu.grupoesfera.cursospring.servicios.ServicioLogin;
-import ar.edu.grupoesfera.cursospring.servicios.ServicioMercadoPago;
-import ar.edu.grupoesfera.cursospring.servicios.ServicioPizza;
+import ar.edu.grupoesfera.cursospring.modelo.*;
+import ar.edu.grupoesfera.cursospring.servicios.*;
 import com.mercadopago.resources.Preference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +22,11 @@ public class ControladorCompra {
     @Autowired
     private ServicioLogin servicioLogin;
 
+    @Autowired
+    private ServicioDelivery servicioDelivery;
+
+    @Autowired
+    ServicioMoto servicioMoto;
 
     private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
 
@@ -45,7 +45,7 @@ public class ControladorCompra {
     }
 
     @RequestMapping(path = "/comprar", method = RequestMethod.GET)
-    public ModelAndView verificacionCompra(@RequestParam("id_pizza") int idPizza, @RequestParam("precio") Double precioPizza, HttpSession session) {
+    public ModelAndView verificacionCompraPorTarjeta(@RequestParam("id_pizza") int idPizza ,  @RequestParam("precio") Double precioPizza, HttpSession session) {
 
         ModelMap model = new ModelMap();
         String viewName = "";
@@ -137,8 +137,27 @@ public class ControladorCompra {
         Usuario usuario = servicioLogin.buscarUsuarioPorId(id_user);
         Pizza pizza_obtenida = servicioPizza.buscarPizzaPorId(idPizza);
         Usuario_Pizza usuarioPizza = servicioLogin.obtenerUsuarioPizza(pizza_obtenida, usuario);
-        servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
-        return new ModelAndView("compraRealizada", model);
+        String viewName = "";
+
+        try {
+
+            servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
+            viewName = "compraRealizada";
+        }
+        catch (Exception e) {
+            model.put("Error", "Ocurrio un error.");
+            Extras extras = Extras.getInstance();
+            Double extra;
+            extra = extras.total();
+            Double totalFinalizado = extra + pizza_obtenida.getPrecio();
+            model.put("extra", extra);
+            model.put("totalFinalizado", totalFinalizado);
+            model.put("idPizza", pizza_obtenida.getId());
+            model.put("precioPizza", pizza_obtenida.getPrecio());
+            viewName = "pagoMP";
+        }
+
+        return new ModelAndView(viewName, model);
     }
 
 }
