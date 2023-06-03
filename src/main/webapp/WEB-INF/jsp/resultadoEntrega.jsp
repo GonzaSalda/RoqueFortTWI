@@ -12,6 +12,7 @@
     <c:if test="${entregaExitosa}">
       <h2 class="text-4xl font-bold text-white">Compra exitosa!</h2>
       <p>La entrega se realizó exitosamente.</p>
+      <p>${informacionGeografica}</p>
       <div>
         <form action="misPedidos">
           <input class="text-2xl font-semibold text-red-400 cursor-pointer" type="submit" name="misPedidos" value="Ir a mis pedidos">

@@ -2,6 +2,7 @@ package ar.edu.grupoesfera.cursospring.controladores;
 
 import ar.edu.grupoesfera.cursospring.modelo.*;
 import ar.edu.grupoesfera.cursospring.servicios.*;
+import com.google.maps.errors.ApiException;
 import com.mercadopago.resources.Preference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 public class ControladorCompra {
@@ -27,6 +29,9 @@ public class ControladorCompra {
 
     @Autowired
     ServicioMoto servicioMoto;
+
+
+    private ServicioGoogleMaps servicioGoogleMaps = new ServicioGoogleMaps();
 
     private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
 
@@ -45,7 +50,7 @@ public class ControladorCompra {
     }
 
     @RequestMapping(path = "/comprar", method = RequestMethod.GET)
-    public ModelAndView verificacionCompraPorTarjeta(@RequestParam("id_pizza") int idPizza ,  @RequestParam("precio") Double precioPizza, HttpSession session) {
+    public ModelAndView verificacionCompraPorTarjeta(@RequestParam("id_pizza") int idPizza , @RequestParam(value = "delivery", required = false) Boolean delivery, @RequestParam("precio") Double precioPizza, HttpSession session) {
 
         ModelMap model = new ModelMap();
         String viewName = "";
@@ -60,12 +65,14 @@ public class ControladorCompra {
             Double total;
             total = extras.total();
             Double totalFinalizado = total + precioPizza;
+            model.put("delivery", delivery);
             model.put("extra", total);
             model.put("totalFinalizado", totalFinalizado);
             model.put("idPizza", idPizza);
             model.put("precioPizza", precioPizza);
             model.put("pizza", pizza_obtenida);
             viewName = "verificacionCompra";
+
         }
         else {
             model.addAttribute("msj_error", "Para comprar necesitas ingresar a tu cuenta.");
@@ -77,8 +84,7 @@ public class ControladorCompra {
 
 
     @RequestMapping(path = "/verificarCompra", method = RequestMethod.POST)
-    public ModelAndView verificarCompra(@RequestParam("nroTarjeta") Integer nroTarjeta, @RequestParam("pizzaId") int pizza_id, HttpSession session) {
-
+    public ModelAndView verificarCompra(@RequestParam("nroTarjeta") Integer nroTarjeta, @RequestParam("direccion") String direccion, @RequestParam("pizzaId") int pizza_id,  @RequestParam(value = "delivery", required = false) boolean delivery, HttpSession session) throws IOException, InterruptedException, ApiException {
         ModelMap model = new ModelMap();
         int id_user = Integer.parseInt(session.getAttribute("idUsuario").toString());
         Usuario usuario = servicioLogin.buscarUsuarioPorId(id_user);
@@ -88,6 +94,22 @@ public class ControladorCompra {
 
         try {
             servicioLogin.verificarTarjetaUsuario(usuario, nroTarjeta);
+            if (delivery) {
+                Moto motoAsignada = servicioMoto.asignarMotoDisponible();
+                if (motoAsignada != null) {
+                    boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion);
+                    String informacionGeografica = servicioGoogleMaps.GoogleMapsAPIConfiguration();
+                    model.addAttribute("informacionGeografica", informacionGeografica);
+                    model.addAttribute("entregaExitosa", entregaExitosa);
+                    servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
+                    viewName = "resultadoEntrega";
+                    return new ModelAndView (viewName,model);
+                } else {
+                    model.addAttribute("entregaExitosa", false);
+                    viewName = "resultadoEntrega";
+                    return new ModelAndView (viewName,model);
+                }
+            }
             servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
             viewName = "compraRealizada";
         }
@@ -109,7 +131,7 @@ public class ControladorCompra {
 
 
     @RequestMapping(path = "/pagoMP", method = RequestMethod.GET)
-    public ModelAndView pagoMP(@RequestParam("idPizza") int idPizza, @RequestParam("precioTotal") Double precioTotal, HttpSession session) {
+    public ModelAndView pagoMP(@RequestParam("idPizza") int idPizza, @RequestParam("precioTotal") Double precioTotal,   @RequestParam(value = "delivery", required = false) boolean delivery, HttpSession session) {
         ModelMap model = new ModelMap();
 
         String viewName = "";
@@ -122,6 +144,7 @@ public class ControladorCompra {
                 model.put("preference", preference);
                 model.put("precioTotal", precioTotal);
                 model.put("idPizza", idPizza);
+                model.put("delivery", delivery);
                 viewName = "pagoMP";
             }
             else {
@@ -131,7 +154,7 @@ public class ControladorCompra {
     }
 
     @RequestMapping(path = "/pagoRealizadoMP", method = RequestMethod.GET)
-    public ModelAndView pagoRealizadoMP(@RequestParam("idPizza") int idPizza,  HttpSession session) {
+    public ModelAndView pagoRealizadoMP(@RequestParam("idPizza") int idPizza,@RequestParam(value = "delivery", required = false) boolean delivery,  HttpSession session) {
         ModelMap model = new ModelMap();
         int id_user = Integer.parseInt(session.getAttribute("idPizza").toString());
         Usuario usuario = servicioLogin.buscarUsuarioPorId(id_user);
@@ -140,7 +163,20 @@ public class ControladorCompra {
         String viewName = "";
 
         try {
-
+            if (delivery) {
+                Moto motoAsignada = servicioMoto.asignarMotoDisponible();
+                if (motoAsignada != null) {
+                    boolean entregaExitosa = servicioDelivery.realizarEntrega("BuenaVida2020");
+                    model.addAttribute("entregaExitosa", entregaExitosa);
+                    servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
+                    viewName = "resultadoEntrega";
+                    return new ModelAndView (viewName,model);
+                } else {
+                    model.addAttribute("entregaExitosa", false);
+                    viewName = "resultadoEntrega";
+                    return new ModelAndView (viewName,model);
+                }
+            }
             servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
             viewName = "compraRealizada";
         }
