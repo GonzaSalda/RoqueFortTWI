@@ -15,15 +15,21 @@ public class Moto {
     private int id;
     @Column(name = "Marca")
     private String marca;
-    private int cantidadDisponible;
+    private boolean disponible = true;
+
 
     public Moto() {
     }
 
-    public Moto(int id, String marca, int cantidadDisponible) {
+    public Moto(int id, String marca,  boolean disponible) {
         this.id = id;
         this.marca = marca;
-        this.cantidadDisponible = cantidadDisponible;
+        this.disponible= disponible;
+    }
+
+    public Moto(String marca,  boolean disponible) {
+        this.marca = marca;
+        this.disponible= disponible;
     }
 
     @Override
@@ -31,8 +37,7 @@ public class Moto {
         return "Moto{" +
                 "id=" + id +
                 ", marca='" + marca + '\'' +
-                ", cantidadDisponible=" + cantidadDisponible +
+                ", disponible='" + disponible + '\'' +
                 '}';
     }
-
 }

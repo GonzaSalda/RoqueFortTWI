@@ -24,7 +24,7 @@ INSERT INTO usuario(Nombre, Email, Password, NumeroTarjeta, Rol)
 VALUES ('Admin', 'admin@admin.com', '123', 365, 'admin');
 
 INSERT INTO moto(Marca, disponible)
-VALUES ("Gillera", true),
-        ("Bajaj", true),
-        ("Honda", true);
+VALUES ('Gillera', true),
+        ('Bajaj', true),
+        ('Honda', true);
 

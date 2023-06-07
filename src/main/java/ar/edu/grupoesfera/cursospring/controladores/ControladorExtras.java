@@ -87,12 +87,12 @@ public class ControladorExtras {
         return "eliminarIngredientes";
     }
 
-        @RequestMapping(value = "/agregarAlCarrito")
-    public ModelAndView agregarAlcarrito() {
+        @RequestMapping(value = "/agregarExtra")
+    public ModelAndView agregarExtra() {
         ModelMap miMapa = new ModelMap();
         Stock tabla = Stock.getInstance();
         miMapa.put("tabla", tabla.obtenerStock());
-        ModelAndView miVista = new ModelAndView("agregarAlCarrito", "command",
+        ModelAndView miVista = new ModelAndView("agregarExtra", "command",
                 new Ingrediente());
         miVista.addAllObjects(miMapa);
         return miVista;
@@ -111,7 +111,7 @@ public class ControladorExtras {
         Stock tabla = Stock.getInstance();
         tabla.agregarStock(productoAgregar, -1);
         modelo.put("tabla", carrito.verIngredientes());
-        return "agregarAlCarrito";
+        return "agregarExtra";
     }
 
     @RequestMapping("/vaciarCarrito")

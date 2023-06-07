@@ -31,8 +31,8 @@
 
         <!-- SE INICIA UN BUCLE EN DONDE POR CADA CURSO SE VA MOSTRANDO SUS DATOS EN UN CUADRO -->
         <c:forEach var="pizza" items="${lista_pizzas}">
-            <div class="rounded-xl bg-[#1C1919] bg-opacity-80 w-[320px] h-[350px] p-4 mx-auto">
-                <div class=" flex items-center justify-center flex-col text-white">
+            <div class="rounded-xl bg-[#1C1919] bg-opacity-80 w-[320px] h-full p-4 mx-auto">
+                <div class=" flex items-center justify-center flex-col text-white ">
                     <div>
                         <a href="descripcionPizza?id_pizza=${pizza.id}">
                             <img class="rounded-xl max-w-[100%] w-[150px] h-[150px]"
@@ -46,7 +46,7 @@
                         <p class="text-[18px] text-center font-bold ">$${pizza.precio}</p>
                     </div>
 
-                    <div>
+                    <div class="flex items-center justify-center gap-x-4">
                         <c:if test='<%=session.getAttribute("ROL").equals("admin")%>'>
                             <form action="editarPizza" method="get">
                                 <input type="hidden" name="id_pizza" value="${pizza.id}">
@@ -62,6 +62,13 @@
                                 <input type="hidden" name="precio" value="${pizza.precio}">
                                 <input class="font-semibold text-sm cursor-pointer p-2 rounded bg-red-400 hover:border-transparent hover:text-black hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between max-w-[80px] w-full md:w-auto"
                                        type="submit" name="pagar" value="Comprar">
+                            </form>
+
+                            <form action="agregarPizzaAlCarrito" method="get">
+                                    <input type="hidden" name="id_pizza" value="${pizza.id}">
+                                        <%-- cambiar por vista de carrito --%>
+                                    <input class="font-semibold text-sm cursor-pointer p-2 rounded bg-red-400 hover:border-transparent hover:text-black hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-full md:w-auto"
+                                           id="agregarCarrito" type="submit" value="Agregar al carrito">
                             </form>
                         </c:if>
                     </div>

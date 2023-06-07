@@ -18,6 +18,7 @@
 
 <div class="container mx-auto my-6">
     <div class="rounded-xl bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[500px] h-[auto] p-4 mx-auto">
+        <button class="text-white font-semibold tracking-[0.10em] uppercase text-[12px]" onclick="goBack()">Volver atras</button>
         <table class="my-6 w-full">
             <h2 class="text-center text-4xl font-bold text-white tracking-[0.12em] p-4 my-4">
                 Agregar extras a la pizza
@@ -52,3 +53,9 @@
 
 </body>
 </html>
+
+<script>
+    function goBack() {
+        history.back();
+    }
+</script>

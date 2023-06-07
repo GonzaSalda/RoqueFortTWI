@@ -12,7 +12,6 @@ public interface UsuarioPizzaDao {
 
     ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorUsuario24hs(Long id);
 
-
     ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorUsuario48hs(Long id);
 
     ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorRangoDeFecha(Long id, LocalDate fechaInicial, LocalDate fechaFinal);
