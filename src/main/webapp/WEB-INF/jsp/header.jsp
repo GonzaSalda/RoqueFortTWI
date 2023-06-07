@@ -78,7 +78,7 @@
                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Consultar</a>
                             </li>
                             <li>
-                                <a href="eliminarIngrediente"
+                                <a href="eliminarIngredienteExtra"
                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Eliminar</a>
                             </li>
                         </ul>
@@ -90,7 +90,7 @@
                     <button id="foto-perfil3" type="button" data-dropdown-toggle="userDropdown3"
                             data-dropdown-placement="bottom-start"
                             class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-full md:w-auto"
-                    >Ingredientes
+                    >Extras
                         <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20"
                              xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -104,7 +104,7 @@
                          id="usuario-perfil3">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                             <li>
-                                <a href="agregarIngrediente"
+                                <a href="agregarIngredienteExtra"
                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agregar</a>
                             </li>
                         </ul>

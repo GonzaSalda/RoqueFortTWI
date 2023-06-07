@@ -39,101 +39,92 @@ public class ControladorExtras {
 
     @RequestMapping(value = "/insertarStock", method = RequestMethod.POST)
     public String addStock(@ModelAttribute("command") Ingrediente ingrediente,
-                           @RequestParam("cantidad") Integer cantidad, ModelMap modelo) {
+                           @RequestParam("cantidad") Integer cantidad, ModelMap model) {
         Stock tabla = Stock.getInstance();
         tabla.agregarStock(ingrediente, cantidad);
-        modelo.put("tabla", tabla.obtenerStock());
+        model.put("tabla", tabla.obtenerStock());
         return "agregarStock";
     }
 
-    @RequestMapping("/agregarIngrediente")
+    @RequestMapping("/agregarIngredienteExtra")
     public ModelAndView insertarIngrediente() {
-        return new ModelAndView("agregarIngrediente", "command", new Ingrediente());
+        return new ModelAndView("agregarExtraAdmin", "command", new Ingrediente());
     }
 
-    @RequestMapping(value = "/insertarIngrediente", method = RequestMethod.POST)
-    public String addProduct(@ModelAttribute("command") Ingrediente ingredienteAgregar, ModelMap modelo) {
+    @RequestMapping(value = "/insertarIngredienteExtra", method = RequestMethod.POST)
+    public String addProduct(@ModelAttribute("command") Ingrediente ingredienteAgregar, ModelMap model) {
         Stock tabla = Stock.getInstance();
         tabla.agregarIngrediente(ingredienteAgregar);
-        modelo.put("tabla", tabla.listarIngredientesDisponibles());
-        return "tablaIngredientes";
+        model.put("tabla", tabla.listarIngredientesDisponibles());
+        return "tablaExtras";
     }
 
 
 
     @RequestMapping(value = "/stockExistentes")
     public ModelAndView stockExistentes() {
-        ModelMap miMapa = new ModelMap();
+        ModelMap model = new ModelMap();
         Stock tabla = Stock.getInstance();
-        miMapa.put("tabla", tabla.obtenerStock());
+        model.put("tabla", tabla.obtenerStock());
         ModelAndView miVista = new ModelAndView();
-        miVista.addAllObjects(miMapa);
+        miVista.addAllObjects(model);
         miVista.setViewName("mostrarStock");
         return miVista;
 
     }
 
-    @RequestMapping("/eliminarIngrediente")
+    @RequestMapping("/eliminarIngredienteExtra")
     public ModelAndView eliminarIngrediente() {
-        return new ModelAndView("eliminarIngredientes", "command", new Ingrediente());
+        return new ModelAndView("eliminarExtras", "command", new Ingrediente());
     }
 
-    @RequestMapping(value = "/eliminarIng", method = RequestMethod.POST)
+    @RequestMapping(value = "/eliminarIngExtra", method = RequestMethod.POST)
     public String eliminarIngredientes(
             @ModelAttribute("command") Ingrediente ingrediente, ModelMap modelo) {
         Stock tabla = Stock.getInstance();
         tabla.eliminarIngrediente(ingrediente);
         modelo.put("tabla", tabla.obtenerStock());
-        return "eliminarIngredientes";
+        return "eliminarExtras";
     }
 
         @RequestMapping(value = "/agregarExtra")
     public ModelAndView agregarExtra() {
-        ModelMap miMapa = new ModelMap();
+        ModelMap model = new ModelMap();
         Stock tabla = Stock.getInstance();
-        miMapa.put("tabla", tabla.obtenerStock());
+            model.put("tabla", tabla.obtenerStock());
         ModelAndView miVista = new ModelAndView("agregarExtra", "command",
                 new Ingrediente());
-        miVista.addAllObjects(miMapa);
+        miVista.addAllObjects(model);
         return miVista;
     }
 
     @RequestMapping(value = "/insertarProductoAlCarrito", method = RequestMethod.POST)
     public String addProductToCarrito(@ModelAttribute("command") Ingrediente productoAgregar) {
-        ModelMap modelo = new ModelMap();
+        ModelMap model = new ModelMap();
         Extras carrito = Extras.getInstance();
         carrito.agregarIngrediente(productoAgregar);
         Double total;
         total = carrito.total();
-        modelo.put("total", total);
-        modelo.put("tabla", carrito.verIngredientes());
-        modelo.put("cantProductosAgregados", carrito.verIngredientes().size());
+        model.put("total", total);
+        model.put("tabla", carrito.verIngredientes());
+        model.put("cantProductosAgregados", carrito.verIngredientes().size());
         Stock tabla = Stock.getInstance();
         tabla.agregarStock(productoAgregar, -1);
-        modelo.put("tabla", carrito.verIngredientes());
         return "agregarExtra";
     }
 
-    @RequestMapping("/vaciarCarrito")
-    public ModelAndView vaciarCarrito() {
-        ModelMap miMapa = new ModelMap();
-
-        Extras carrito = Extras.getInstance();
+    @RequestMapping("/vaciarIngExtras")
+    public ModelAndView vaciarIngExtras() {
+        ModelMap model = new ModelMap();
+        Extras extras = Extras.getInstance();
         Stock stock = Stock.getInstance();
-        Iterator<Ingrediente> iterator = carrito.verIngredientes().iterator();
-
+        Iterator<Ingrediente> iterator = extras.verIngredientes().iterator();
         while (iterator.hasNext()) {
             Ingrediente cadaElemento = iterator.next();
             stock.agregarStock(cadaElemento, 1);
         }
-
-        carrito.vaciar();
-        miMapa.put("cantProductosAgregados", carrito.verIngredientes().size());
-        miMapa.put("tabla", carrito.verIngredientes());
-        ModelAndView miVista = new ModelAndView();
-        miVista.addAllObjects(miMapa);
-        miVista.setViewName("carrito");
-        return miVista;
+        extras.vaciar();
+        return new ModelAndView("redirect:/vistaCarrito", model);
 
     }
 

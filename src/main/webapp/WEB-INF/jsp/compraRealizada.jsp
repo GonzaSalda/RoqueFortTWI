@@ -21,7 +21,7 @@
 
 
 <main class="h-full flex items-center justify-center">
-	<div class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 mx-auto rounded-xl flex items-center justify-center flex-col ">
+	<div class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 my-2 mx-auto rounded-xl flex items-center justify-center flex-col ">
 		<h2 class="text-4xl font-bold text-white">Compra exitosa!</h2>
 		<div>
 			<form action="misPedidos">

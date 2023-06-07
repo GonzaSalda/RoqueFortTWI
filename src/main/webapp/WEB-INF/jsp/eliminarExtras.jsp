@@ -29,7 +29,7 @@
                 <td>Enviar</td>
             </tr>
             <c:forEach items="${tabla}" var="producto">
-                <form action="eliminarIng" method="POST">
+                <form action="eliminarIngExtra" method="POST">
                     <tr class="text-white font-bold text-[15px]">
                         <td>${producto.key.nombre}</td>
                         <input type="text" name="nombre" value="${producto.key.nombre}"

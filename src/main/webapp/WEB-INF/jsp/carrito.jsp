@@ -40,22 +40,24 @@
                         </div>
                     </div>
                 </div>
-
-
+            </c:forEach>
+            <c:forEach var="prod" items="${tabla}">
+                <div>
+                    <p class="text-white font-semibold">${prod.nombre}</p>
+                </div>
             </c:forEach>
         </div>
-        <div class="rounded-xl bg-[#1C1919] bg-opacity-80 w-[520px] h-[150px] p-4 mx-auto my-4">
+        <div class="rounded-xl bg-[#1C1919] bg-opacity-80 w-[520px] h-full p-4 mx-auto my-4">
 
             <div class="text-white font-bold w-full h-full flex flex-col justify-center items-center">
                 <h2 class="tracking-[0.12em] h-full flex items-start">TOTAL DEL CARRITO</h2>
                 <div class="h-full" id="total-precio">
-                    <p>Total: $${precio_total } </p>
+                    <p>Extra Ingre-Cond:$${extra}</p>
+                    <p>Pizza: $${precio_total } </p>
+                    <p>Total:$${totalFinalizado}</p>
+                    <a class="font-normal text-xl  rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[250px]" href="vaciarIngExtras">Sacar ingredientes extras</a>
                 </div>
-                <form action="comprarPizzasDelCarrito" method="GET" id="realizar-compra">
-                    <input class="font-semibold text-sm cursor-pointer p-2 rounded bg-red-400 hover:border-transparent hover:text-black hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between  w-full md:w-auto"
-                           type="submit" name="realizarCompra" value="Realizar compra">
-                </form>
-                <div class=" flex flex-col gap-2">
+                <div class=" flex flex-col gap-2 my-2">
                     <a class="font-semibold text-2xl p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[350px]"
                        href="comprarporTarjeta?&precioTotal=${precio_total}&delivery=true">
                         Pagar con tarjeta

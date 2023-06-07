@@ -39,7 +39,7 @@
                                id="precio" hidden/>
                         <td>${producto.value}</td>
                         <td><input type="number" width="50px" name="cantidad"
-                                   value="0" min="0" id="cantidad" class="form-control"></input></td>
+                                   value="0" min="0" id="cantidad" class="form-control text-black"></input></td>
                         <td><input
                                 class="font-semibold  text-sm px-4 py-2 leading-none rounded bg-red-400  hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-full md:w-auto"
                                 type="submit" value="Agregar"></td>

@@ -25,7 +25,6 @@
 				<input type="hidden" name="pizzaId" value="${idPizza}"> <%--Obtengo el idpizza del metodo verificacionCompra y luego
 				llamo como quiera en el name para pasarselo a otra vista con el model.put--%>
 				<div>
-					<span>Total:</span>
 					<p>Extra Ingre-Cond:${extra}$</p>
 					<p>Pizza:${precioPizza}$</p>
 					<p>Total:${totalFinalizado}$</p>

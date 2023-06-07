@@ -26,7 +26,7 @@ public interface ServicioCarrito {
     
 	void eliminarPizzaDelCarrito(Carrito_Pizza carritoPizza);
 
-	void vaciarPizzaDelCarrito(List<Carrito_Pizza> pizzasCarrito);
+	void vaciarCarrito(List<Carrito_Pizza> pizzasCarrito);
 
 
 }

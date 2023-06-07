@@ -18,17 +18,17 @@
 
 <div class="container mx-auto my-6">
 	<div class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 mx-auto rounded-xl ">
-		<form class="flex flex-col justify-center items-center w-full h-auto " action="insertarIngrediente" method="POST">
+		<form class="flex flex-col justify-center items-center w-full h-auto " action="insertarIngredienteExtra" method="POST">
 			<div>
 				<h2 class="text-white font-bold text-[25px]">
-					Agregar Ingrediente
+					Agregar ingrediente extra
 				</h2>
 			</div>
 			<div class="text-[18px] text-white font-semibold my-2 ">
 				<input type="text" name="nombre" id="nombre" placeholder="nombre"
-					   class="text-black outline-0"></input>
+					   class="text-black p-2 rounded-xl outline-0"></input>
 				<input
-						type="text" name="precio" placeholder="precio" id="precio" class="text-black outline-0"></input>
+						type="text" name="precio" placeholder="precio" id="precio" class="text-black   rounded-xl outline-0 p-2"></input>
 			</div>
 			<div>
 				</br> <input class="font-semibold  text-sm px-4 py-2 leading-none rounded bg-red-400  hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-full md:w-auto" type="submit" name="btnAceptar"

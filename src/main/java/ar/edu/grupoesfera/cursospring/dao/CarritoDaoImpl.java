@@ -91,7 +91,6 @@ public class CarritoDaoImpl implements CarritoDao {
 		return pizzas;
 	}
 
-
 	@Transactional
 	@Override
 	public Carrito_Pizza obtenerCarritoPizza(Carrito carrito, Pizza pizza) {
@@ -105,7 +104,6 @@ public class CarritoDaoImpl implements CarritoDao {
 
 		return (Carrito_Pizza) criteria.uniqueResult();
 	}
-
 
 	@Transactional
 	@Override

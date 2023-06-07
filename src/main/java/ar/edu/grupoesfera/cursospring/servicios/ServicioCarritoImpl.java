@@ -76,6 +76,7 @@ public class ServicioCarritoImpl implements ServicioCarrito {
 	}
 
 
+	/*Agarro las pizzas del carrito y las guardo en la base de datos*/
 	@Override
 	public void comprarPizzasDelCarrito(List<Pizza> pizzas, Usuario usuario) {
 
@@ -92,7 +93,7 @@ public class ServicioCarritoImpl implements ServicioCarrito {
 
 
 	@Override
-	public void vaciarPizzaDelCarrito(List<Carrito_Pizza> carritoPizzas) {
+	public void vaciarCarrito(List<Carrito_Pizza> carritoPizzas) {
 		
 		for (Carrito_Pizza carritoPizza : carritoPizzas) {
 			carritoDao.eliminarPizzaDelCarrito(carritoPizza);
