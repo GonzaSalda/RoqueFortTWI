@@ -30,10 +30,7 @@
 					<p>Total: $${totalFinalizado}</p>
 				</div>
 
-				<a class="font-normal text-[15px] p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[250px]"
-				   href="agregarExtra">Agregar ingredientes extras</a>
-				<a class="font-normal text-[15px] p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[250px]"
-				   href="vaciarIngExtrasCompraDirecta">Sacar ingredientes extras</a>
+
 				<div>
 					<%@ include file="mapaInput.jsp"%>
 					<div>

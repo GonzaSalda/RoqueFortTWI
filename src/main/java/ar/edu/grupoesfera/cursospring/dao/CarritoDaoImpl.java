@@ -15,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
+@Repository("carritoDao")
+@Transactional
 public class CarritoDaoImpl implements CarritoDao {
 	
 	@Autowired
@@ -24,7 +25,7 @@ public class CarritoDaoImpl implements CarritoDao {
 	private UsuarioDao usuarioDao;
 
 
-	@Transactional
+
 	@Override
 	public Carrito buscarCarritoPorID(int id_carrito) {
 
@@ -36,7 +37,6 @@ public class CarritoDaoImpl implements CarritoDao {
 	}
 
 
-	@Transactional
 	@Override
 	public void agregarPizzaALista(Pizza pizza_obtenida, Carrito carrito) {
 
@@ -46,37 +46,39 @@ public class CarritoDaoImpl implements CarritoDao {
 
 		carritoPizza.setCarrito(carrito);
 		carritoPizza.setPizza(pizza_obtenida);
-		sesion.saveOrUpdate(carrito);
 		sesion.save(carritoPizza);
 	}
 
 
-	@Transactional
 	@Override
 	public Carrito obtenerCarritoPorIdUsuario(int id_user) {
 		Session sesion = sessionFactory.getCurrentSession();
-
-		Criteria criteria = sesion.createCriteria(Carrito.class);
-		criteria.add(Restrictions.eq("usuario.id", id_user));
-		criteria.setMaxResults(1); // Limitar los resultados a uno
-		Carrito carrito = (Carrito) criteria.uniqueResult();
-		if (carrito == null) {
-			System.out.println("No se encontró el carrito para el usuario con ID: " + id_user);
+		List<Carrito> carritos = sesion.createCriteria(Carrito.class).list();
+		Carrito carrito = null;
+		for (Carrito car : carritos) {
+			if (car.getUsuario().getId() == id_user) {
+				carrito = car;
+				break;
+			}
 		}
-
+		if (carrito == null) {
+			// Si no se encontró un carrito para el usuario, crear uno nuevo
+			Usuario usuario = usuarioDao.buscarPorId(id_user); // Suponiendo que existe un método en el usuarioDao para obtener un usuario por su ID
+			carrito = new Carrito();
+			carrito.setUsuario(usuario);
+			sessionFactory.getCurrentSession().save(carrito);
+		}
 		return carrito;
 	}
 
 
 
-	@Transactional
 	@Override
 	public void guardarCarrito(Carrito carrito) {
 		sessionFactory.getCurrentSession().save(carrito);
 	}
 
 
-	@Transactional
 	@Override
 	public List<Pizza> obtenerPizzasDelCarrito(Carrito carrito) {
 		Session sesion = sessionFactory.getCurrentSession();
@@ -91,28 +93,25 @@ public class CarritoDaoImpl implements CarritoDao {
 		return pizzas;
 	}
 
-	@Transactional
 	@Override
 	public Carrito_Pizza obtenerCarritoPizza(Carrito carrito, Pizza pizza) {
 		
 		Session sesion = sessionFactory.getCurrentSession();
 
-		Criteria criteria = sesion.createCriteria(Carrito_Pizza.class);
-		criteria.add(Restrictions.eq("carrito", carrito));
-		criteria.add(Restrictions.eq("pizza", pizza));
-		criteria.setMaxResults(1); // Limitar el resultado a 1
-
-		return (Carrito_Pizza) criteria.uniqueResult();
+		Carrito_Pizza carritoPizza = (Carrito_Pizza) sesion.createCriteria(Carrito_Pizza.class)
+				.add(Restrictions.eq("carrito", carrito))
+				.add(Restrictions.eq("pizza", pizza))
+				.uniqueResult();
+		return carritoPizza;
 	}
 
-	@Transactional
 	@Override
 	public void eliminarPizzaDelCarrito(Carrito_Pizza carritoPizza) {
 		sessionFactory.getCurrentSession().delete(carritoPizza);
 	}
 
 
-	@Transactional
+
 	@Override
 	public List<Carrito_Pizza> obtenerCarritoPizzas(Carrito carrito) {
 		
