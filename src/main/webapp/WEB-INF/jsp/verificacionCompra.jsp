@@ -25,11 +25,15 @@
 				<input type="hidden" name="pizzaId" value="${idPizza}"> <%--Obtengo el idpizza del metodo verificacionCompra y luego
 				llamo como quiera en el name para pasarselo a otra vista con el model.put--%>
 				<div>
-					<span>Total:</span>
-					<p>Extra Ingre-Cond:${extra}$</p>
-					<p>Pizza:${precioPizza}$</p>
-					<p>Total:${totalFinalizado}$</p>
+					<p>Extras: $${extra}</p>
+					<p>Pizza: $${precioPizza}</p>
+					<p>Total: $${totalFinalizado}</p>
 				</div>
+
+				<a class="font-normal text-[15px] p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[250px]"
+				   href="agregarExtra">Agregar ingredientes extras</a>
+				<a class="font-normal text-[15px] p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[250px]"
+				   href="vaciarIngExtrasCompraDirecta">Sacar ingredientes extras</a>
 				<div>
 					<%@ include file="mapaInput.jsp"%>
 					<div>

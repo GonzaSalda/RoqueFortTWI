@@ -1,9 +1,6 @@
 package ar.edu.grupoesfera.cursospring.controladores;
 
-import ar.edu.grupoesfera.cursospring.modelo.Pizza;
-import ar.edu.grupoesfera.cursospring.modelo.Usuario;
 import ar.edu.grupoesfera.cursospring.modelo.Usuario_Pizza;
-import ar.edu.grupoesfera.cursospring.servicios.ServicioUsuario;
 import ar.edu.grupoesfera.cursospring.servicios.ServicioUsuarioPizza;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @Controller
 public class ControladorHistorial {

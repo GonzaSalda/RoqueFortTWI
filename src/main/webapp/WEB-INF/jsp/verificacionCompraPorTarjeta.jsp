@@ -25,9 +25,9 @@
 				<input type="hidden" name="pizzaId" value="${idPizza}"> <%--Obtengo el idpizza del metodo verificacionCompra y luego
 				llamo como quiera en el name para pasarselo a otra vista con el model.put--%>
 				<div>
-					<p>Extra Ingre-Cond:${extra}$</p>
-					<p>Pizza:${precioPizza}$</p>
-					<p>Total:${totalFinalizado}$</p>
+					<p>Extra Ingre-Cond: $${extra}</p>
+					<p>Pizza: $${precioPizza}</p>
+					<p>Total: $${totalFinalizado}</p>
 				</div>
 				<div>
 					<%@ include file="mapaInput.jsp"%>
@@ -39,7 +39,7 @@
 				<h3 id="pagarTarjeta">Pagar con tarjeta</h3>
 				<label for="nroTarjeta">Número de tarjeta</label>
 				<input class="text-black font-semibold p-2 outline-0 rounded-2xl" id="nroTarjeta" type="number" name="nroTarjeta">
-				<input class="bg-black rounded-xl p-2 text-white " id="comprar" type="submit" value="Realizar compra">
+				<input class="bg-red-400 hover:bg-gray-100 hover:text-black rounded-xl p-2 text-white " id="comprar" type="submit" value="Realizar compra">
 			</form>
 
 

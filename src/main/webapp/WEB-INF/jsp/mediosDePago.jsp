@@ -14,11 +14,6 @@
 
 <div class="container mx-auto my-4">
     <div class="rounded-xl bg-[#1C1919] bg-opacity-80 w-[780px] h-[650] p-6 mx-auto flex flex-col items-center justify-center gap-4">
-
-        <div class="text-white text-xl tracking-[0.12em] bg-red-400 rounded-2xl w-[500px] h-[200px] flex flex-col items-center justify-center ">
-            <a class="hover:text-black font-bold" href="agregarExtra">Agregar extras al carrito</a>
-        </div>
-
         <div class="text-4xl uppcase text-white font-bold">
             <h1>Medios de pago</h1>
         </div>

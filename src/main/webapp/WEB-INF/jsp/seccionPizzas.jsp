@@ -15,7 +15,7 @@
 
 <%@ include file="header.jsp" %>
 
-<div class="max-w-[100%] w-full flex items-center justify-center h-[350px] m-12">
+<div class="max-w-[100%] w-full flex items-center justify-center h-[350px] my-12">
     <img src="https://kentucky.com.ar/imgs/grafico-tentate.svg" alt="tentate">
 </div>
 

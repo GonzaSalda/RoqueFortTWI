@@ -9,6 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RoqueFort</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -16,12 +18,9 @@
 
 <div class="bg-[#1C1919] bg-opacity-80 w-full">
     <div class="flex w-full p-4 justify-center items-center ">
-        <div class="flex">
+        <div class="flex justify-between">
             <a class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-full md:w-auto"
-               href="verListaPizzas">Home</a>
-
-            <a class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-full md:w-auto"
-               href="verListaPizzas">Pizzas</a>
+               href="verListaPizzas">Inicio</a>
 
             <c:if test='<%=session.getAttribute("ROL").equals("cliente")%>'>
                 <div>
@@ -48,8 +47,8 @@
                             </li>
                         </ul>
                     </div>
-
                 </div>
+
             </c:if>
             <c:if test='<%=session.getAttribute("ROL").equals("admin")%>'>
                 <div>
@@ -116,12 +115,14 @@
         <!-- Aca se valida si el usuario inicio sesión -->
         <c:if test='<%=session.getAttribute("idUsuario") != null%>'>
             <div class="flex justify-end items-center w-full gap-x-4">
+                <c:if test='<%=session.getAttribute("ROL").equals("cliente")%>'>
                     <%-- Carrito --%>
                 <div>
-                    <a class="text-white" href="vistaCarrito" id="carrito">
-                        Carrito
+                    <a class="text-white w-[15px]" href="vistaCarrito">
+                       <p>Carrito</p>
                     </a>
                 </div>
+                </c:if>
                 <img id="foto-perfil4" type="button" data-dropdown-toggle="userDropdown4"
                      data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer"
                      src="https://static.vecteezy.com/system/resources/previews/005/545/335/original/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg"

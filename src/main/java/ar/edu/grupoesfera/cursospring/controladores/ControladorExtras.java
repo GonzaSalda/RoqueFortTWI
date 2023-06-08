@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class ControladorExtras {
 
@@ -125,6 +127,22 @@ public class ControladorExtras {
         }
         extras.vaciar();
         return new ModelAndView("redirect:/vistaCarrito", model);
+
+    }
+
+    @RequestMapping("/vaciarIngExtrasCompraDirecta")
+    public ModelAndView vaciarIngExtrasCompraDirecta(HttpServletRequest request) {
+        ModelMap model = new ModelMap();
+        Extras extras = Extras.getInstance();
+        Stock stock = Stock.getInstance();
+        Iterator<Ingrediente> iterator = extras.verIngredientes().iterator();
+        while (iterator.hasNext()) {
+            Ingrediente cadaElemento = iterator.next();
+            stock.agregarStock(cadaElemento, 1);
+        }
+        extras.vaciar();
+        String currentUrl = request.getRequestURL().toString();
+        return new ModelAndView("redirect:" + currentUrl, model);
 
     }
 
