@@ -45,7 +45,7 @@
             </props>
         </property>
         <property name="username" value="root"/>
-        <property name="password" value="123456"/>
+        <property name="password" value="root"/>
     </bean>
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate5.HibernateTransactionManager">

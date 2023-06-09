@@ -16,7 +16,7 @@ public class ServicioUsuarioPizzaImpl implements ServicioUsuarioPizza{
     private UsuarioPizzaDao usuarioPizzaDao;
 
     @Override
-    public List<Usuario_Pizza> buscarHistorialPorIdUsuario(Long id) {
+    public List<Usuario_Pizza> buscarHistorialPorIdUsuario(Integer id) {
             return usuarioPizzaDao.obtenerPizzasCompradasPorUsuario(id);
     }
 

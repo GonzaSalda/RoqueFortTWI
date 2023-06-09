@@ -22,7 +22,7 @@ public class UsuarioPizzaDaoImpl implements UsuarioPizzaDao{
     private SessionFactory sessionFactory;
     @Transactional
     @Override
-    public ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorUsuario(Long usuarioId) {
+    public ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorUsuario(Integer usuarioId) {
         final Session sesion = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = sesion.getCriteriaBuilder();
 
@@ -47,7 +47,6 @@ public class UsuarioPizzaDaoImpl implements UsuarioPizzaDao{
     @Transactional
     @Override
     public ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorUsuario24hs(Long id) {
-
         LocalDate fechaActual = LocalDate.now();
         LocalDate fechaInicial = fechaActual.minusDays(id);
 

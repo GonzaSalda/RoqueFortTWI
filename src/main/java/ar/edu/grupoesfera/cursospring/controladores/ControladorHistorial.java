@@ -34,7 +34,7 @@ public class ControladorHistorial {
         }
 
         try {
-            ArrayList<Usuario_Pizza> pizzasCompradas = (ArrayList<Usuario_Pizza>) servicioUsuarioPizza.buscarHistorialPorIdUsuario(Long.valueOf(id));
+            ArrayList<Usuario_Pizza> pizzasCompradas = (ArrayList<Usuario_Pizza>) servicioUsuarioPizza.buscarHistorialPorIdUsuario(id);
             modelo.put("activetodo", "bg-indigo-400 text-white");
             modelo.put("formestado", "hidden");
             modelo.put("pizzas", pizzasCompradas);

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ServicioUsuarioPizza {
 
-    List<Usuario_Pizza> buscarHistorialPorIdUsuario(Long id);
+    List<Usuario_Pizza> buscarHistorialPorIdUsuario(Integer id);
 
     ArrayList<Usuario_Pizza> buscarHistorialPorIdUserltimas24hs(Long id);
 

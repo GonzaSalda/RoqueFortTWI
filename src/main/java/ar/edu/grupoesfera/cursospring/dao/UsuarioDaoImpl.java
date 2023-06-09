@@ -19,6 +19,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Boolean.TRUE;
+
+
 
 @Repository
 public class UsuarioDaoImpl implements UsuarioDao {
@@ -82,6 +85,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
     public void guardarPizzaDelUsuario( Usuario usuario, Pizza pizza_obtenida) {
         Session sesion = sessionFactory.getCurrentSession();
         Usuario_Pizza usuarioPizza = new Usuario_Pizza(usuario, pizza_obtenida);
+        usuarioPizza.setIsComprada(Boolean.TRUE);
         usuarioPizza.setFecha_incio_compra(LocalDate.now());
         usuarioPizza.setHora(LocalTime.now());
         sesion.save(usuarioPizza);

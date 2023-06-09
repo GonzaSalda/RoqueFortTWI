@@ -39,6 +39,7 @@ public class Usuario_Pizza {
 
 
 
+
 	public Usuario_Pizza(Usuario usuario, Pizza pizza) {
 		this.usuario = usuario;
 		this.pizza = pizza;

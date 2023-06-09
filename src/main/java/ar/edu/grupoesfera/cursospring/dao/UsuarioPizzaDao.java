@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface UsuarioPizzaDao {
-    ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorUsuario(Long usuarioId);
+    ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorUsuario(Integer usuarioId);
 
     ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorUsuario24hs(Long id);
 
