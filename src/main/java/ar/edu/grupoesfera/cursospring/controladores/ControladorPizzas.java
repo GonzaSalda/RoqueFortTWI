@@ -1,5 +1,6 @@
 package ar.edu.grupoesfera.cursospring.controladores;
 
+import ar.edu.grupoesfera.cursospring.modelo.DatosLogin;
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
 import ar.edu.grupoesfera.cursospring.servicios.ServicioPizza;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,22 @@ public class ControladorPizzas {
         model.put("msj_error", msj_error);
         return new ModelAndView("seccionPizzas", model);
     }
+
+    @RequestMapping("/crearPizza")
+    public ModelAndView cargarVista(){
+        ModelMap model = new ModelMap();
+        Pizza pizza = new Pizza();
+        model.put("datosCrearPizza", pizza);
+
+        return new ModelAndView("crearPizza", model);
+    }
+
+    @RequestMapping(path ="/guardarPizza", method= RequestMethod.POST)
+    public ModelAndView guardarVista(@ModelAttribute("datosCrearPizza") Pizza datosPizza){
+        ModelMap model = new ModelMap();
+        servicioPizza.savePizza(datosPizza);
+        return new ModelAndView("crearPizza", model);
+    }
+
 
    }

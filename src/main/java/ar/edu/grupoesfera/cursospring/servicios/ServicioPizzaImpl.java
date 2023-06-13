@@ -37,4 +37,9 @@ public class ServicioPizzaImpl implements ServicioPizza {
         pizzaDao.actualizarPizza(pizza);
     }
 
+    @Override
+    public void savePizza(Pizza pizza) {
+       pizzaDao.guardarPizza(pizza);
+    }
+
 }

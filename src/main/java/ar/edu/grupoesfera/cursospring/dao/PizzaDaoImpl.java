@@ -35,5 +35,9 @@ public class PizzaDaoImpl implements PizzaDao {
         sessionFactory.getCurrentSession().update(pizza);
     }
 
-
+    @Transactional
+    @Override
+    public void guardarPizza(Pizza pizza) {
+        sessionFactory.getCurrentSession().save(pizza);
+    }
 }
