@@ -7,15 +7,14 @@ import java.util.Map;
 import ar.edu.grupoesfera.cursospring.modelo.Ingrediente;
 import ar.edu.grupoesfera.cursospring.modelo.Extras;
 import ar.edu.grupoesfera.cursospring.modelo.Stock;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class ControladorExtras {
@@ -101,7 +100,8 @@ public class ControladorExtras {
     }
 
     @RequestMapping(value = "/insertarProductoAlCarrito", method = RequestMethod.POST)
-    public String addProductToCarrito(@ModelAttribute("command") Ingrediente productoAgregar) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addProductToCarrito(@ModelAttribute("command") Ingrediente productoAgregar) {
         ModelMap model = new ModelMap();
         Extras carrito = Extras.getInstance();
         carrito.agregarIngrediente(productoAgregar);
@@ -112,7 +112,6 @@ public class ControladorExtras {
         model.put("cantProductosAgregados", carrito.verIngredientes().size());
         Stock tabla = Stock.getInstance();
         tabla.agregarStock(productoAgregar, -1);
-        return "agregarExtra";
     }
 
     @RequestMapping("/vaciarIngExtras")
@@ -131,8 +130,8 @@ public class ControladorExtras {
     }
 
     @RequestMapping("/vaciarIngExtrasCompraDirecta")
-    public ModelAndView vaciarIngExtrasCompraDirecta(HttpServletRequest request) {
-        ModelMap model = new ModelMap();
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void  vaciarIngExtrasCompraDirecta() {
         Extras extras = Extras.getInstance();
         Stock stock = Stock.getInstance();
         Iterator<Ingrediente> iterator = extras.verIngredientes().iterator();
@@ -141,9 +140,6 @@ public class ControladorExtras {
             stock.agregarStock(cadaElemento, 1);
         }
         extras.vaciar();
-        String currentUrl = request.getRequestURL().toString();
-        return new ModelAndView("redirect:" + currentUrl, model);
-
     }
 
 }

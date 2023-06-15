@@ -39,14 +39,7 @@
 <main class="flex items-center justify-center ">
     <div class="relative w-[1137px] h-[503px] bg-[#1C1919] bg-opacity-80">
         <div class="grid grid-cols-2 grid-rows-2 w-full h-full  justify-center items-center ">
-            <div class="col-span-1 row-start-1 row-end-3 px-6 mb-12">
-                <h1 class="text-[40px] font-bold text-white">HASTA $3.500 EN DESCUENTOS</h1>
-                <p class="text-[12px] font-normal text-white uppercase mb-6 ">Para clientes nuevos</p>
-                <div class="w-[240px] h-[50px] bg-red-400  bg-opacity-80 rounded-2xl flex justify-center items-center  group hover:bg-white">
-                    <a href="registro" class="group-hover:bg-white group-hover:text-gray-900 uppercase tracking-[0.425em] text-white">Registrate</a>
-                </div>
-            </div>
-            <div class="col-start-2 col-end-3 row-start-1 row-end-3 absolute right-4 top-14">
+            <div class="col-start-1 col-end-2 row-start-1 row-end-2 absolute left-16 top-12 ">
                 <img src="https://kentucky.com.ar/imgs/grafico_amamos.svg" alt="Amamos">
             </div>
             <div class="col-start-2 col-end-3 row-start-2  w-full h-full flex items-end mb-12">

@@ -95,14 +95,15 @@ public class CarritoDaoImpl implements CarritoDao {
 
 	@Override
 	public Carrito_Pizza obtenerCarritoPizza(Carrito carrito, Pizza pizza) {
-		
+
 		Session sesion = sessionFactory.getCurrentSession();
 
-		Carrito_Pizza carritoPizza = (Carrito_Pizza) sesion.createCriteria(Carrito_Pizza.class)
-				.add(Restrictions.eq("carrito", carrito))
-				.add(Restrictions.eq("pizza", pizza))
-				.uniqueResult();
-		return carritoPizza;
+		Criteria criteria = sesion.createCriteria(Carrito_Pizza.class);
+		criteria.add(Restrictions.eq("carrito", carrito));
+		criteria.add(Restrictions.eq("pizza", pizza));
+		criteria.setMaxResults(1); // Limitar el resultado a 1
+
+		return (Carrito_Pizza) criteria.uniqueResult();
 	}
 
 	@Override
@@ -120,7 +121,6 @@ public class CarritoDaoImpl implements CarritoDao {
 		List<Carrito_Pizza> pizzasCarrito = sesion.createCriteria(Carrito_Pizza.class)
 											.add(Restrictions.eq("carrito", carrito))
 											.list();
-		
 		return pizzasCarrito;
 	}
 

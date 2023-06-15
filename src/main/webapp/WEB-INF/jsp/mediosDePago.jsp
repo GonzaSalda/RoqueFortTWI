@@ -18,9 +18,6 @@
             <h1>Medios de pago</h1>
         </div>
 
-        <a class="font-normal text-[15px] p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[250px]"
-           href="agregarExtra">Agregar ingredientes extras</a>
-
         <div class=" flex flex-col gap-2">
 
             <a class="font-semibold text-2xl p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[350px]"
