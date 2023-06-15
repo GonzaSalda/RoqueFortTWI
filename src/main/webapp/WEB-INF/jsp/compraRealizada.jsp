@@ -24,8 +24,8 @@
 	<div class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 my-2 mx-auto rounded-xl flex items-center justify-center flex-col ">
 		<h2 class="text-4xl font-bold text-white">Compra exitosa!</h2>
 		<div>
-			<form action="misPedidos">
-				<input class="text-2xl font-semibold text-red-400 cursor-pointer" type="submit" name="misPedidos" value="Ir a mis pedidos">
+			<form action="historial">
+				<input class="text-2xl font-semibold text-red-400 cursor-pointer" type="submit" name="misCompras" value="Ver mis compras">
 			</form>
 		</div>
 	</div>

@@ -27,6 +27,4 @@ public class Usuario {
     @Column(name = "Imagen")
     private String imagen;
 
-
-
 }

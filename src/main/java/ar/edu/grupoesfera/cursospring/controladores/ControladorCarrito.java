@@ -35,7 +35,9 @@ public class ControladorCarrito {
 	@Autowired
 	ServicioMoto servicioMoto;
 
+	private ServicioGoogleMaps servicioGoogleMaps = new ServicioGoogleMaps();
 
+	private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
 
 	@RequestMapping(path ="/agregarPizzaAlCarrito", method = RequestMethod.GET)
 	public ModelAndView agregarPizzaAlCarrito(@RequestParam("id_pizza") int idPizza, HttpSession session) {
@@ -124,10 +126,9 @@ public class ControladorCarrito {
 				Moto motoAsignada = servicioMoto.asignarMotoDisponible();
 				if (motoAsignada != null) {
 					boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion);
-/*
                     String informacionDeEntrega = servicioGoogleMaps.GoogleMapsAPIConfiguration(direccion);
 
-                    model.addAttribute("informacionDeEntrega", informacionDeEntrega);*/
+                    model.addAttribute("informacionDeEntrega", informacionDeEntrega);
 					model.addAttribute("entregaExitosa", entregaExitosa);
 					servicioCarrito.comprarPizzasDelCarrito(pizzas, usuario);
 					// Se vacia la lista del carrito

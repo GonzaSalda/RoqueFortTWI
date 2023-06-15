@@ -23,13 +23,13 @@
         <form:form action="pizzaActualizado" method="POST" modelAttribute="datosCrearPizza">
             <div class="flex flex-col gap-2">
                 <label for="nombre">Nombre de la pizza</label>
-                <input id="nombre" type="text" name="nombre" value="${nombrePizza}">
+                <input class="p-2 rounded-xl outline-0 text-black" id="nombre" type="text" name="nombre" value="${nombrePizza}">
 
                 <label for="descripcion">Descripción</label>
-                <input id="descripcion" type="text" name="descripcion" value="${descPizza}">
+                <input class="p-2 rounded-xl outline-0 text-black" id="descripcion" type="text" name="descripcion" value="${descPizza}">
 
                 <label for="precio">Precio</label>
-                <input id="precio" type="number" name="precio" value="${precioPizza}">
+                <input class="p-2 rounded-xl outline-0 text-black" id="precio" type="number" name="precio" value="${precioPizza}">
             </div>
 
 

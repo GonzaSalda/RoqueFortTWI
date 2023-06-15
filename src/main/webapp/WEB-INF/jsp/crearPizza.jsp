@@ -24,16 +24,16 @@
         <form:form action="guardarPizza" method="POST" modelAttribute="datosCrearPizza">
             <div class="flex flex-col gap-2">
                 <label for="imagen">Imagen de la pizza</label>
-                <input id="imagen" type="file" name="imagen">
+                <input  id="imagen" type="file" name="imagen">
 
                 <label for="nombre">Nombre de la pizza</label>
-                <input id="nombre" type="text" name="nombre">
+                <input class="p-2 rounded-xl outline-0 text-black" id="nombre" type="text" name="nombre">
 
                 <label for="descripcion">Descripción</label>
-                <input id="descripcion" type="text" name="descripcion">
+                <input class="p-2 rounded-xl outline-0 text-black" id="descripcion" type="text" name="descripcion">
 
                 <label for="precio">Precio</label>
-                <input id="precio" type="number" name="precio">
+                <input class="p-2 rounded-xl outline-0 text-black" id="precio" type="number" name="precio">
             </div>
 
             <input class="font-semibold  text-sm px-4 py-2 leading-none rounded bg-red-400  hover:text-gray-900 hover:bg-gray-100  mt-4 text-white flex items-center justify-between w-full md:w-auto"

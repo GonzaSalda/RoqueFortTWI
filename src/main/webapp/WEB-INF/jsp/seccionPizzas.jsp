@@ -20,12 +20,6 @@
 </div>
 
 <div class="container mx-auto  my-6">
-    <c:if test='<%=session.getAttribute("ROL").equals("admin")%>'>
-        <div>
-            <a href="agregarPizza" id="agregarPizza">Agregar Pizza</a>
-        </div>
-    </c:if>
-
     <div class="grid grid-cols-1 max-w-[640px] w-full gap-6 lg:grid-cols-3 lg:max-w-none lg:mx-0">
 
 
@@ -53,7 +47,7 @@
                                 <input type="hidden" name="nombre" value="${pizza.nombre}">
                                 <input type="hidden" name="descripcion" value="${pizza.descripcion}">
                                 <input type="hidden" name="precio" value="${pizza.precio}">
-                                <input type="submit" name="editarPizza" value="Editar pizza">
+                                <input  class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-full md:w-auto" type="submit" name="editarPizza" value="Editar pizza">
                             </form>
                         </c:if>
                         <c:if test='<%=session.getAttribute("ROL").equals("cliente")%>'>

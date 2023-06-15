@@ -84,6 +84,9 @@
                     </div>
                 </div>
 
+                <div  class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-[120px]">
+                    <a href="crearPizza">Agregar Pizza</a>
+                </div>
 
                 <div>
                     <button id="foto-perfil3" type="button" data-dropdown-toggle="userDropdown3"
@@ -135,6 +138,7 @@
                         <p><%=session.getAttribute("nombreUsuario")%>
                         </p>
                     </div>
+                    <c:if test='<%=session.getAttribute("ROL").equals("cliente")%>'>
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                         <li>
                             <a href="historial"
@@ -142,6 +146,7 @@
                         </li>
                         <li>
                     </ul>
+                    </c:if>
                     <div class="py-1">
                         <a href="cerrarSesion"
                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Cerrar

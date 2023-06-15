@@ -35,7 +35,7 @@ public class ControladorCompra {
     ServicioMoto servicioMoto;
 
 
-/*    private ServicioGoogleMaps servicioGoogleMaps = new ServicioGoogleMaps();*/
+    private ServicioGoogleMaps servicioGoogleMaps = new ServicioGoogleMaps();
 
     private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
 
@@ -102,10 +102,9 @@ public class ControladorCompra {
                 Moto motoAsignada = servicioMoto.asignarMotoDisponible();
                 if (motoAsignada != null) {
                     boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion);
-/*
                     String informacionDeEntrega = servicioGoogleMaps.GoogleMapsAPIConfiguration(direccion);
 
-                    model.addAttribute("informacionDeEntrega", informacionDeEntrega);*/
+                    model.addAttribute("informacionDeEntrega", informacionDeEntrega);
                     model.addAttribute("entregaExitosa", entregaExitosa);
                     servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
                     viewName = "resultadoEntrega";
