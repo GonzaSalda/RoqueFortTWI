@@ -17,7 +17,7 @@
 <%@ include file="header.jsp"%>
 
 <main class="container w-full rounded-xl bg-[#1C1919] bg-opacity-80 text-white m-auto pb-2">
-    <h1 class="text-4xl font-bold m-4  text-center" >Historial</h1>
+    <h1 class="text-4xl font-bold m-4 p-2 text-center">Historial</h1>
     <div class="">
         <nav class="border w-fit mx-auto">
                     <ul class="flex font-medium justify-between">
@@ -46,7 +46,7 @@
                     <input type="submit" value="Buscar" class=" w-48 h-12 m-auto text-center font-semibold text-sm bg-sky-600 text-white rounded-md shadow-sm">
         </form>
     </div>
-         <div class="w-fit mx-auto flex">
+         <div class="w-fit mx-auto items-center justify-center flex flex-wrap">
 
                         <c:forEach var="pizzaComprada" items="${pizzas}">
                              <div class="evento border m-2">
@@ -72,18 +72,6 @@
                                             </div>
                                         </div>
                                     </div>
-                   <!--                 <div class="mt-4 flex justify-between">
-                                        <p>MODERNA 2 x $3000</p>
-                                        <div class="text-end mb-2 font-semibold">
-                                            <p>$3000</p>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4 flex justify-between">
-                                        <p>VEGETARIANA 2 x $3000</p>
-                                        <div class="text-end mb-2 font-semibold">
-                                            <p>$3000</p>
-                                        </div>
-                                    </div> --!>
                                     <hr>
                                     <div class="mt-4 flex justify-between">
                                         <p>Total</p>
@@ -98,7 +86,7 @@ ${error}
          </div>
 
     </div>
-
+</main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 
 </body>

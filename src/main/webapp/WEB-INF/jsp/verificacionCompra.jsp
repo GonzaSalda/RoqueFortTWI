@@ -18,8 +18,8 @@
 	<%@ include file="header.jsp"%>
 
 	<main class="container mx-auto my-6">
-		<div class="text-white text-xl tracking-[0.12em] w-full h-full flex flex-col items-center justify-center ">
-			<form class="bg-[#1C1919] bg-opacity-80 w-[500px] h-[600px] rounded-2xl flex items-center justify-center flex-col gap-6 my-6"
+		<div class="text-white text-xl  w-full h-full flex flex-col items-center justify-center ">
+			<form class="bg-[#1C1919] bg-opacity-80 w-[500px] h-full py-2 rounded-2xl flex items-center justify-center flex-col gap-6 my-6"
 				  action="verificarCompra" method="post">
 				<h3 class="text-4xl font-bold">Resumen</h3>
 				<input type="hidden" name="pizzaId" value="${idPizza}"> <%--Obtengo el idpizza del metodo verificacionCompra y luego
@@ -30,6 +30,10 @@
 					<p>Total: $${totalFinalizado}</p>
 				</div>
 
+				<a class="font-normal text-[15px] p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[250px]"
+				   href="agregarExtra">Agregar ingredientes extras</a>
+				<a class="font-normal text-[15px] p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[250px]"
+				   href="vaciarIngExtrasCompraDirecta">Sacar ingredientes extras</a>
 
 				<div>
 					<%@ include file="mapaInput.jsp"%>
