@@ -95,18 +95,23 @@ public class ControladorCompra {
         Pizza pizza_obtenida = servicioPizza.buscarPizzaPorId(pizza_id);
         Usuario_Pizza usuarioPizza = servicioLogin.obtenerUsuarioPizza(pizza_obtenida, usuario);
         String viewName = "";
-
+        long tiempoEstimadoPreparacion = 60000;
         try {
             servicioLogin.verificarTarjetaUsuario(usuario, nroTarjeta);
             if (delivery) {
                 Moto motoAsignada = servicioMoto.asignarMotoDisponible();
                 if (motoAsignada != null) {
-                    boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion);
+                    long tiempoViajeMinutos = servicioGoogleMaps.obtenerTiempoViajeMinutos(direccion);
+                    tiempoEstimadoPreparacion += tiempoViajeMinutos * 60000;
+
+                    boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion, motoAsignada, tiempoEstimadoPreparacion);
                     String informacionDeEntrega = servicioGoogleMaps.GoogleMapsAPIConfiguration(direccion);
 
                     model.addAttribute("informacionDeEntrega", informacionDeEntrega);
                     model.addAttribute("entregaExitosa", entregaExitosa);
                     servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
+
+                    model.addAttribute("tiempoEstimado", tiempoEstimadoPreparacion);
                     viewName = "resultadoEntrega";
                     return new ModelAndView (viewName,model);
                 } else {
@@ -160,6 +165,7 @@ public class ControladorCompra {
         return new ModelAndView(viewName, model);
     }
 
+/*
     @RequestMapping(path = "/pagoRealizadoMP", method = RequestMethod.GET)
     public ModelAndView pagoRealizadoMP(@RequestParam("idPizza") int idPizza,@RequestParam(value = "delivery", required = false) boolean delivery,  HttpSession session) {
         ModelMap model = new ModelMap();
@@ -173,7 +179,7 @@ public class ControladorCompra {
             if (delivery) {
                 Moto motoAsignada = servicioMoto.asignarMotoDisponible();
                 if (motoAsignada != null) {
-                    boolean entregaExitosa = servicioDelivery.realizarEntrega("BuenaVida2020");
+                    boolean entregaExitosa = servicioDelivery.realizarEntrega("BuenaVida2020",motoAsignada);
                     model.addAttribute("entregaExitosa", entregaExitosa);
                     servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
                     viewName = "resultadoEntrega";
@@ -202,5 +208,6 @@ public class ControladorCompra {
 
         return new ModelAndView(viewName, model);
     }
+*/
 
 }

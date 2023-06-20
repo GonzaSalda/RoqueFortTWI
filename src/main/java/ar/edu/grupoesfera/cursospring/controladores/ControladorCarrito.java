@@ -35,7 +35,9 @@ public class ControladorCarrito {
 	@Autowired
 	ServicioMoto servicioMoto;
 
+/*
 	private ServicioGoogleMaps servicioGoogleMaps = new ServicioGoogleMaps();
+*/
 
 	private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
 
@@ -111,12 +113,13 @@ public class ControladorCarrito {
 		return new ModelAndView(viewName, model);
 	}
 
-	@RequestMapping(path = "/verificarCompraPorTarjeta", method = RequestMethod.POST)
+	/*@RequestMapping(path = "/verificarCompraPorTarjeta", method = RequestMethod.POST)
 	public ModelAndView verificarCompraPorTarjeta(@RequestParam("nroTarjeta") Integer nroTarjeta, @RequestParam("direccion") String direccion,  @RequestParam(value = "delivery", required = false) boolean delivery, HttpSession session) throws IOException, InterruptedException, ApiException {
 		ModelMap model = new ModelMap();
 		int id_user = Integer.parseInt(session.getAttribute("idUsuario").toString());
 		Usuario usuario = servicioLogin.buscarUsuarioPorId(id_user);
 		String viewName = "";
+
 		Carrito carrito = servicioCarrito.obtenerCarritoPorIdUsuario(id_user);
 		//Obtengo las pizzas y las guardo en una variable lista
 		List<Pizza> pizzas = servicioCarrito.obtenerPizzasDelCarrito(carrito);
@@ -125,10 +128,9 @@ public class ControladorCarrito {
 			if (delivery) {
 				Moto motoAsignada = servicioMoto.asignarMotoDisponible();
 				if (motoAsignada != null) {
-					boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion);
-                    String informacionDeEntrega = servicioGoogleMaps.GoogleMapsAPIConfiguration(direccion);
-
-                    model.addAttribute("informacionDeEntrega", informacionDeEntrega);
+					boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion,motoAsignada);
+                  *//*  String informacionDeEntrega = servicioGoogleMaps.GoogleMapsAPIConfiguration(direccion);
+                    model.addAttribute("informacionDeEntrega", informacionDeEntrega);*//*
 					model.addAttribute("entregaExitosa", entregaExitosa);
 					servicioCarrito.comprarPizzasDelCarrito(pizzas, usuario);
 					// Se vacia la lista del carrito
@@ -154,7 +156,7 @@ public class ControladorCarrito {
 		}
 		return new ModelAndView(viewName, model);
 	}
-
+*/
 
 	@RequestMapping(path ="/eliminarPizzaDeListaCarrito", method = RequestMethod.GET)
 	public ModelAndView eliminarPizzaDeListaCarrito(@RequestParam("pizza_id") int pizza_id, HttpSession sesion) {

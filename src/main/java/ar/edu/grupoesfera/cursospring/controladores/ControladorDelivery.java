@@ -12,22 +12,4 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ControladorDelivery {
-    @Autowired
-    private ServicioDelivery servicioDelivery;
-
-    @Autowired
-    ServicioMoto servicioMoto;
-
-    @RequestMapping(value = "/realizarEntrega", method = RequestMethod.GET)
-    public String realizarEntrega(@RequestParam("direccion") String direccion, Model model) {
-        Moto motoAsignada = servicioMoto.asignarMotoDisponible();
-        if (motoAsignada != null) {
-            boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion);
-            model.addAttribute("entregaExitosa", entregaExitosa);
-        }else{
-            model.addAttribute("entregaExitosa", false);
-        }
-
-        return "resultadoEntrega";
-    }
 }
