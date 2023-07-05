@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ServicioMotoImpl implements ServicioMoto{
@@ -21,5 +23,9 @@ public class ServicioMotoImpl implements ServicioMoto{
             motoDao.actualizarMoto(motoDisponible);
         }
         return motoDisponible;
+    }
+
+    public List<Moto> obtenerMotos() {
+        return motoDao.findAll();
     }
 }

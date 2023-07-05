@@ -88,6 +88,7 @@
                     <a href="crearPizza">Agregar Pizza</a>
                 </div>
 
+
                 <div>
                     <button id="foto-perfil3" type="button" data-dropdown-toggle="userDropdown3"
                             data-dropdown-placement="bottom-start"
@@ -111,6 +112,10 @@
                             </li>
                         </ul>
                     </div>
+                </div>
+
+                <div  class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-[120px]">
+                    <a href="listarMotos">Motos</a>
                 </div>
             </c:if>
         </div>

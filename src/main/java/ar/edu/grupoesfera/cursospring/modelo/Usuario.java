@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Identificador")
@@ -27,4 +28,15 @@ public class Usuario {
     @Column(name = "Imagen")
     private String imagen;
 
+    public Usuario(String nombre, String email, String password, String rol) {
+        this.nombre = nombre;
+        this.email = email;
+        this.password = password;
+        this.rol = rol;
+    }
+
+    public Usuario() {
+
+    }
 }
+

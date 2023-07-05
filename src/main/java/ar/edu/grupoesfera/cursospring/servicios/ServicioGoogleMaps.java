@@ -5,9 +5,11 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.*;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+@Service
 public class ServicioGoogleMaps {
 
     public String GoogleMapsAPIConfiguration(String direccion) throws InterruptedException, ApiException, IOException {

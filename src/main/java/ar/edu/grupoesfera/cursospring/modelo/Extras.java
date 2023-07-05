@@ -41,4 +41,6 @@ public class Extras {
     }
 
 
+    public void agregarIngrediente(String tomate) {
+    }
 }

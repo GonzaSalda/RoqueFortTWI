@@ -1,7 +1,8 @@
 package ar.edu.grupoesfera.cursospring.controladores;
 
-import ar.edu.grupoesfera.cursospring.modelo.DatosLogin;
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
+import ar.edu.grupoesfera.cursospring.servicios.ServicioCarrito;
+import ar.edu.grupoesfera.cursospring.servicios.ServicioLogin;
 import ar.edu.grupoesfera.cursospring.servicios.ServicioPizza;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,16 @@ import java.util.List;
 @Controller
 public class ControladorPizzas {
 
-    @Autowired
+    private ServicioLogin servicioLogin;
     private ServicioPizza servicioPizza;
+    private ServicioCarrito servicioCarrito;
+
+    @Autowired
+    public ControladorPizzas(ServicioLogin servicioLogin, ServicioPizza servicioPizza, ServicioCarrito servicioCarrito) {
+        this.servicioLogin = servicioLogin;
+        this.servicioPizza = servicioPizza;
+        this.servicioCarrito = servicioCarrito;
+    }
 
 
     @RequestMapping(path= "/verListaPizzas", method= RequestMethod.GET)
@@ -41,7 +50,7 @@ public class ControladorPizzas {
     }
 
     @RequestMapping(path ="/guardarPizza", method= RequestMethod.POST)
-    public ModelAndView guardarVista(@ModelAttribute("datosCrearPizza") Pizza datosPizza){
+    public ModelAndView pizzaCreada(@ModelAttribute("datosCrearPizza") Pizza datosPizza){
         ModelMap model = new ModelMap();
         servicioPizza.savePizza(datosPizza);
         return new ModelAndView("crearPizza", model);

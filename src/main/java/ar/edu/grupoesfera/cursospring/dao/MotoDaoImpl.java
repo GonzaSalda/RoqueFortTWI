@@ -47,4 +47,9 @@ public class MotoDaoImpl implements MotoDao{
         }
         return null;
     }
+    @Override
+    public List<Moto> findAll() {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Moto", Moto.class).list();
+    }
 }

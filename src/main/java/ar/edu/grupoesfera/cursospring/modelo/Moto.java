@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -17,13 +17,14 @@ public class Moto {
     @Column(name = "Marca")
     private String marca;
     private boolean disponible = true;
-
-    private Date horaRegreso;
-
+    @Column(name = "HorarioSalida")
+    private LocalTime horarioSalida;
+    @Column(name = "HorarioSalidaPlanificado")
+    private LocalTime horarioSalidaPlanificado;
     public Moto() {
     }
 
-    public Moto(int id, String marca,  boolean disponible) {
+    public Moto(int id, String marca, boolean disponible) {
         this.id = id;
         this.marca = marca;
         this.disponible= disponible;
@@ -42,4 +43,6 @@ public class Moto {
                 ", disponible='" + disponible + '\'' +
                 '}';
     }
+
+
 }

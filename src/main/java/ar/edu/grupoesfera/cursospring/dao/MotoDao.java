@@ -14,4 +14,6 @@ public interface MotoDao {
 
     Moto findMotoDisponible();
 
+    List<Moto> findAll();
+
 }

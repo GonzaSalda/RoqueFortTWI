@@ -19,25 +19,32 @@ import java.util.List;
 @Controller
 public class ControladorCompra {
 
-    @Autowired
+
     private ServicioPizza servicioPizza;
 
-    @Autowired
     private ServicioLogin servicioLogin;
 
-    @Autowired
     private ServicioCarrito servicioCarrito;
 
-    @Autowired
     private ServicioDelivery servicioDelivery;
 
+    private ServicioMoto servicioMoto;
+
     @Autowired
-    ServicioMoto servicioMoto;
+    public ControladorCompra(ServicioPizza servicioPizza , ServicioLogin servicioLogin,ServicioCarrito servicioCarrito,ServicioDelivery servicioDelivery, ServicioMoto servicioMoto  ) {
+        this.servicioPizza = servicioPizza;
+        this.servicioLogin = servicioLogin;
+        this.servicioCarrito = servicioCarrito;
+        this.servicioDelivery = servicioDelivery;
+        this.servicioMoto = servicioMoto;
+    }
 
 
     private ServicioGoogleMaps servicioGoogleMaps = new ServicioGoogleMaps();
 
     private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
+
+
 
     @RequestMapping(path = "/verMediosDePago", method = RequestMethod.POST)
     public ModelAndView verMediosDePago(@RequestParam("precio") Double precioPizza, @RequestParam("id_pizza") int id_pizza) {
