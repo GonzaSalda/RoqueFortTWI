@@ -28,7 +28,7 @@
 <header class=" bg-[#1C1919] bg-opacity-80 rounded-xl mb-8">
   <div class="container mx-auto flex items-center justify-between p-4">
     <div>
-      <h1 class="font-extrabold text-[25px] text-white uppercase" >RoqueFort</h1>
+      <a href="http://localhost:8080/proyecto_base_spring_war_exploded/" class="font-extrabold text-[25px] text-white uppercase" >RoqueFort</a>
     </div>
     <div  id="registro">
       <a href="login"

@@ -12,15 +12,15 @@
     <title>Registrarse</title>
 </head>
 
-<body>
+<body class="bg-[url(https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80)] bg-cover bg-no-repeat ">
 <%@ include file="headerInicio.jsp"%>
 
 <div class="caja-login">
-    <h2>Registrar Usuario</h2>
+    <h2 class="text-semibold text-[20px] tracking-[0.15em] uppercase">Registrar Usuario</h2>
     <form:form action="registrar" method="POST" modelAttribute="datosRegistro">
         <div class="caja-usuario">
             <form:input path="nombre" type="text" name="nombre" id="nombre"/>
-            <label for="nombre">Nombre</label>
+            <label class="text-white " for="nombre">Nombre</label>
         </div>
         <div class="caja-usuario">
             <form:input path="email"  type="email" name="email" id="email"/>
@@ -34,7 +34,7 @@
             <form:input path="repetirContrasenia" type="password" name="repetirContrasenia" id="repetirContrasenia"/>
             <label for="repetirContrasenia">Repetir contraseña</label>
         </div>
-        <form:button type="submit" class="a">
+        <form:button type="submit" class="a text-white">
             Registrar
         </form:button>
     </form:form>

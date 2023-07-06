@@ -102,7 +102,7 @@ public class ControladorCompra {
         Pizza pizza_obtenida = servicioPizza.buscarPizzaPorId(pizza_id);
         Usuario_Pizza usuarioPizza = servicioLogin.obtenerUsuarioPizza(pizza_obtenida, usuario);
         String viewName = "";
-        long tiempoEstimadoPreparacion = 60000;
+        long tiempoEstimadoPreparacion = 120000;
         try {
             servicioLogin.verificarTarjetaUsuario(usuario, nroTarjeta);
             if (delivery) {
@@ -172,23 +172,31 @@ public class ControladorCompra {
         return new ModelAndView(viewName, model);
     }
 
-/*
     @RequestMapping(path = "/pagoRealizadoMP", method = RequestMethod.GET)
-    public ModelAndView pagoRealizadoMP(@RequestParam("idPizza") int idPizza,@RequestParam(value = "delivery", required = false) boolean delivery,  HttpSession session) {
+    public ModelAndView pagoRealizadoMP(@RequestParam("idPizza") int idPizza,@RequestParam(value = "delivery", required = false) boolean delivery,  @RequestParam("direccion") String direccion,  HttpSession session) {
         ModelMap model = new ModelMap();
         int id_user = Integer.parseInt(session.getAttribute("idPizza").toString());
         Usuario usuario = servicioLogin.buscarUsuarioPorId(id_user);
         Pizza pizza_obtenida = servicioPizza.buscarPizzaPorId(idPizza);
         Usuario_Pizza usuarioPizza = servicioLogin.obtenerUsuarioPizza(pizza_obtenida, usuario);
+        long tiempoEstimadoPreparacion = 60000;
         String viewName = "";
 
         try {
             if (delivery) {
                 Moto motoAsignada = servicioMoto.asignarMotoDisponible();
                 if (motoAsignada != null) {
-                    boolean entregaExitosa = servicioDelivery.realizarEntrega("BuenaVida2020",motoAsignada);
+                    long tiempoViajeMinutos = servicioGoogleMaps.obtenerTiempoViajeMinutos(direccion);
+                    tiempoEstimadoPreparacion += tiempoViajeMinutos * 60000;
+
+                    boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion, motoAsignada, tiempoEstimadoPreparacion);
+                    String informacionDeEntrega = servicioGoogleMaps.GoogleMapsAPIConfiguration(direccion);
+
+                    model.addAttribute("informacionDeEntrega", informacionDeEntrega);
                     model.addAttribute("entregaExitosa", entregaExitosa);
                     servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
+
+                    model.addAttribute("tiempoEstimado", tiempoEstimadoPreparacion);
                     viewName = "resultadoEntrega";
                     return new ModelAndView (viewName,model);
                 } else {
@@ -215,6 +223,5 @@ public class ControladorCompra {
 
         return new ModelAndView(viewName, model);
     }
-*/
 
 }

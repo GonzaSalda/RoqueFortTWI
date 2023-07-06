@@ -17,10 +17,12 @@ public class Moto {
     @Column(name = "Marca")
     private String marca;
     private boolean disponible = true;
-    @Column(name = "HorarioSalida")
-    private LocalTime horarioSalida;
+    @Column(name = "HorarioEntrega")
+    private LocalTime horarioEntrega;
     @Column(name = "HorarioSalidaPlanificado")
     private LocalTime horarioSalidaPlanificado;
+    @Column(name = "HorarioVueltaNegocio")
+    private LocalTime horarioVueltaNegocio;
     public Moto() {
     }
 

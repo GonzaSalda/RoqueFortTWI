@@ -42,7 +42,7 @@
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                             <li>
                                 <a href="agregarExtra"
-                                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agregar
+                                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Añadir extra
                                     extra</a>
                             </li>
                         </ul>
@@ -51,11 +51,10 @@
 
             </c:if>
             <c:if test='<%=session.getAttribute("ROL").equals("admin")%>'>
-                <div>
+                <div class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-full md:w-auto">
                     <button id="foto-perfil2" type="button" data-dropdown-toggle="userDropdown2"
-                            data-dropdown-placement="bottom-start"
-                            class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-full md:w-auto"
-                    >Stock
+                            data-dropdown-placement="bottom-start" class="flex gap-x-2 items-center"
+                            >Stock de extras
                         <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20"
                              xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -89,32 +88,11 @@
                 </div>
 
 
-                <div>
-                    <button id="foto-perfil3" type="button" data-dropdown-toggle="userDropdown3"
-                            data-dropdown-placement="bottom-start"
-                            class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-full md:w-auto"
-                    >Extras
-                        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                  clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-
-                    <div id="userDropdown3"
-                         class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
-                         id="usuario-perfil3">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
-                            <li>
-                                <a href="agregarIngredienteExtra"
-                                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agregar</a>
-                            </li>
-                        </ul>
-                    </div>
+                <div  class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-full md:w-auto">
+                    <a href="agregarIngredienteExtra">Agregar extras</a>
                 </div>
 
-                <div  class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-[120px]">
+                <div  class="inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-black  bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0 text-white flex items-center justify-between w-auto">
                     <a href="listarMotos">Motos</a>
                 </div>
             </c:if>

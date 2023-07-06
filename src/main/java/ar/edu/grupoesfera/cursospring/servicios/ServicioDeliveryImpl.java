@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,11 +26,15 @@ public class ServicioDeliveryImpl implements ServicioDelivery{
 
     @Autowired
     private ServicioGoogleMaps servicioGoogleMaps;
-    LocalTime horaSalidaPlanificada = LocalTime.now(); // Obtener la hora actual como la hora de salida planificada
     @Override
     public boolean realizarEntrega(String direccion, Moto moto, long tiempoEstimado) throws IOException, InterruptedException, ApiException {
+        LocalTime horaSalidaPlanificada = LocalTime.now();
+        moto.setHorarioSalidaPlanificado(horaSalidaPlanificada);
+        moto.setHorarioEntrega(null);
+        moto.setHorarioVueltaNegocio(null);
+        motoDao.actualizarMoto(moto);
+
         if (moto != null) {
-            moto.setHorarioSalidaPlanificado(horaSalidaPlanificada);
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.execute(() -> {
                 try {
@@ -41,11 +42,26 @@ public class ServicioDeliveryImpl implements ServicioDelivery{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                moto.setDisponible(true);
-                moto.setHorarioSalida(LocalTime.now()); // Asignar la hora de salida actual
+                LocalTime horarioEntrega = LocalTime.now();
+                moto.setHorarioEntrega(horarioEntrega);
+
+                Duration duracionAdicional = Duration.ofMinutes(1);
+                LocalTime horarioVueltaNegocio = horarioEntrega.plus(duracionAdicional);
+                moto.setHorarioVueltaNegocio(horarioVueltaNegocio);
+
+
+                LocalTime horaActual = LocalTime.now();
+
+                System.out.println("Hora actual: " + horaActual);
+                System.out.println("Horario de vuelta de negocio: " + moto.getHorarioVueltaNegocio());
+                if (horaActual.isBefore(moto.getHorarioVueltaNegocio())) {
+                    moto.setDisponible(true);
+                    motoDao.actualizarMoto(moto);
+                }
                 motoDao.actualizarMoto(moto);
             });
             executor.shutdown();
+
             return true;
         } else {
             return false;

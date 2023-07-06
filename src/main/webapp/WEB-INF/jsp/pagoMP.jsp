@@ -20,22 +20,24 @@
 
 <main>
     <div class="container mx-auto my-6" >
-        <div class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 mx-auto rounded-xl flex items-center justify-center flex-col ">
+        <div class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 mx-auto rounded-xl flex items-center justify-center flex-col gap-y-4">
 
-            <form class="text-white font-semibold text-2xl" action="" method="post">
+            <form class="text-white font-semibold text-2xl text-center" action="" method="post">
 
                 <input type="hidden" name="idPizza" value="${idPizza}">
 
-                <h3 id="resumen">Resumen</h3>
+                <h3>Detalle de tu compra</h3>
 
-                <div id="precioTotal">
-                    <span>Total:</span>
-                    <p class="text-white font-bold text-[16px]">${precioTotal}$</p>
+                <div>
+                    <p class="text-white font-semibold text-[16px]"><span>Total: </span>$${precioTotal}</p>
                 </div>
 
                 <div>
-                    <label for="delivery">Entrega a domicilio:</label>
-                    <input type="checkbox" name="delivery" id="delivery" value="true">
+                    <%@ include file="mapaInput.jsp"%>
+                    <div>
+                        <label for="delivery">Entrega a domicilio</label>
+                        <input type="checkbox" name="delivery" id="delivery" value="true">
+                    </div>
                 </div>
             </form>
 
