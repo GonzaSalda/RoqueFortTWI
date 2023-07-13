@@ -33,8 +33,8 @@
   <script>
     // Función para iniciar el conteo regresivo después de que la vista se haya cargado completamente
     window.onload = function() {
-      var tiempoEstimado = ${tiempoEstimado};
-      var tiempoRestante = tiempoEstimado;
+      var tiempoEstimado = '${tiempoEstimado}';
+      var tiempoRestante = tiempoEstimado * 60 * 1000; // Convertir minutos a milisegundos
 
       // Función para actualizar el contador cada segundo
       function actualizarContador() {

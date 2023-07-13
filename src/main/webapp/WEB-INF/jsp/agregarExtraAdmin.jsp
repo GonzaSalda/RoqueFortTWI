@@ -21,7 +21,7 @@
 		<form class="flex flex-col justify-center items-center w-full h-auto " action="insertarIngredienteExtra" method="POST">
 			<div>
 				<h2 class="text-white font-bold text-[25px]">
-					Agregar ingrediente extra
+					Agregar extra
 				</h2>
 			</div>
 			<div class="text-[18px] text-white font-semibold my-2 ">

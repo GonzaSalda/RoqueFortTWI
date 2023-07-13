@@ -15,7 +15,7 @@
 
 <%@ include file="headerInicio.jsp"%>
 
-<div class="caja-login">
+<div class="caja-login my-6">
     <h2>Bienvenido</h2>
     <form:form action="validar-login" method="post" modelAttribute="datosLogin">
 

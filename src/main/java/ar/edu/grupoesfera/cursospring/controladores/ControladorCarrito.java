@@ -20,26 +20,30 @@ import java.util.List;
 
 @Controller
 public class ControladorCarrito {
-	@Autowired
 	private ServicioPizza servicioPizza;
 
-	@Autowired
 	private ServicioLogin servicioLogin;
 
-	@Autowired
 	private ServicioCarrito servicioCarrito;
 
-	@Autowired
 	private ServicioDelivery servicioDelivery;
 
-	@Autowired
-	ServicioMoto servicioMoto;
+	private ServicioMoto servicioMoto;
 
-/*
+	@Autowired
+	public ControladorCarrito(ServicioPizza servicioPizza , ServicioLogin servicioLogin,ServicioCarrito servicioCarrito,ServicioDelivery servicioDelivery, ServicioMoto servicioMoto  ) {
+		this.servicioPizza = servicioPizza;
+		this.servicioLogin = servicioLogin;
+		this.servicioCarrito = servicioCarrito;
+		this.servicioDelivery = servicioDelivery;
+		this.servicioMoto = servicioMoto;
+	}
+
 	private ServicioGoogleMaps servicioGoogleMaps = new ServicioGoogleMaps();
-*/
 
 	private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
+
+
 
 	@RequestMapping(path ="/agregarPizzaAlCarrito", method = RequestMethod.GET)
 	public ModelAndView agregarPizzaAlCarrito(@RequestParam("id_pizza") int idPizza, HttpSession session) {
@@ -113,7 +117,7 @@ public class ControladorCarrito {
 		return new ModelAndView(viewName, model);
 	}
 
-	/*@RequestMapping(path = "/verificarCompraPorTarjeta", method = RequestMethod.POST)
+	@RequestMapping(path = "/verificarCompraPorTarjeta", method = RequestMethod.POST)
 	public ModelAndView verificarCompraPorTarjeta(@RequestParam("nroTarjeta") Integer nroTarjeta, @RequestParam("direccion") String direccion,  @RequestParam(value = "delivery", required = false) boolean delivery, HttpSession session) throws IOException, InterruptedException, ApiException {
 		ModelMap model = new ModelMap();
 		int id_user = Integer.parseInt(session.getAttribute("idUsuario").toString());
@@ -123,15 +127,21 @@ public class ControladorCarrito {
 		Carrito carrito = servicioCarrito.obtenerCarritoPorIdUsuario(id_user);
 		//Obtengo las pizzas y las guardo en una variable lista
 		List<Pizza> pizzas = servicioCarrito.obtenerPizzasDelCarrito(carrito);
+		boolean enCola = false;
+
 		try {
 			servicioLogin.verificarTarjetaUsuario(usuario, nroTarjeta);
+			long tiempoEstimadoPreparacion = 2;
+			long tiempoViajeMinutos = servicioGoogleMaps.obtenerTiempoViajeMinutos(direccion);
+			tiempoEstimadoPreparacion +=  tiempoViajeMinutos;
 			if (delivery) {
 				Moto motoAsignada = servicioMoto.asignarMotoDisponible();
 				if (motoAsignada != null) {
-					boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion,motoAsignada);
-                  *//*  String informacionDeEntrega = servicioGoogleMaps.GoogleMapsAPIConfiguration(direccion);
-                    model.addAttribute("informacionDeEntrega", informacionDeEntrega);*//*
+					boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion, motoAsignada, tiempoEstimadoPreparacion);
+					String informacionDeEntrega = servicioGoogleMaps.GoogleMapsAPIConfiguration(direccion);
+                    model.addAttribute("informacionDeEntrega", informacionDeEntrega);
 					model.addAttribute("entregaExitosa", entregaExitosa);
+					model.addAttribute("tiempoEstimado", Long.toString(tiempoEstimadoPreparacion));
 					servicioCarrito.comprarPizzasDelCarrito(pizzas, usuario);
 					// Se vacia la lista del carrito
 					List<Carrito_Pizza> pizzasCarrito = servicioCarrito.obtenerCarritoPizzas(carrito);
@@ -139,9 +149,18 @@ public class ControladorCarrito {
 					viewName = "resultadoEntrega";
 					return new ModelAndView (viewName,model);
 				} else {
-					model.addAttribute("entregaExitosa", false);
-					viewName = "resultadoEntrega";
-					return new ModelAndView (viewName,model);
+					enCola = true;
+					CompraCola compraCola = new CompraCola(usuario, pizzas, direccion, delivery , tiempoViajeMinutos);
+					CompraCola compraColaAnterior = servicioDelivery.obtenerUltimaCompraCola(); // Obtener la última compra en la cola
+					if (compraColaAnterior != null) {
+						long tiempoViajeMinutosAnterior = compraColaAnterior.getTiempoViajeMinutos();
+						tiempoViajeMinutos += tiempoViajeMinutosAnterior;
+					}
+					servicioDelivery.agregarCompraCola(compraCola);
+					model.addAttribute("tiempoEstimado", tiempoViajeMinutos);
+					model.addAttribute("enCola", enCola);
+					viewName = "enColaCompra";
+					return new ModelAndView(viewName, model);
 				}
 			}
 			servicioCarrito.comprarPizzasDelCarrito(pizzas, usuario);
@@ -156,7 +175,6 @@ public class ControladorCarrito {
 		}
 		return new ModelAndView(viewName, model);
 	}
-*/
 
 	@RequestMapping(path ="/eliminarPizzaDeListaCarrito", method = RequestMethod.GET)
 	public ModelAndView eliminarPizzaDeListaCarrito(@RequestParam("pizza_id") int pizza_id, HttpSession sesion) {

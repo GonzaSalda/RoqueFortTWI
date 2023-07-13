@@ -33,7 +33,9 @@
                 </div>
 
                 <div>
-                    <%@ include file="mapaInput.jsp"%>
+                    <div id="mapaInputContainer" style="display: none;">
+                        <%@ include file="mapaInput.jsp"%>
+                    </div>
                     <div>
                         <label for="delivery">Entrega a domicilio</label>
                         <input type="checkbox" name="delivery" id="delivery" value="true">
@@ -53,7 +55,18 @@
         </div>
     </div>
 </main>
-
-
 </body>
 </html>
+
+<script>
+    const deliveryCheckbox = document.getElementById("delivery");
+    const mapaInputContainer = document.getElementById("mapaInputContainer");
+
+    deliveryCheckbox.addEventListener("change", function() {
+        if (this.checked) {
+            mapaInputContainer.style.display = "block";
+        } else {
+            mapaInputContainer.style.display = "none";
+        }
+    });
+</script>

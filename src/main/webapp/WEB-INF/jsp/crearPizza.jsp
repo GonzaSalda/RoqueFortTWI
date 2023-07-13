@@ -17,9 +17,9 @@
 
 <!--<%@ include file="header.jsp" %>-->
 <div class="container mx-auto my-6 text-white">
-<h1 class="text-4xl font-bold m-4  text-center">Crear Pizza</h1>
     <div id="formularioCrearPizza"
          class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 mx-auto rounded-xl flex items-center justify-center flex-col ">
+        <h1 class="text-4xl font-bold m-4  text-center">Crear Pizza</h1>
 
         <form:form action="guardarPizza" method="POST" modelAttribute="datosCrearPizza">
             <div class="flex flex-col gap-2">
@@ -36,7 +36,7 @@
                 <input class="p-2 rounded-xl outline-0 text-black" id="precio" type="number" name="precio">
             </div>
 
-            <input class="font-semibold  text-sm px-4 py-2 leading-none rounded bg-red-400  hover:text-gray-900 hover:bg-gray-100  mt-4 text-white flex items-center justify-between w-full md:w-auto"
+            <input class="font-semibold mx-auto  text-sm px-4 py-2 leading-none rounded bg-red-400  hover:text-gray-900 hover:bg-gray-100  mt-4 text-white flex items-center justify-between w-full md:w-auto"
                    id="guarda" type="submit" value="Guardar">
         </form:form>
     </div>

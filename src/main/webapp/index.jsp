@@ -15,7 +15,7 @@
 
 <body class="bg-[url(https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80)] bg-cover bg-no-repeat ">
 
-<header class=" bg-[#1C1919] bg-opacity-80 rounded-xl mb-8">
+<header class="bg-[#1C1919] bg-opacity-80 mb-8">
     <div class="container mx-auto flex items-center justify-between p-4">
         <div>
             <h1 class="font-extrabold text-[25px] text-white uppercase" >RoqueFort</h1>
@@ -36,16 +36,14 @@
 </header>
 
 
-<main class="flex items-center justify-center ">
-    <div class="relative w-[1137px] h-[503px] bg-[#1C1919] bg-opacity-80">
-        <div class="grid grid-cols-2 grid-rows-2 w-full h-full  justify-center items-center ">
-            <div class="col-start-1 col-end-2 row-start-1 row-end-2 absolute left-16 top-12 ">
-                <img src="https://kentucky.com.ar/imgs/grafico_amamos.svg" alt="Amamos">
+<main class="flex items-center justify-center m-4">
+    <div class="relative w-[1137px] h-[503px] bg-[#1C1919] bg-opacity-80 flex flex-col p-6 gap-y-6">
+            <div>
+                <img class="max-w-[100%] w-[650px]" src="https://kentucky.com.ar/imgs/grafico_amamos.svg" alt="Amamos">
             </div>
-            <div class="col-start-2 col-end-3 row-start-2  w-full h-full flex items-end mb-12">
-                <img class="px-6"  src="https://s3.sa-east-1.amazonaws.com/static-content.betwarrior.bet/Product/Landing_page/5158/img/app.svg" alt="Decargá nuestra app">
+            <div class="flex justify-end">
+                <img class="max-w-[100%] w-[550px]"  src="https://s3.sa-east-1.amazonaws.com/static-content.betwarrior.bet/Product/Landing_page/5158/img/app.svg" alt="Decargá nuestra app">
             </div>
-        </div>
     </div>
 </main>
 

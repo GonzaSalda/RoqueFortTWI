@@ -19,11 +19,8 @@
     <img src="https://kentucky.com.ar/imgs/grafico-tentate.svg" alt="tentate">
 </div>
 
-<div class="container mx-auto  my-6">
-    <div class="grid grid-cols-1 max-w-[640px] w-full gap-6 lg:grid-cols-3 lg:max-w-none lg:mx-0">
-
-
-        <!-- SE INICIA UN BUCLE EN DONDE POR CADA CURSO SE VA MOSTRANDO SUS DATOS EN UN CUADRO -->
+<div class="container mx-auto w-full my-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-[640px] w-full gap-6 lg:max-w-none lg:mx-0">
         <c:forEach var="pizza" items="${lista_pizzas}">
             <div class="rounded-xl bg-[#1C1919] bg-opacity-80 w-[320px] h-full p-4 mx-auto">
                 <div class=" flex items-center justify-center flex-col text-white ">

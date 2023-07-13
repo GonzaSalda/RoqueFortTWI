@@ -102,29 +102,36 @@ public class ControladorCompra {
         Pizza pizza_obtenida = servicioPizza.buscarPizzaPorId(pizza_id);
         Usuario_Pizza usuarioPizza = servicioLogin.obtenerUsuarioPizza(pizza_obtenida, usuario);
         String viewName = "";
-        long tiempoEstimadoPreparacion = 120000;
+        boolean enCola = false;
         try {
             servicioLogin.verificarTarjetaUsuario(usuario, nroTarjeta);
+            long tiempoEstimadoPreparacion = 2;
+            long tiempoViajeMinutos = servicioGoogleMaps.obtenerTiempoViajeMinutos(direccion);
+            tiempoEstimadoPreparacion +=  tiempoViajeMinutos;
             if (delivery) {
                 Moto motoAsignada = servicioMoto.asignarMotoDisponible();
                 if (motoAsignada != null) {
-                    long tiempoViajeMinutos = servicioGoogleMaps.obtenerTiempoViajeMinutos(direccion);
-                    tiempoEstimadoPreparacion += tiempoViajeMinutos * 60000;
-
                     boolean entregaExitosa = servicioDelivery.realizarEntrega(direccion, motoAsignada, tiempoEstimadoPreparacion);
                     String informacionDeEntrega = servicioGoogleMaps.GoogleMapsAPIConfiguration(direccion);
-
                     model.addAttribute("informacionDeEntrega", informacionDeEntrega);
                     model.addAttribute("entregaExitosa", entregaExitosa);
                     servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);
-
-                    model.addAttribute("tiempoEstimado", tiempoEstimadoPreparacion);
+                    model.addAttribute("tiempoEstimado", Long.toString(tiempoEstimadoPreparacion));
                     viewName = "resultadoEntrega";
                     return new ModelAndView (viewName,model);
                 } else {
-                    model.addAttribute("entregaExitosa", false);
-                    viewName = "resultadoEntrega";
-                    return new ModelAndView (viewName,model);
+                    enCola = true;
+                    CompraCola compraCola = new CompraCola(usuario, pizza_obtenida, direccion, delivery , tiempoViajeMinutos);
+                    CompraCola compraColaAnterior = servicioDelivery.obtenerUltimaCompraCola(); // Obtener la última compra en la cola
+                    if (compraColaAnterior != null) {
+                        long tiempoViajeMinutosAnterior = compraColaAnterior.getTiempoViajeMinutos();
+                        tiempoViajeMinutos += tiempoViajeMinutosAnterior;
+                    }
+                    servicioDelivery.agregarCompraCola(compraCola);
+                    model.addAttribute("tiempoEstimado", tiempoViajeMinutos);
+                    model.addAttribute("enCola", enCola);
+                    viewName = "enColaCompra";
+                    return new ModelAndView(viewName, model);
                 }
             }
             servicioLogin.guardarPizzaEnListaUsuario(pizza_obtenida, usuario);

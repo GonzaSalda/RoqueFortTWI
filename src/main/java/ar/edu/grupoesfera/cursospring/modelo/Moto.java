@@ -23,6 +23,7 @@ public class Moto {
     private LocalTime horarioSalidaPlanificado;
     @Column(name = "HorarioVueltaNegocio")
     private LocalTime horarioVueltaNegocio;
+
     public Moto() {
     }
 
@@ -31,6 +32,7 @@ public class Moto {
         this.marca = marca;
         this.disponible= disponible;
     }
+
 
     public Moto(String marca,  boolean disponible) {
         this.marca = marca;
@@ -45,6 +47,4 @@ public class Moto {
                 ", disponible='" + disponible + '\'' +
                 '}';
     }
-
-
 }
