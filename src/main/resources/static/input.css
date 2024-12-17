@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    .header {
+        @apply bg-bgHeader bg-opacity-80 mb-8;
+    }
+
+    .btn-login {
+        @apply inline-block font-semibold mr-6 text-sm px-4 py-2 leading-none rounded text-white bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0
+    }
+
+    .btn-register {
+        @apply inline-block font-semibold text-sm px-4 py-2 leading-none rounded text-white hover:border-transparent hover:text-gray-900 hover:bg-white mt-4 lg:mt-0
+    }
+
+}

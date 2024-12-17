@@ -5,15 +5,6 @@
       <!DOCTYPE html>
       <html lang="en">
 
-      <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Comida Rapida</title>
-        <!-- Tailwind -->
-        <script src="https://cdn.tailwindcss.com"></script>
-      </head>
-
       <body>
         <!DOCTYPE html>
         <html lang="en">
@@ -22,6 +13,7 @@
           <meta charset="utf-8">
           <meta http-equiv="X-UA-Compatible" content="IE=edge">
           <meta name="viewport" content="width=device-width, initial-scale=1">
+          <script src="https://cdn.tailwindcss.com"></script>
 
           <title>RoqueFort</title>
         </head>
@@ -31,8 +23,7 @@
           <header class=" bg-[#1C1919] bg-opacity-80  mb-8">
             <div class="container mx-auto flex items-center justify-between p-4">
               <div>
-                <a href="http://localhost:8080/"
-                  class="font-extrabold text-[25px] text-white uppercase">RoqueFort</a>
+                <a href="/" class="font-extrabold text-[25px] text-white uppercase">RoqueFort</a>
               </div>
               <div id="registro">
                 <a href="login"

@@ -23,6 +23,11 @@ public class ControladorLogin {
         this.servicioPizza = servicioPizza;
     }
 
+    @GetMapping("/")
+    public String irAHome() {
+        return "index";
+    }
+
     @GetMapping("/registro")
     public String irAlRegistro(Model model) {
         model.addAttribute("datosRegistro", new DatosRegistro());
@@ -81,6 +86,6 @@ public class ControladorLogin {
     public String cerrarSesion(HttpSession session) {
         // Eliminar los atributos de la sesión
         session.invalidate();
-        return "redirect:/";
+        return "index";
     }
 }
