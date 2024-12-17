@@ -20,7 +20,7 @@
                         <div
                             class="bg-bgHeader/80 w-[450px] rounded-2xl h-full flex flex-col justify-center items-center mx-5 px-6 py-12 lg:px-8">
                             <h2 class=" text-3xl md:text-4xl text-white font-bold my-4">Bienvenidos</h2>
-                            <form:form class="flex flex-col gap-y-4 w-full" action="validar-login" method="post"
+                            <form:form class="flex flex-col gap-y-4 w-full" action="roquefort" method="post"
                                 modelAttribute="datosLogin">
                                 <div>
                                     <label for="email" class="block text-sm/6 font-medium text-white">Email

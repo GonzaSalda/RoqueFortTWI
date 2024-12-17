@@ -1,6 +1,7 @@
 package ar.edu.grupoesfera.cursospring.controladores;
 
 import ar.edu.grupoesfera.cursospring.modelo.DatosCreacionPizza;
+import ar.edu.grupoesfera.cursospring.modelo.Pizza;
 import ar.edu.grupoesfera.cursospring.servicios.ServicioPizza;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,26 +18,28 @@ public class ControladorAdmin {
     @Autowired
     private ServicioPizza servicioPizza;
 
-
     @RequestMapping("/editarPizza")
-    public ModelAndView irAEditarPizza(@RequestParam("id_pizza") int pizzaId, @RequestParam("nombre") String nombrePizza, @RequestParam("descripcion") String descPizza, @RequestParam("precio") Double precioPizza) {
+    public ModelAndView irAEditarPizza(@RequestParam("id_pizza") int pizzaId) {
+        Pizza pizza = servicioPizza.buscarPizzaPorId(pizzaId);
+
         ModelMap modelo = new ModelMap();
         DatosCreacionPizza datosCrearPizza = new DatosCreacionPizza();
         modelo.put("datosCrearPizza", datosCrearPizza);
-        modelo.put("nombrePizza", nombrePizza);
-        modelo.put("descPizza", descPizza);
-        modelo.put("precioPizza", precioPizza);
-        modelo.put("pizzaId", pizzaId);
+        modelo.put("nombrePizza", pizza.getNombre());
+        modelo.put("descPizza", pizza.getDescripcion());
+        modelo.put("precioPizza", pizza.getPrecio());
+        modelo.put("pizzaId", pizza.getId());
         return new ModelAndView("editarPizza", modelo);
 
     }
 
-
     @RequestMapping(path = "/pizzaActualizado", method = RequestMethod.POST)
-    public ModelAndView actualizarPizza(@RequestParam("id_pizza") int idPizza, @ModelAttribute("datosCrearPizza") DatosCreacionPizza datosCrearPizza) {
+    public ModelAndView actualizarPizza(@RequestParam("id_pizza") int idPizza,
+            @ModelAttribute("datosCrearPizza") DatosCreacionPizza datosCrearPizza) {
         ModelMap modelo = new ModelMap();
 
-        servicioPizza.actualizarPizza(idPizza, datosCrearPizza.getNombre(), datosCrearPizza.getDescripcion(), datosCrearPizza.getPrecio());
+        servicioPizza.actualizarPizza(idPizza, datosCrearPizza.getNombre(), datosCrearPizza.getDescripcion(),
+                datosCrearPizza.getPrecio());
         modelo.put("datosCrearCurso", new DatosCreacionPizza());
 
         return new ModelAndView("pizzaActualizado", modelo);
