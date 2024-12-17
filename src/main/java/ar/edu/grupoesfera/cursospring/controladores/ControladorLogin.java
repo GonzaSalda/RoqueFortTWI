@@ -4,108 +4,83 @@ import ar.edu.grupoesfera.cursospring.modelo.*;
 import ar.edu.grupoesfera.cursospring.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
-
 
 @Controller
 public class ControladorLogin {
-    @Inject
-    private ServicioLogin servicioLogin;
-    @Inject
-    private ServicioPizza servicioPizza;
 
+    private final ServicioLogin servicioLogin;
+    private final ServicioPizza servicioPizza;
 
     @Autowired
-    public ControladorLogin(ServicioLogin servicioLogin) {
+    public ControladorLogin(ServicioLogin servicioLogin, ServicioPizza servicioPizza) {
         this.servicioLogin = servicioLogin;
+        this.servicioPizza = servicioPizza;
     }
 
-
-    @RequestMapping(path = "/registro")
-    public ModelAndView irAlRegistro() {
-        ModelMap model = new ModelMap();
-        DatosRegistro datosRegistro = new DatosRegistro();
-        model.put("datosRegistro", datosRegistro);
-        return new ModelAndView("registro", model);
+    @GetMapping("/registro")
+    public String irAlRegistro(Model model) {
+        model.addAttribute("datosRegistro", new DatosRegistro());
+        return "registro";
     }
 
-    @RequestMapping(path = "/registrar", method = RequestMethod.POST)
-    public ModelAndView registrar(@ModelAttribute("datosRegistro") DatosRegistro datosRegistro) {
-        ModelMap model = new ModelMap();
-        String viewName = "";
+    @PostMapping("/registrar")
+    public String registrar(@ModelAttribute("datosRegistro") DatosRegistro datosRegistro, Model model) {
         if (servicioLogin.buscarUsuarioPorEmail(datosRegistro.getEmail()) == null) {
             try {
                 servicioLogin.registrar(datosRegistro);
-                model.put("datosLogin", new DatosLogin());
-                viewName = "login";
+                model.addAttribute("datosLogin", new DatosLogin());
+                return "login";
+            } catch (Exception e) {
+                model.addAttribute("error", "Las contraseñas no son iguales");
+                model.addAttribute("datosRegistro", datosRegistro);
+                return "registro";
             }
-            catch (Exception e) {
-                model.put("error", "Las contraseñas no son iguales");
-                model.put("datosRegistro", datosRegistro);
-                viewName = "registro";
-            }
+        } else {
+            model.addAttribute("error", "Debe llenar los campos");
+            model.addAttribute("datosRegistro", datosRegistro);
+            return "registro";
         }
-        else {
-            model.put("error", "Debe llenar los campos");
-            model.put("datosRegistro", datosRegistro);
-            viewName = "registro";
-        }
-
-        return new ModelAndView(viewName, model);
     }
 
-    @RequestMapping("/login")
-    public ModelAndView irALogin() {
-        ModelMap modelo = new ModelMap();
-        DatosLogin datosLogin = new DatosLogin();
-        modelo.put("datosLogin", datosLogin);
-        return new ModelAndView("login", modelo);
+    @GetMapping("/login")
+    public String irALogin(Model model) {
+        model.addAttribute("datosLogin", new DatosLogin());
+        return "login";
     }
 
-    @RequestMapping(path = "/validar-login", method = RequestMethod.POST)
-    public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpSession session) {
-        ModelMap model = new ModelMap();
+    @PostMapping("/validar-login")
+    public String validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpSession session, Model model) {
         try {
-            // Se obtiene un usuario por email y contraseña, si no existe, devuelve una excepcion
+            // Validación de usuario
             Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
-
-            // Se guardan los datos del usuario en la sesion
+            // Guardar los datos en la sesión
             session.setAttribute("idUsuario", usuarioBuscado.getId());
             session.setAttribute("nombreUsuario", usuarioBuscado.getNombre());
             session.setAttribute("ROL", usuarioBuscado.getRol());
             session.setAttribute("imgUsuario", usuarioBuscado.getImagen());
             session.setAttribute("user", usuarioBuscado);
 
+            // Obtener pizzas para mostrar
             List<Pizza> pizzas = servicioPizza.getPizza();
+            model.addAttribute("lista_pizzas", pizzas);
 
-            model.put("lista_pizzas", pizzas);
-            return new ModelAndView("seccionPizzas", model);
+            return "seccionPizzas";
+        } catch (Exception e) {
+            model.addAttribute("error", "Usuario o clave incorrectos");
+            return "login";
         }
-        catch (Exception e) {
-            model.put("error", "Usuario o clave incorrectos");
-        }
-
-        return new ModelAndView("login", model);
     }
 
-    @RequestMapping(path = "/cerrarSesion")
-    public ModelAndView cerrarSesion(HttpSession session) {
-
-        // Se eliminan los datos de la sesion iniciado del usuario y se lo redirije al
-        // home
-        session.removeAttribute("idUsuario");
-        session.removeAttribute("nombreUsuario");
-        session.removeAttribute("ROL");
-
-        return new ModelAndView("redirect:/");
+    @GetMapping("/cerrarSesion")
+    public String cerrarSesion(HttpSession session) {
+        // Eliminar los atributos de la sesión
+        session.invalidate();
+        return "redirect:/";
     }
-
-
-
 }

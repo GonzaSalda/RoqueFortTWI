@@ -1,4 +1,4 @@
-package ar.edu.grupoesfera.cursospring.servicios;
+/* package ar.edu.grupoesfera.cursospring.servicios;
 
 import ar.edu.grupoesfera.cursospring.modelo.Usuario;
 import com.mercadopago.MercadoPago;
@@ -31,4 +31,4 @@ public class ServicioMercadoPago {
 
         return preferencia;
     }
-}
+} */

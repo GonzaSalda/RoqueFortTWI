@@ -2,14 +2,15 @@ package ar.edu.grupoesfera.cursospring.servicios;
 
 import ar.edu.grupoesfera.cursospring.dao.PizzaDao;
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.List;
 
 @Service("servicioPizza")
 public class ServicioPizzaImpl implements ServicioPizza {
-    @Inject
+    @Autowired
     private PizzaDao pizzaDao;
 
     @Override

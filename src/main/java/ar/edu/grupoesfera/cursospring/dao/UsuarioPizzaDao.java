@@ -6,13 +6,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface UsuarioPizzaDao {
-    ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorUsuario(Integer usuarioId);
+    List<Usuario_Pizza> obtenerPizzasCompradasPorUsuario(Integer usuarioId);
 
-    ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorUsuario24hs(Long id);
+    List<Usuario_Pizza> obtenerPizzasCompradasPorUsuario24hs(Long id);
 
-    ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorUsuario48hs(Long id);
+    List<Usuario_Pizza> obtenerPizzasCompradasPorUsuario48hs(Long id);
 
-    ArrayList<Usuario_Pizza> obtenerPizzasCompradasPorRangoDeFecha(Long id, LocalDate fechaInicial, LocalDate fechaFinal);
+    List<Usuario_Pizza> obtenerPizzasCompradasPorRangoDeFecha(Long id, LocalDate fechaInicial, LocalDate fechaFinal);
 }

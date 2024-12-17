@@ -3,95 +3,84 @@ package ar.edu.grupoesfera.cursospring.dao;
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
 import ar.edu.grupoesfera.cursospring.modelo.Usuario;
 import ar.edu.grupoesfera.cursospring.modelo.Usuario_Pizza;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.Boolean.TRUE;
-
-
 
 @Repository
 public class UsuarioDaoImpl implements UsuarioDao {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Transactional
     @Override
     public Usuario buscarUsuario(String email, String password) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Usuario usuario = (Usuario) session.createCriteria(Usuario.class)
-                .add(Restrictions.eq("email", email))
-                .add(Restrictions.eq("password", password))
-                .uniqueResult();
-
-        return usuario;
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Usuario> criteriaQuery = builder.createQuery(Usuario.class);
+        Root<Usuario> root = criteriaQuery.from(Usuario.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                builder.equal(root.get("email"), email),
+                builder.equal(root.get("password"), password));
+        List<Usuario> usuarios = entityManager.createQuery(criteriaQuery).getResultList();
+        return usuarios.isEmpty() ? null : usuarios.get(0);
     }
 
     @Transactional
     @Override
     public Usuario buscarUsuarioPorEmail(String email) {
-
-        Session sesion = sessionFactory.getCurrentSession();
-        Usuario usuario = (Usuario) sesion.createCriteria(Usuario.class)
-                .add(Restrictions.eq("email", email))
-                .uniqueResult();
-
-        return usuario;
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Usuario> criteriaQuery = builder.createQuery(Usuario.class);
+        Root<Usuario> root = criteriaQuery.from(Usuario.class);
+        criteriaQuery.select(root);
+        criteriaQuery.where(builder.equal(root.get("email"), email));
+        List<Usuario> usuarios = entityManager.createQuery(criteriaQuery).getResultList();
+        return usuarios.isEmpty() ? null : usuarios.get(0);
     }
 
     @Transactional
     @Override
     public Usuario buscarPorId(int id) {
-        final Session session = sessionFactory.getCurrentSession();
-        return (Usuario) session.createCriteria(Usuario.class)
-                .add(Restrictions.eq("id", id))
-                .uniqueResult();
+        return entityManager.find(Usuario.class, id);
     }
 
     @Transactional
     @Override
     public void guardarUsuario(Usuario usuario) {
-        sessionFactory.getCurrentSession().save(usuario);
+        entityManager.persist(usuario);
     }
 
     @Transactional
     @Override
-    public Usuario_Pizza obtenerUsuarioPizza(Pizza Pizza_obtenida, Usuario usuario) {
-        Session sesion = sessionFactory.getCurrentSession();
-        Usuario_Pizza usuarioPizza = (Usuario_Pizza) sesion.createCriteria(Usuario_Pizza.class)
-                .add(Restrictions.eq("usuario", usuario))
-                .add(Restrictions.eq("pizza", Pizza_obtenida))
-                .uniqueResult();
-        return usuarioPizza;
+    public Usuario_Pizza obtenerUsuarioPizza(Pizza pizza, Usuario usuario) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Usuario_Pizza> criteriaQuery = builder.createQuery(Usuario_Pizza.class);
+        Root<Usuario_Pizza> root = criteriaQuery.from(Usuario_Pizza.class);
+        Join<Usuario_Pizza, Usuario> usuarioJoin = root.join("usuario");
+        Join<Usuario_Pizza, Pizza> pizzaJoin = root.join("pizza");
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                builder.equal(usuarioJoin, usuario),
+                builder.equal(pizzaJoin, pizza));
+        List<Usuario_Pizza> usuarioPizzas = entityManager.createQuery(criteriaQuery).getResultList();
+        return usuarioPizzas.isEmpty() ? null : usuarioPizzas.get(0);
     }
 
     @Transactional
     @Override
-    public void guardarPizzaDelUsuario( Usuario usuario, Pizza pizza_obtenida) {
-        Session sesion = sessionFactory.getCurrentSession();
-        Usuario_Pizza usuarioPizza = new Usuario_Pizza(usuario, pizza_obtenida);
+    public void guardarPizzaDelUsuario(Usuario usuario, Pizza pizza) {
+        Usuario_Pizza usuarioPizza = new Usuario_Pizza(usuario, pizza);
         usuarioPizza.setIsComprada(Boolean.TRUE);
         usuarioPizza.setFecha_incio_compra(LocalDate.now());
         usuarioPizza.setHora(LocalTime.now());
-        sesion.save(usuarioPizza);
+        entityManager.persist(usuarioPizza);
     }
-
-
-
-
 }

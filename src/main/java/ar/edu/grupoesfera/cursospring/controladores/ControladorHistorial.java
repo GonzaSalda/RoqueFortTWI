@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ControladorHistorial {
@@ -55,7 +56,7 @@ public class ControladorHistorial {
         }
         ModelMap modelo = new ModelMap();
         try{
-            ArrayList<Usuario_Pizza> pizzasComprados = servicioUsuarioPizza.buscarHistorialPorIdUserltimas24hs(Long.valueOf(id));
+            List<Usuario_Pizza> pizzasComprados = servicioUsuarioPizza.buscarHistorialPorIdUserltimas24hs(Long.valueOf(id));
             modelo.put("active24", "bg-indigo-400 text-white");
             modelo.put("formestado", "hidden");
             modelo.put("pizzas", pizzasComprados);
@@ -77,7 +78,7 @@ public class ControladorHistorial {
         }
         ModelMap modelo = new ModelMap();
         try{
-            ArrayList<Usuario_Pizza> pizzasCompradas = servicioUsuarioPizza.buscarHistorialPorIdUserltimas48hs(Long.valueOf(id));
+            List<Usuario_Pizza> pizzasCompradas = servicioUsuarioPizza.buscarHistorialPorIdUserltimas48hs(Long.valueOf(id));
 
             modelo.put("active48", "bg-indigo-400 text-white");
             modelo.put("formestado", "hidden");
@@ -100,7 +101,7 @@ public class ControladorHistorial {
         }
 
         try{
-            ArrayList<Usuario_Pizza> pizzasCompradas = servicioUsuarioPizza.buscarHistorialPorIdRangoFecha(Long.valueOf(id), fechaInicial, fechaFinal);
+            List<Usuario_Pizza> pizzasCompradas = servicioUsuarioPizza.buscarHistorialPorIdRangoFecha(Long.valueOf(id), fechaInicial, fechaFinal);
             modelo.put("activerango", "bg-indigo-400 text-white");
 
             modelo.put("pizzas", pizzasCompradas);

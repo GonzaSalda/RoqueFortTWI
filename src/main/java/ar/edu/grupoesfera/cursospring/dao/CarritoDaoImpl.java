@@ -4,125 +4,104 @@ import ar.edu.grupoesfera.cursospring.modelo.Carrito;
 import ar.edu.grupoesfera.cursospring.modelo.Carrito_Pizza;
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
 import ar.edu.grupoesfera.cursospring.modelo.Usuario;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository("carritoDao")
 @Transactional
 public class CarritoDaoImpl implements CarritoDao {
-	
-	@Autowired
-	private SessionFactory sessionFactory;
-	@Autowired
-	private UsuarioDao usuarioDao;
 
+    @PersistenceContext
+    private EntityManager entityManager;
 
+    @Autowired
+    private UsuarioDao usuarioDao;
 
-	@Override
-	public Carrito buscarCarritoPorID(int id_carrito) {
+    @Override
+    public Carrito buscarCarritoPorID(int id_carrito) {
+        return entityManager.find(Carrito.class, id_carrito);
+    }
 
-		Session sesion = sessionFactory.getCurrentSession();
-				
-		Carrito carrito = sesion.get(Carrito.class, id_carrito);
-		
-		return carrito;
-	}
-
-
-	@Override
-	public void agregarPizzaALista(Pizza pizza_obtenida, Carrito carrito) {
-
-        Session sesion = sessionFactory.getCurrentSession();
-
+    @Override
+    public void agregarPizzaALista(Pizza pizza_obtenida, Carrito carrito) {
         Carrito_Pizza carritoPizza = new Carrito_Pizza();
+        carritoPizza.setCarrito(carrito);
+        carritoPizza.setPizza(pizza_obtenida);
+        entityManager.persist(carritoPizza);
+    }
 
-		carritoPizza.setCarrito(carrito);
-		carritoPizza.setPizza(pizza_obtenida);
-		sesion.save(carritoPizza);
-	}
+    @Override
+    public Carrito obtenerCarritoPorIdUsuario(int id_user) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Carrito> cq = cb.createQuery(Carrito.class);
+        Root<Carrito> root = cq.from(Carrito.class);
+        cq.select(root).where(cb.equal(root.get("usuario").get("id"), id_user));
+        
+        List<Carrito> carritos = entityManager.createQuery(cq).getResultList();
+        Carrito carrito = null;
 
+        if (carritos.isEmpty()) {
+            Usuario usuario = usuarioDao.buscarPorId(id_user); // Suponiendo que existe un método en el usuarioDao para obtener un usuario por su ID
+            carrito = new Carrito();
+            carrito.setUsuario(usuario);
+            entityManager.persist(carrito);
+        } else {
+            carrito = carritos.get(0);
+        }
+        return carrito;
+    }
 
-	@Override
-	public Carrito obtenerCarritoPorIdUsuario(int id_user) {
-		Session sesion = sessionFactory.getCurrentSession();
-		List<Carrito> carritos = sesion.createCriteria(Carrito.class).list();
-		Carrito carrito = null;
-		for (Carrito car : carritos) {
-			if (car.getUsuario().getId() == id_user) {
-				carrito = car;
-				break;
-			}
-		}
-		if (carrito == null) {
-			// Si no se encontró un carrito para el usuario, crear uno nuevo
-			Usuario usuario = usuarioDao.buscarPorId(id_user); // Suponiendo que existe un método en el usuarioDao para obtener un usuario por su ID
-			carrito = new Carrito();
-			carrito.setUsuario(usuario);
-			sessionFactory.getCurrentSession().save(carrito);
-		}
-		return carrito;
-	}
+    @Override
+    public void guardarCarrito(Carrito carrito) {
+        if (carrito.getId() == 0) {
+            entityManager.persist(carrito); // Crear nuevo carrito si no tiene ID
+        } else {
+            entityManager.merge(carrito); // Actualizar carrito si ya tiene ID
+        }
+    }
 
+    @Override
+    public List<Pizza> obtenerPizzasDelCarrito(Carrito carrito) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Pizza> cq = cb.createQuery(Pizza.class);
+        Root<Carrito_Pizza> root = cq.from(Carrito_Pizza.class);
+        cq.select(root.get("pizza")).where(cb.equal(root.get("carrito"), carrito));
 
+        List<Pizza> pizzas = entityManager.createQuery(cq).getResultList();
+        return pizzas;
+    }
 
-	@Override
-	public void guardarCarrito(Carrito carrito) {
-		sessionFactory.getCurrentSession().save(carrito);
-	}
+    @Override
+    public Carrito_Pizza obtenerCarritoPizza(Carrito carrito, Pizza pizza) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Carrito_Pizza> cq = cb.createQuery(Carrito_Pizza.class);
+        Root<Carrito_Pizza> root = cq.from(Carrito_Pizza.class);
+        cq.select(root).where(cb.equal(root.get("carrito"), carrito), cb.equal(root.get("pizza"), pizza));
+        
+        List<Carrito_Pizza> resultList = entityManager.createQuery(cq).getResultList();
+        return resultList.isEmpty() ? null : resultList.get(0);
+    }
 
+    @Override
+    public void eliminarPizzaDelCarrito(Carrito_Pizza carritoPizza) {
+        entityManager.remove(entityManager.contains(carritoPizza) ? carritoPizza : entityManager.merge(carritoPizza));
+    }
 
-	@Override
-	public List<Pizza> obtenerPizzasDelCarrito(Carrito carrito) {
-		Session sesion = sessionFactory.getCurrentSession();
-		List<Carrito_Pizza> carrito_pizzas = sesion.createCriteria(Carrito_Pizza.class)
-				.add(Restrictions.eq("carrito", carrito))
-				.list();
-		List<Pizza> pizzas = new ArrayList<Pizza>();
+    @Override
+    public List<Carrito_Pizza> obtenerCarritoPizzas(Carrito carrito) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Carrito_Pizza> cq = cb.createQuery(Carrito_Pizza.class);
+        Root<Carrito_Pizza> root = cq.from(Carrito_Pizza.class);
+        cq.select(root).where(cb.equal(root.get("carrito"), carrito));
 
-		for (Carrito_Pizza carritoPizza : carrito_pizzas) {
-			pizzas.add(carritoPizza.getPizza());
-		}
-		return pizzas;
-	}
-
-	@Override
-	public Carrito_Pizza obtenerCarritoPizza(Carrito carrito, Pizza pizza) {
-
-		Session sesion = sessionFactory.getCurrentSession();
-
-		Criteria criteria = sesion.createCriteria(Carrito_Pizza.class);
-		criteria.add(Restrictions.eq("carrito", carrito));
-		criteria.add(Restrictions.eq("pizza", pizza));
-		criteria.setMaxResults(1); // Limitar el resultado a 1
-
-		return (Carrito_Pizza) criteria.uniqueResult();
-	}
-
-	@Override
-	public void eliminarPizzaDelCarrito(Carrito_Pizza carritoPizza) {
-		sessionFactory.getCurrentSession().delete(carritoPizza);
-	}
-
-
-
-	@Override
-	public List<Carrito_Pizza> obtenerCarritoPizzas(Carrito carrito) {
-		
-		Session sesion = sessionFactory.getCurrentSession();
-
-		List<Carrito_Pizza> pizzasCarrito = sesion.createCriteria(Carrito_Pizza.class)
-											.add(Restrictions.eq("carrito", carrito))
-											.list();
-		return pizzasCarrito;
-	}
-
-
+        List<Carrito_Pizza> pizzasCarrito = entityManager.createQuery(cq).getResultList();
+        return pizzasCarrito;
+    }
 }

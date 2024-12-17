@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,8 +41,8 @@ public class ControladorCarrito {
 
 	private ServicioGoogleMaps servicioGoogleMaps = new ServicioGoogleMaps();
 
-	private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
-
+/* 	private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
+ */
 
 
 	@RequestMapping(path ="/agregarPizzaAlCarrito", method = RequestMethod.GET)

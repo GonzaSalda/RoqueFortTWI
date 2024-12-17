@@ -11,10 +11,10 @@ public interface ServicioUsuarioPizza {
 
     List<Usuario_Pizza> buscarHistorialPorIdUsuario(Integer id);
 
-    ArrayList<Usuario_Pizza> buscarHistorialPorIdUserltimas24hs(Long id);
+    List<Usuario_Pizza> buscarHistorialPorIdUserltimas24hs(Long id);
 
-    ArrayList<Usuario_Pizza> buscarHistorialPorIdUserltimas48hs(Long id);
+    List<Usuario_Pizza> buscarHistorialPorIdUserltimas48hs(Long id);
 
-    ArrayList<Usuario_Pizza> buscarHistorialPorIdRangoFecha(Long id, LocalDate fechaInicial, LocalDate fechaFinal);
+    List<Usuario_Pizza> buscarHistorialPorIdRangoFecha(Long id, LocalDate fechaInicial, LocalDate fechaFinal);
 }
 

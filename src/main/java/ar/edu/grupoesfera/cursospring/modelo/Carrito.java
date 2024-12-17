@@ -3,7 +3,7 @@ package ar.edu.grupoesfera.cursospring.modelo;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Setter
 @Getter

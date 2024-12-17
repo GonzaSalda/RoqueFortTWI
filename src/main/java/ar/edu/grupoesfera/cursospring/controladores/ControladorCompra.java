@@ -2,9 +2,8 @@ package ar.edu.grupoesfera.cursospring.controladores;
 
 import ar.edu.grupoesfera.cursospring.modelo.*;
 import ar.edu.grupoesfera.cursospring.servicios.*;
-import com.google.maps.errors.ApiException;
-import com.mercadopago.resources.Preference;
-import org.springframework.beans.factory.annotation.Autowired;
+/* import com.mercadopago.resources.Preference;
+ */import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import com.google.maps.errors.ApiException;
 
 @Controller
 public class ControladorCompra {
@@ -42,8 +42,8 @@ public class ControladorCompra {
 
     private ServicioGoogleMaps servicioGoogleMaps = new ServicioGoogleMaps();
 
-    private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
-
+/*     private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
+ */
 
 
     @RequestMapping(path = "/verMediosDePago", method = RequestMethod.POST)
@@ -155,7 +155,7 @@ public class ControladorCompra {
 
 
 
-
+/* 
     @RequestMapping(path = "/pagoMP", method = RequestMethod.GET)
     public ModelAndView pagoMP(@RequestParam("idPizza") int idPizza, @RequestParam("precioTotal") Double precioTotal,   @RequestParam(value = "delivery", required = false) boolean delivery, HttpSession session) {
         ModelMap model = new ModelMap();
@@ -229,6 +229,6 @@ public class ControladorCompra {
         }
 
         return new ModelAndView(viewName, model);
-    }
+    } */
 
 }
