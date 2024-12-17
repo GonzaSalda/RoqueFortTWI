@@ -14,14 +14,14 @@
                 <title>RoqueFort</title>
             </head>
 
-            <body class="bg-bgCustom bg-cover bg-no-repeat ">
+            <body class="bg-bgCustom bg-cover bg-no-repeat min-h-screen">
 
                 <!-- Incluir el header desde otro archivo JSP -->
                 <jsp:include page="/WEB-INF/jsp/header.jsp" />
 
                 <main class="flex items-center justify-center m-4">
-                    <div class="relative w-[1137px] h-[503px] bg-[#1C1919] bg-opacity-80 flex flex-col p-6 gap-y-6">
-                        <div>
+                    <div class="relative w-[1137px] h-[403px] md:h-[503px] bg-bgHeader bg-opacity-80 flex flex-col  p-6 gap-y-6">
+                        <div class="flex items-center h-full">
                             <img class="max-w-[100%] w-[650px]" src="https://kentucky.com.ar/imgs/grafico_amamos.svg"
                                 alt="Amamos">
                         </div>
