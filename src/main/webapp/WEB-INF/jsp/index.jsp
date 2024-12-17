@@ -16,26 +16,8 @@
 
             <body class="bg-bgCustom bg-cover bg-no-repeat ">
 
-                <header class="header">
-                    <div class="container mx-auto flex items-center justify-between p-4">
-                        <div>
-                            <h1 class="font-extrabold text-2xl text-white uppercase">RoqueFort</h1>
-                        </div>
-                        <div id="registro">
-                            <a href="login"
-                                class="btn-login"
-                                id="iniciar-sesion">
-                                Iniciar sesión
-                            </a>
-                            <a href="registro"
-                                class="btn-register"
-                                id="registrar">
-                                Registrate
-                            </a>
-                        </div>
-                    </div>
-                </header>
-
+                <!-- Incluir el header desde otro archivo JSP -->
+                <jsp:include page="/WEB-INF/jsp/header.jsp" />
 
                 <main class="flex items-center justify-center m-4">
                     <div class="relative w-[1137px] h-[503px] bg-[#1C1919] bg-opacity-80 flex flex-col p-6 gap-y-6">

@@ -8,12 +8,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/EstilosRegistrarUsuario.css" rel="stylesheet" type="text/css">
+    <link href="/output.css" rel="stylesheet">
     <title>Registrarse</title>
 </head>
 
-<body class="bg-[url(https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80)] bg-cover bg-no-repeat ">
-<%@ include file="headerInicio.jsp"%>
+<body class="bg-bgCustom2 bg-cover bg-no-repeat ">
+<%@ include file="header.jsp"%>
 
 <div class="caja-login">
     <h2 class="text-semibold text-[20px] tracking-[0.15em] uppercase">Registrar Usuario</h2>
