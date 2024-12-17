@@ -32,7 +32,7 @@
                                     class="rounded-xl bg-[#1C1919] bg-opacity-80 w-full max-w-[320px] sm:max-w-[400px] md:max-w-[480px] h-auto p-4 mx-auto">
                                     <div class="flex items-center justify-center flex-col text-white">
                                         <!-- Imagen -->
-                                        <div class="w-full flex justify-center mb-4">
+                                        <div class="w-full flex justify-center ">
                                             <a href="descripcionPizza?id_pizza=${pizza.id}">
                                                 <img class="rounded-xl w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] object-cover"
                                                     src="/imagenes/pizzas/${pizza.imagen}">
@@ -41,7 +41,7 @@
 
                                         <!-- Contenido -->
                                         <div
-                                            class="h-auto flex flex-col items-center justify-center gap-y-4 text-center px-2">
+                                            class="min-h-[206px] flex flex-col items-center justify-center gap-y-4 text-center px-2">
                                             <p class="text-[16px] sm:text-[18px] font-semibold tracking-[0.12em]">
                                                 ${pizza.nombre}
                                             </p>
@@ -54,7 +54,7 @@
                                         </div>
 
                                         <!-- Botones -->
-                                        <div class="mt-4 w-full flex justify-center">
+                                        <div class="w-full flex justify-center">
                                             <!-- Admin -->
                                             <c:if test='<%=session.getAttribute("ROL").equals("admin")%>'>
                                                 <form action="editarPizza" method="get">

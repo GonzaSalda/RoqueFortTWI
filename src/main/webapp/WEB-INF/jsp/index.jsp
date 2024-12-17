@@ -14,7 +14,7 @@
                 <title>RoqueFort</title>
             </head>
 
-            <body class="bg-bgCustom bg-cover bg-no-repeat min-h-screen">
+            <body class="bg-bgCustom3 bg-cover bg-no-repeat min-h-screen">
 
                 <!-- Incluir el header desde otro archivo JSP -->
                 <jsp:include page="/WEB-INF/jsp/header.jsp" />

@@ -14,7 +14,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </head>
 <body>
-<%@ include file="header.jsp" %>
+<%@ include file="navbar.jsp" %>
 
 <div class="container mx-auto my-6">
 	<div class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 mx-auto rounded-xl ">

@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<%@ include file="header.jsp"%>
+<%@ include file="navbar.jsp"%>
 
 <div>
     <img src="https://kentucky.com.ar/imgs/grafico-tentate.svg" alt="tentate">

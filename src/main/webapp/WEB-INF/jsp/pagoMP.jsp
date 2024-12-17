@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<%@ include file="header.jsp" %>
+<%@ include file="navbar.jsp" %>
 
 <main>
     <div class="container mx-auto my-6" >

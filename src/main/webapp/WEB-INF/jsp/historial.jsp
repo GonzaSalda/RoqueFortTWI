@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<%@ include file="header.jsp"%>
+<%@ include file="navbar.jsp"%>
 
 <main class="container w-full rounded-xl bg-[#1C1919] bg-opacity-80 text-white m-auto pb-2">
     <h1 class="text-4xl font-bold m-4 p-2 text-center">Historial</h1>

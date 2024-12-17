@@ -30,7 +30,8 @@ public class ControladorPizzas {
     }
 
 
-    @RequestMapping(path= "/verListaPizzas", method= RequestMethod.GET)
+  /*   @RequestMapping(path= "/verListaPizzas", method= RequestMethod.GET) */
+  @RequestMapping(path= "/menu", method= RequestMethod.GET)
     public ModelAndView verListaPizzas(@ModelAttribute("msj_exito") String msj_exito, @ModelAttribute("msj_error") String msj_error, HttpSession session) {
         ModelMap model = new ModelMap();
         List<Pizza> pizzas = servicioPizza.getPizza();

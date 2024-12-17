@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<%@ include file="header.jsp"%>
+<%@ include file="navbar.jsp"%>
 
 
 <main class="h-full flex items-center justify-center">

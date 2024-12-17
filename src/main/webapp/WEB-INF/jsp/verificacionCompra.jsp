@@ -15,7 +15,7 @@
 </head>
 <body>
 
-	<%@ include file="header.jsp"%>
+	<%@ include file="navbar.jsp"%>
 
 	<main class="container mx-auto my-6">
 		<div class="text-white text-xl  w-full h-full flex flex-col items-center justify-center ">

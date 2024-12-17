@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<%@ include file="header.jsp" %>
+<%@ include file="navbar.jsp" %>
 
 <div class="container mx-auto my-6">
     <div class="rounded-xl bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[500px] h-[auto] p-4 mx-auto">

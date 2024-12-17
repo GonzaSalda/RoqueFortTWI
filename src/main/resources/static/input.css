@@ -15,7 +15,15 @@
     @apply inline-block font-semibold text-sm px-4 py-2 leading-none rounded text-white hover:border-transparent hover:text-gray-900 hover:bg-white mt-4 lg:mt-0;
   }
 
+  .btn-primary{
+    @apply inline-block font-semibold text-sm px-4 max-w-max py-2 leading-none whitespace-nowrap align-middle rounded text-white bg-red-400 hover:border-transparent hover:text-gray-900 hover:bg-gray-100 mt-4 lg:mt-0;
+  }
+
   .input {
     @apply block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-red-500 sm:text-sm/6;
+  }
+
+  .input-short {
+    @apply block w-[250px] rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-red-500 sm:text-sm/6;
   }
 }

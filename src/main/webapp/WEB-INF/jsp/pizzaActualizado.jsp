@@ -12,7 +12,7 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 </head>
 <body>
-	<%@ include file="header.jsp"%>
+	<%@ include file="navbar.jsp"%>
 
 	<main class="container mx-auto my-6">
 	<div class="text-4xl font-bold text-white text-center ">

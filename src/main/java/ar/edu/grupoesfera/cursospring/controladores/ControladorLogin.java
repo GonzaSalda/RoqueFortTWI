@@ -59,7 +59,7 @@ public class ControladorLogin {
         return "login";
     }
 
-    @PostMapping("/roquefort")
+    @RequestMapping("/roquefort")
     public String validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpSession session, Model model) {
         try {
             // Validación de usuario

@@ -15,7 +15,7 @@
 </head>
 <body>
 
-<!--<%@ include file="header.jsp" %>-->
+<%@ include file="navbar.jsp" %>
 <div class="container mx-auto my-6 text-white">
     <div id="formularioCrearPizza"
          class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 mx-auto rounded-xl flex items-center justify-center flex-col ">

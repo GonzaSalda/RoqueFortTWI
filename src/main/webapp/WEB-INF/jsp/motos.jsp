@@ -10,7 +10,7 @@
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 <body>
-<%@ include file="header.jsp" %>
+<%@ include file="navbar.jsp" %>
 
 
 <div  class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 mx-auto rounded-xl flex items-center justify-center flex-col gap-y-4 my-8 text-white">
