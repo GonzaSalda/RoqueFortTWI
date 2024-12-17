@@ -30,9 +30,9 @@
             </tr>
             <c:forEach items="${tabla}" var="producto">
                 <tr class="text-white font-bold text-[15px] ">
-                    <td>${producto.key.nombre}</td>
-                    <td>$ ${producto.key.precio}</td>
-                    <td>${producto.value}</td>
+                    <td>${producto.nombre}</td>
+                    <td>$ ${producto.precio}</td>
+                    <td>${producto.stock}</td>
                 </tr>
             </c:forEach>
         </table>

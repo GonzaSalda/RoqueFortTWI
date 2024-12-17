@@ -1,145 +1,78 @@
 package ar.edu.grupoesfera.cursospring.controladores;
 
-
-import java.util.Iterator;
-import java.util.Map;
-
-import ar.edu.grupoesfera.cursospring.modelo.Ingrediente;
-import ar.edu.grupoesfera.cursospring.modelo.Extras;
+import ar.edu.grupoesfera.cursospring.modelo.Extra;
 import ar.edu.grupoesfera.cursospring.modelo.Stock;
-import org.springframework.http.HttpStatus;
+import ar.edu.grupoesfera.cursospring.servicios.ServicioExtra;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 public class ControladorExtras {
 
-    @ModelAttribute("cantProductosAgregados")
-    public Integer cargarCantidad() {
-        Extras carrito = Extras.getInstance();
-        Integer cantProductosAgregados = carrito.verIngredientes().size();
-        return cantProductosAgregados;
+    @Autowired
+    private ServicioExtra servicioExtra;
+
+    // Mostrar la lista de extras
+    @RequestMapping(value = "/stockExistentes")
+    public ModelAndView mostrarStockExistente() {
+        ModelMap model = new ModelMap();
+        List<Extra> listaExtras = servicioExtra.listarTodos();
+        model.put("tabla", listaExtras);
+        return new ModelAndView("mostrarStock", model);
     }
 
-    @ModelAttribute("tabla")
-    public Map<Ingrediente, Integer> mostrarTabla() {
+    // Vista para agregar un nuevo Extra
+    @RequestMapping(value = "/agregarExtra")
+    public ModelAndView vistaAgregarExtra() {
+        return new ModelAndView("agregarExtraAdmin", "command", new Extra());
+    }
 
-        Stock tabla = Stock.getInstance();
-        return tabla.obtenerStock();
+    // Agregar un nuevo Extra
+    @RequestMapping(value = "/insertarExtra", method = RequestMethod.POST)
+    public String agregarExtra(@ModelAttribute("command") Extra extra, ModelMap model) {
+        servicioExtra.agregarExtra(extra);
+        model.put("tabla", servicioExtra.listarTodos());
+        return "tablaExtras";
     }
 
     @RequestMapping(value = "/agregarStock")
     public ModelAndView devolver() {
-        return new ModelAndView("agregarStock", "command", new Ingrediente());
+        // Obtén la lista de todos los extras (productos) desde el servicio
+        List<Extra> extras = servicioExtra.listarTodos();
+
+        // Pasa la lista "extras" al modelo con el nombre "tabla"
+        return new ModelAndView("agregarStock", "tabla", extras);
     }
 
     @RequestMapping(value = "/insertarStock", method = RequestMethod.POST)
-    public String addStock(@ModelAttribute("command") Ingrediente ingrediente,
-                           @RequestParam("cantidad") Integer cantidad, ModelMap model) {
-        Stock tabla = Stock.getInstance();
-        tabla.agregarStock(ingrediente, cantidad);
-        model.put("tabla", tabla.obtenerStock());
+    public String addStock(@RequestParam("id") Long id,
+            @RequestParam("stock") Integer stock,
+            ModelMap model) {
+        // Llama al servicio para agregar el stock
+        servicioExtra.agregarStock(id, stock);
+
+        // Obtener la lista actualizada de todos los extras
+        List<Extra> extras = servicioExtra.listarTodos();
+        System.out.println("Cantidad de extras: " + extras.size()); // Esto te ayudará a verificar si hay datos
+
+        // Pasar la lista actualizada al modelo
+        model.put("tabla", extras);
+
+        // Retorna la vista con la tabla actualizada
         return "agregarStock";
     }
 
-    @RequestMapping("/agregarIngredienteExtra")
-    public ModelAndView insertarIngrediente() {
-        return new ModelAndView("agregarExtraAdmin", "command", new Ingrediente());
-    }
-
-    @RequestMapping(value = "/insertarIngredienteExtra", method = RequestMethod.POST)
-    public String addProduct(@ModelAttribute("command") Ingrediente ingredienteAgregar, ModelMap model) {
-        Stock tabla = Stock.getInstance();
-        tabla.agregarIngrediente(ingredienteAgregar);
-        model.put("tabla", tabla.listarIngredientesDisponibles());
+    // Vista para eliminar un Extra
+    @RequestMapping("/eliminarExtra/{id}")
+    public String eliminarExtra(@PathVariable("id") Long id, ModelMap model) {
+        servicioExtra.eliminarExtra(id);
+        model.put("tabla", servicioExtra.listarTodos());
         return "tablaExtras";
     }
-
-
-
-    @RequestMapping(value = "/stockExistentes")
-    public ModelAndView stockExistentes() {
-        ModelMap model = new ModelMap();
-        Stock tabla = Stock.getInstance();
-        model.put("tabla", tabla.obtenerStock());
-        ModelAndView miVista = new ModelAndView();
-        miVista.addAllObjects(model);
-        miVista.setViewName("mostrarStock");
-        return miVista;
-
-    }
-
-    @RequestMapping("/eliminarIngredienteExtra")
-    public ModelAndView eliminarIngrediente() {
-        return new ModelAndView("eliminarExtras", "command", new Ingrediente());
-    }
-
-    @RequestMapping(value = "/eliminarIngExtra", method = RequestMethod.POST)
-    public String eliminarIngredientes(
-            @ModelAttribute("command") Ingrediente ingrediente, ModelMap modelo) {
-        Stock tabla = Stock.getInstance();
-        tabla.eliminarIngrediente(ingrediente);
-        modelo.put("tabla", tabla.obtenerStock());
-        return "eliminarExtras";
-    }
-
-        @RequestMapping(value = "/agregarExtra")
-    public ModelAndView agregarExtra() {
-        ModelMap model = new ModelMap();
-        Stock tabla = Stock.getInstance();
-            model.put("tabla", tabla.obtenerStock());
-        ModelAndView miVista = new ModelAndView("agregarExtra", "command",
-                new Ingrediente());
-        miVista.addAllObjects(model);
-        return miVista;
-    }
-
-    @RequestMapping(value = "/insertarProductoAlCarrito", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addProductToCarrito(@ModelAttribute("command") Ingrediente productoAgregar) {
-        ModelMap model = new ModelMap();
-        Extras carrito = Extras.getInstance();
-        carrito.agregarIngrediente(productoAgregar);
-        Double total;
-        total = carrito.total();
-        model.put("total", total);
-        model.put("tabla", carrito.verIngredientes());
-        model.put("cantProductosAgregados", carrito.verIngredientes().size());
-        Stock tabla = Stock.getInstance();
-        tabla.agregarStock(productoAgregar, -1);
-    }
-
-    @RequestMapping("/vaciarIngExtras")
-    public ModelAndView vaciarIngExtras() {
-        ModelMap model = new ModelMap();
-        Extras extras = Extras.getInstance();
-        Stock stock = Stock.getInstance();
-        Iterator<Ingrediente> iterator = extras.verIngredientes().iterator();
-        while (iterator.hasNext()) {
-            Ingrediente cadaElemento = iterator.next();
-            stock.agregarStock(cadaElemento, 1);
-        }
-        extras.vaciar();
-        return new ModelAndView("redirect:/vistaCarrito", model);
-
-    }
-
-    @RequestMapping("/vaciarIngExtrasCompraDirecta")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void  vaciarIngExtrasCompraDirecta() {
-        Extras extras = Extras.getInstance();
-        Stock stock = Stock.getInstance();
-        Iterator<Ingrediente> iterator = extras.verIngredientes().iterator();
-        while (iterator.hasNext()) {
-            Ingrediente cadaElemento = iterator.next();
-            stock.agregarStock(cadaElemento, 1);
-        }
-        extras.vaciar();
-    }
-
 }

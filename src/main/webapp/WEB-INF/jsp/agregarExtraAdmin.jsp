@@ -18,7 +18,7 @@
 
 <div class="container mx-auto my-6">
 	<div class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 mx-auto rounded-xl ">
-		<form class="flex flex-col justify-center items-center w-full h-auto " action="insertarIngredienteExtra" method="POST">
+		<form class="flex flex-col justify-center items-center w-full h-auto " action="insertarExtra" method="POST">
 			<div>
 				<h2 class="text-white font-bold text-[25px]">
 					Agregar extra
