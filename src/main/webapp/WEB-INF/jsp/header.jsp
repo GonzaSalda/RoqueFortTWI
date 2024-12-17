@@ -1,6 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
     <header class="header">
-        <div class="container mx-auto flex items-center justify-between p-4">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between p-4">
             <div>
                 <a href="/" class="font-extrabold text-2xl text-white uppercase">RoqueFort</a>
             </div>
