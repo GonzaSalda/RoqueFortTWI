@@ -33,7 +33,7 @@
                                     </li>
                                     <!-- Extra -->
                                     <li>
-                                        <a href="agregarExtra" class="btn-primary">Añadir
+                                        <a href="ExtraCarrito" class="btn-primary">Añadir
                                             extra</a>
                                     </li>
                                 </ul>

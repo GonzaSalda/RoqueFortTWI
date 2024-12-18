@@ -46,18 +46,31 @@ public class ControladorCarrito {
 	 * private ServicioMercadoPago servicioMercadoPago = new ServicioMercadoPago();
 	 */
 
-	@RequestMapping(path = "/agregarPizzaAlCarrito", method = RequestMethod.GET)
+	@RequestMapping(path = "/agregarPizzaAlCarrito", method = RequestMethod.POST)
 	public ModelAndView agregarPizzaAlCarrito(@RequestParam("id_pizza") int idPizza, HttpSession session) {
 		ModelMap model = new ModelMap();
 		if (session.getAttribute("idUsuario") != null) {
 			int id_user = Integer.parseInt(session.getAttribute("idUsuario").toString());
-			/* Obtengo el id de la pizza */
 			Pizza pizza_obtenida = servicioPizza.buscarPizzaPorId(idPizza);
-			/* Obtengo el carrito del usuario por el id */
 			Carrito carrito = servicioCarrito.obtenerCarritoPorIdUsuario(id_user);
-			/* Guardo el id de la pizza y el carrito del usuario logueado en el carrito */
 			servicioCarrito.agregarPizzaAlCarrito(pizza_obtenida, carrito);
 			model.put("msj_exito", "Se agrego la pizza al carrito con exito!");
+		} else {
+			model.addAttribute("msj_error", "Para comprar necesitas ingresar a tu cuenta.");
+		}
+
+		return new ModelAndView("redirect:/verListaPizzas", model);
+	}
+
+	@RequestMapping(path = "/agregarExtraAlCarrito", method = RequestMethod.POST)
+	public ModelAndView agregarPizzaAlCarrito(@RequestParam("id_extra") Long idExtra, HttpSession session) {
+		ModelMap model = new ModelMap();
+		if (session.getAttribute("idUsuario") != null) {
+			int id_user = Integer.parseInt(session.getAttribute("idUsuario").toString());
+			Extra extra_obtenido = servicioExtra.buscarPorId(idExtra);
+			Carrito carrito = servicioCarrito.obtenerCarritoPorIdUsuario(id_user);
+			servicioCarrito.agregarExtraAlCarrito(extra_obtenido, carrito);
+			model.put("msj_exito", "Se agrego extra al carrito con exito!");
 		} else {
 			model.addAttribute("msj_error", "Para comprar necesitas ingresar a tu cuenta.");
 		}
@@ -72,14 +85,14 @@ public class ControladorCarrito {
 		if (sesion.getAttribute("idUsuario") != null) {
 			try {
 				int id_user = (int) sesion.getAttribute("idUsuario");
-				/* Obtengo el carrito del usuario */
 				Carrito carrito = servicioCarrito.obtenerCarritoPorIdUsuario(id_user);
-				/* Obtengo las pizzas de ese carrito */
 				List<Pizza> pizzas = servicioCarrito.obtenerPizzasDelCarrito(carrito);
-				/* Obtengo el precio total de las pizzas */
+				List<Extra> extrass = servicioCarrito.obtenerExtrasDelCarrito(carrito);
+
 				double preciosTotal = servicioCarrito.getTotalDePrecios(pizzas);
-				/* Lo muestro en las vistas al array */
 				model.put("lista_pizzas_carrito", pizzas);
+				model.put("lista_extras_carrito", extrass);
+
 				List<Extra> extras = servicioExtra.listarTodos();
 				double totalExtras = extras.stream().mapToDouble(Extra::getStock).sum();
 				double totalFinalizado = totalExtras + preciosTotal;

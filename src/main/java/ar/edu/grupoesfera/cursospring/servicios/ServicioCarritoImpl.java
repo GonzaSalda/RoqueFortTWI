@@ -4,6 +4,7 @@ import ar.edu.grupoesfera.cursospring.dao.CarritoDao;
 import ar.edu.grupoesfera.cursospring.dao.UsuarioDao;
 import ar.edu.grupoesfera.cursospring.modelo.Carrito;
 import ar.edu.grupoesfera.cursospring.modelo.Carrito_Pizza;
+import ar.edu.grupoesfera.cursospring.modelo.Extra;
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
 import ar.edu.grupoesfera.cursospring.modelo.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class ServicioCarritoImpl implements ServicioCarrito {
 		carritoDao.agregarPizzaALista(pizza_obtenida, carrito);
 	}
 
+	@Override
+	public void agregarExtraAlCarrito(Extra extra_obtenido, Carrito carrito) {
+		carritoDao.agregarExtraALista(extra_obtenido, carrito);
+	}
+
 
 	@Override
 	public Carrito obtenerCarritoPorIdUsuario(int id_user) {
@@ -57,6 +63,17 @@ public class ServicioCarritoImpl implements ServicioCarrito {
 		List<Pizza> pizzasCarrito = carritoDao.obtenerPizzasDelCarrito(carrito);
 		if (!pizzasCarrito.isEmpty()) {
 			return pizzasCarrito;
+		}
+		else {
+			throw new ListaCarritoException();
+		}
+	}
+
+	@Override
+	public List<Extra> obtenerExtrasDelCarrito(Carrito carrito) {
+		List<Extra> extrasCarrito = carritoDao.obtenerExtrasDelCarrito(carrito);
+		if (!extrasCarrito.isEmpty()) {
+			return extrasCarrito;
 		}
 		else {
 			throw new ListaCarritoException();

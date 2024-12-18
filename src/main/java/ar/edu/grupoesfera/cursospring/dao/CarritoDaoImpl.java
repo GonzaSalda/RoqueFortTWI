@@ -2,6 +2,7 @@ package ar.edu.grupoesfera.cursospring.dao;
 
 import ar.edu.grupoesfera.cursospring.modelo.Carrito;
 import ar.edu.grupoesfera.cursospring.modelo.Carrito_Pizza;
+import ar.edu.grupoesfera.cursospring.modelo.Extra;
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
 import ar.edu.grupoesfera.cursospring.modelo.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,14 @@ public class CarritoDaoImpl implements CarritoDao {
         Carrito_Pizza carritoPizza = new Carrito_Pizza();
         carritoPizza.setCarrito(carrito);
         carritoPizza.setPizza(pizza_obtenida);
+        entityManager.persist(carritoPizza);
+    }
+
+    @Override
+    public void agregarExtraALista(Extra extra_obtenido, Carrito carrito) {
+        Carrito_Pizza carritoPizza = new Carrito_Pizza();
+        carritoPizza.setCarrito(carrito);
+        carritoPizza.setExtra(extra_obtenido);
         entityManager.persist(carritoPizza);
     }
 
@@ -76,6 +85,17 @@ public class CarritoDaoImpl implements CarritoDao {
 
         List<Pizza> pizzas = entityManager.createQuery(cq).getResultList();
         return pizzas;
+    }
+
+    @Override
+    public List<Extra> obtenerExtrasDelCarrito(Carrito carrito) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Extra> cq = cb.createQuery(Extra.class);
+        Root<Carrito_Pizza> root = cq.from(Carrito_Pizza.class);
+        cq.select(root.get("extra")).where(cb.equal(root.get("carrito"), carrito));
+
+        List<Extra> extras = entityManager.createQuery(cq).getResultList();
+        return extras;
     }
 
     @Override

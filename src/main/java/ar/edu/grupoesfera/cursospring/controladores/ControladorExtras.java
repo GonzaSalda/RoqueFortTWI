@@ -36,6 +36,13 @@ public class ControladorExtras {
         return "tablaExtras";
     }
 
+    @RequestMapping(value = "/ExtraCarrito")
+    public ModelAndView agregar() {
+        List<Extra> extras = servicioExtra.listarTodos();
+        return new ModelAndView("agregarExtra", "tabla", extras);
+    }
+
+
     @RequestMapping(value = "/agregarStock")
     public ModelAndView devolver() {
         List<Extra> extras = servicioExtra.listarTodos();

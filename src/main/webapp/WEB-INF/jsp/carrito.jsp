@@ -22,7 +22,7 @@
                         <div>
                             <!-- Se valida si la lista de cursos no esta vacía -->
                             <c:if test="${not empty lista_pizzas_carrito}">
-                                <div class="flex gap-2 my-2 flex-wrap">
+                                <div class="flex flex-col gap-2 my-2 flex-wrap">
                                     <c:forEach var="pizza" items="${lista_pizzas_carrito}">
                                         <div
                                             class="rounded-xl bg-[#1C1919] bg-opacity-80 w-[320px] h-[350px] p-4 mx-auto flex flex-col  h-full items-center justify-center">
@@ -50,6 +50,24 @@
                                         </div>
                                     </c:forEach>
 
+                                    <c:forEach var="extras" items="${lista_extras_carrito}">
+                                        <div
+                                            class="rounded-xl bg-[#1C1919] bg-opacity-80 w-[320px] h-[350px] p-4 mx-auto flex flex-col  items-center justify-center">
+                                        
+                                            <div
+                                                class="flex flex-col my-2 gap-2 text-white text-[15px] font-semibold items-center justify-center">
+                                                <div>
+                                                    <p class="text-red-400 font-bold tracking-[0.10em]">${extras.nombre}
+                                                    </p>
+                                                </div>
+
+                                                <div>
+                                                    <p> $${extras.precio}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </c:forEach>
                                 </div>
                                 <c:if test="${fn:length(tabla)>0}">
                                     <div

@@ -23,7 +23,11 @@ public class Carrito_Pizza {
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinColumn(name = "pizza_id")
 	private Pizza pizza;
-	
+
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+	@JoinColumn(name = "extra_id")
+	private Extra extra;
+
 	
 	public Carrito_Pizza() {}
 

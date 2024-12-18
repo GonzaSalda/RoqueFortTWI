@@ -66,12 +66,12 @@
 
                                             <!-- Cliente -->
                                             <c:if test='<%=session.getAttribute("ROL").equals("cliente")%>'>
-                                                <form action="verMediosDePago" method="POST">
+                                                <form action="agregarPizzaAlCarrito" method="POST">
                                                     <input type="hidden" name="id_pizza" value="${pizza.id}">
                                                     <input type="hidden" name="precio" value="${pizza.precio}">
                                                     <input
                                                         class="font-semibold text-sm cursor-pointer p-2 rounded bg-red-400 hover:border-transparent hover:text-black hover:bg-gray-100 text-white w-[100px] sm:w-[150px]"
-                                                        type="submit" name="pagar" value="Comprar">
+                                                        type="submit" name="pagar" value="Agregar al carrito">
                                                 </form>
                                             </c:if>
                                         </div>
