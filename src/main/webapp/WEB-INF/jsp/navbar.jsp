@@ -18,7 +18,7 @@
             <body class="bg-bgCustom3 bg-cover bg-no-repeat  min-h-screen">
 
                 <nav class="bg-bgHeader bg-opacity-80 border-gray-200 ">
-                    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                    <div class=" flex flex-wrap items-center justify-between mx-auto p-4">
 
 
 
@@ -92,7 +92,7 @@
                                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Consultar
                                                         Stock</a>
                                                 <li>
-                                                    <a href="eliminarIngredienteExtra"
+                                                    <a href="eliminarExtra"
                                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Eliminar
                                                         extra</a>
                                                 </li>

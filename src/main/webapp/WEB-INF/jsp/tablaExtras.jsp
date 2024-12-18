@@ -19,7 +19,7 @@
 
 <div class="container mx-auto my-6">
     <div class="bg-[#1C1919] bg-opacity-80 w-[750px] min-h-[200px] h-[auto] p-4 mx-auto rounded-xl ">
-        <h2 class="text-4xl text-white font-bold my-2">
+        <h2 class="text-4xl text-white font-bold my-2 text-center">
             Listado de extras
         </h2>
 		<table class="my-6 w-full">

@@ -2,6 +2,12 @@
 module.exports = {
   content: ["src/main/webapp/WEB-INF/jsp/**/*.jsp"],
   theme: {
+    screens: {
+      sm: "640px",   // Pantallas pequeñas (móviles)
+      md: "768px",   // Pantallas medianas (tabletas)
+      lg: "960px",   // Pantallas grandes
+      xl: "1140px",  // Pantallas extra grandes
+    },
     extend: {
       colors: {
         bgHeader: "#1C1919",
