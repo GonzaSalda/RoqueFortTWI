@@ -5,6 +5,22 @@ DATABASE tallerweb;
 USE
 tallerweb;
 
+CREATE TABLE pizza (
+    Identificador BIGINT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion VARCHAR(255),
+    Precio DECIMAL(10, 2) NOT NULL,
+    Imagen VARCHAR(255)
+);
+
+CREATE TABLE usuario (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    Password VARCHAR(100) NOT NULL,
+    Rol ENUM('admin', 'usuario') DEFAULT 'usuario'
+);
+
 INSERT INTO pizza(Identificador, Nombre, Descripcion, Precio, Imagen)
 VALUES (1, 'MODERNA', 'Salsa, muzza, rúcula, jamón crudo, tomates deshidratados, parmesano', 3000.0, 'ALEMANA.jpg'),
        (2, 'VEGETARIANA',
@@ -21,8 +37,8 @@ VALUES (1, 'MODERNA', 'Salsa, muzza, rúcula, jamón crudo, tomates deshidratado
        (7, 'FUGAZZETTA DE PEPPERONI', 'Jamón, pepperoni, muzza, cebolla cortada en pluma', 2600.0,
         'FUGAZZETTA DE PEPPERONI.jpg');
 
-INSERT INTO usuario(Nombre, Email, Password, NumeroTarjeta, Rol)
-VALUES ('Admin', 'admin@admin.com', '123', 365, 'admin');
+INSERT INTO usuario(Nombre, Email, Password, Rol)
+VALUES ('Admin', 'admin@admin.com', '123', 'admin');
 
 INSERT INTO moto(Marca, disponible)
 VALUES ('Gillera', true);
