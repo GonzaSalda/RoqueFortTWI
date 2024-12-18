@@ -806,6 +806,10 @@ video {
   grid-column: span 6 / span 6;
 }
 
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+
 .m-2 {
   margin: 0.5rem;
 }
@@ -846,6 +850,11 @@ video {
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .mb-2 {
@@ -1105,6 +1114,10 @@ video {
   width: 100%;
 }
 
+.w-auto {
+  width: auto;
+}
+
 .min-w-full {
   min-width: 100%;
 }
@@ -1177,6 +1190,10 @@ video {
   align-items: flex-start;
 }
 
+.items-end {
+  align-items: flex-end;
+}
+
 .items-center {
   align-items: center;
 }
@@ -1245,6 +1262,10 @@ video {
 .divide-gray-100 > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-opacity: 1;
   border-color: rgb(243 244 246 / var(--tw-divide-opacity, 1));
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .rounded {
@@ -1681,6 +1702,10 @@ video {
 }
 
 @media (min-width: 640px) {
+  .sm\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+
   .sm\:my-12 {
     margin-top: 3rem;
     margin-bottom: 3rem;
@@ -1698,6 +1723,10 @@ video {
     width: 150px;
   }
 
+  .sm\:w-\[350px\] {
+    width: 350px;
+  }
+
   .sm\:max-w-\[400px\] {
     max-width: 400px;
   }
@@ -1708,6 +1737,10 @@ video {
 
   .sm\:grid-cols-6 {
     grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .sm\:text-\[14px\] {
@@ -1724,6 +1757,16 @@ video {
 
   .sm\:text-sm\/6 {
     font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
+
+  .sm\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .sm\:text-base {
+    font-size: 1rem;
     line-height: 1.5rem;
   }
 }
@@ -1824,6 +1867,11 @@ video {
   .md\:text-\[35px\] {
     font-size: 35px;
   }
+
+  .md\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
 }
 
 @media (min-width: 960px) {
@@ -1834,6 +1882,18 @@ video {
 
   .lg\:mt-0 {
     margin-top: 0px;
+  }
+
+  .lg\:w-\[500px\] {
+    width: 500px;
+  }
+
+  .lg\:w-\[600px\] {
+    width: 600px;
+  }
+
+  .lg\:w-\[00px\] {
+    width: 00px;
   }
 
   .lg\:max-w-none {
@@ -1847,6 +1907,11 @@ video {
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
   }
 }
 
