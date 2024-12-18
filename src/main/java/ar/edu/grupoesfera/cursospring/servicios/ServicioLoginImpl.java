@@ -12,7 +12,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
-
 @Service
 @Transactional
 public class ServicioLoginImpl implements ServicioLogin {
@@ -50,10 +49,7 @@ public class ServicioLoginImpl implements ServicioLogin {
             nuevoUsuario.setEmail(datosRegistro.getEmail());
             nuevoUsuario.setPassword(datosRegistro.getContrasenia());
             nuevoUsuario.setRol("cliente");
-            nuevoUsuario.setNroTarjeta(999);
-            nuevoUsuario.setImagen("default-user.png");
             usuarioDao.guardarUsuario(nuevoUsuario);
-
 
             return nuevoUsuario;
         } else {
@@ -71,18 +67,10 @@ public class ServicioLoginImpl implements ServicioLogin {
         return usuarioDao.obtenerUsuarioPizza(pizza_obtenida, usuario);
     }
 
-
     @Override
     public void guardarPizzaEnListaUsuario(Pizza pizza_obtenido, Usuario usuario) {
-        usuarioDao.guardarPizzaDelUsuario(usuario,pizza_obtenido);
+        usuarioDao.guardarPizzaDelUsuario(usuario, pizza_obtenido);
     }
 
-    @Override
-    public Integer verificarTarjetaUsuario(Usuario usuario, Integer nroTarjeta) {
-        if (usuario.getNroTarjeta().equals(nroTarjeta)) {
-            return nroTarjeta;
-        } else {
-            throw new TarjetaInvalidaException();
-        }
-    }
+ 
 }

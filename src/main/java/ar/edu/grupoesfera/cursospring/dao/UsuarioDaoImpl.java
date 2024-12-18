@@ -3,7 +3,6 @@ package ar.edu.grupoesfera.cursospring.dao;
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
 import ar.edu.grupoesfera.cursospring.modelo.Usuario;
 import ar.edu.grupoesfera.cursospring.modelo.Usuario_Pizza;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

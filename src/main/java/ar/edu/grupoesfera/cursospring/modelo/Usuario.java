@@ -13,7 +13,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Identificador")
+    @Column(name = "id")
     private int id;
     @Column(name = "Nombre")
     private String nombre;
@@ -21,12 +21,9 @@ public class Usuario {
     private String email;
     @Column(name = "Password")
     private String password;
-    @Column(name = "NumeroTarjeta")
-    private Integer nroTarjeta;
     @Column(name = "Rol")
     private String rol;
-    @Column(name = "Imagen")
-    private String imagen;
+ 
 
     public Usuario(String nombre, String email, String password, String rol) {
         this.nombre = nombre;

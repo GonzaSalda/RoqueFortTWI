@@ -68,7 +68,6 @@ public class ControladorLogin {
             session.setAttribute("idUsuario", usuarioBuscado.getId());
             session.setAttribute("nombreUsuario", usuarioBuscado.getNombre());
             session.setAttribute("ROL", usuarioBuscado.getRol());
-            session.setAttribute("imgUsuario", usuarioBuscado.getImagen());
             session.setAttribute("user", usuarioBuscado);
 
             // Obtener pizzas para mostrar

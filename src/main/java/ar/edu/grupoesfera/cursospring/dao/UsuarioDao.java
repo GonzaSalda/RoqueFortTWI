@@ -1,17 +1,13 @@
 package ar.edu.grupoesfera.cursospring.dao;
 
-
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
 import ar.edu.grupoesfera.cursospring.modelo.Usuario;
 import ar.edu.grupoesfera.cursospring.modelo.Usuario_Pizza;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public interface UsuarioDao {
     Usuario buscarUsuario(String email, String password);
-    Usuario buscarUsuarioPorEmail(String email) ;
+
+    Usuario buscarUsuarioPorEmail(String email);
 
     Usuario buscarPorId(int id);
 
@@ -19,7 +15,6 @@ public interface UsuarioDao {
 
     Usuario_Pizza obtenerUsuarioPizza(Pizza pizza_obtenida, Usuario usuario);
 
-    void guardarPizzaDelUsuario(Usuario usuario , Pizza pizza_obtenida);
-
+    void guardarPizzaDelUsuario(Usuario usuario, Pizza pizza_obtenida);
 
 }

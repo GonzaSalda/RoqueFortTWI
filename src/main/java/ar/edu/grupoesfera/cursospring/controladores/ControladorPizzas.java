@@ -1,8 +1,6 @@
 package ar.edu.grupoesfera.cursospring.controladores;
 
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
-import ar.edu.grupoesfera.cursospring.servicios.ServicioCarrito;
-import ar.edu.grupoesfera.cursospring.servicios.ServicioLogin;
 import ar.edu.grupoesfera.cursospring.servicios.ServicioPizza;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,21 +16,17 @@ import java.util.List;
 @Controller
 public class ControladorPizzas {
 
-    private ServicioLogin servicioLogin;
     private ServicioPizza servicioPizza;
-    private ServicioCarrito servicioCarrito;
 
     @Autowired
-    public ControladorPizzas(ServicioLogin servicioLogin, ServicioPizza servicioPizza, ServicioCarrito servicioCarrito) {
-        this.servicioLogin = servicioLogin;
+    public ControladorPizzas(ServicioPizza servicioPizza) {
         this.servicioPizza = servicioPizza;
-        this.servicioCarrito = servicioCarrito;
     }
 
-
-  /*   @RequestMapping(path= "/verListaPizzas", method= RequestMethod.GET) */
-  @RequestMapping(path= "/menu", method= RequestMethod.GET)
-    public ModelAndView verListaPizzas(@ModelAttribute("msj_exito") String msj_exito, @ModelAttribute("msj_error") String msj_error, HttpSession session) {
+    /* @RequestMapping(path= "/verListaPizzas", method= RequestMethod.GET) */
+    @RequestMapping(path = "/menu", method = RequestMethod.GET)
+    public ModelAndView verListaPizzas(@ModelAttribute("msj_exito") String msj_exito,
+            @ModelAttribute("msj_error") String msj_error, HttpSession session) {
         ModelMap model = new ModelMap();
         List<Pizza> pizzas = servicioPizza.getPizza();
         model.put("lista_pizzas", pizzas);
@@ -42,7 +36,7 @@ public class ControladorPizzas {
     }
 
     @RequestMapping("/crearPizza")
-    public ModelAndView cargarVista(){
+    public ModelAndView cargarVista() {
         ModelMap model = new ModelMap();
         Pizza pizza = new Pizza();
         model.put("datosCrearPizza", pizza);
@@ -50,12 +44,11 @@ public class ControladorPizzas {
         return new ModelAndView("crearPizza", model);
     }
 
-    @RequestMapping(path ="/guardarPizza", method= RequestMethod.POST)
-    public ModelAndView pizzaCreada(@ModelAttribute("datosCrearPizza") Pizza datosPizza){
+    @RequestMapping(path = "/guardarPizza", method = RequestMethod.POST)
+    public ModelAndView pizzaCreada(@ModelAttribute("datosCrearPizza") Pizza datosPizza) {
         ModelMap model = new ModelMap();
         servicioPizza.savePizza(datosPizza);
         return new ModelAndView("crearPizza", model);
     }
 
-
-   }
+}
