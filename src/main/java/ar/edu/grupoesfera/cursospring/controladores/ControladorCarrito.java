@@ -15,15 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 public class ControladorCarrito {
 	private ServicioPizza servicioPizza;
 
 	private ServicioCarrito servicioCarrito;
-
-	private ServicioExtra servicioExtra;
 
 	@Autowired
 	private CarritoService carritoService;
@@ -33,18 +30,26 @@ public class ControladorCarrito {
 			ServicioExtra servicioExtra) {
 		this.servicioPizza = servicioPizza;
 		this.servicioCarrito = servicioCarrito;
-		this.servicioExtra = servicioExtra;
 	}
 
 	@PostMapping("/agregarPizzaAlCarrito")
 	public String agregarPizzaAlCarrito(@RequestParam int id_pizza, @RequestParam double precio, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("user");
 		if (usuario != null) {
-			// Usar el servicio para obtener o crear el carrito
 			Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
 
 			// Llamar al servicio para agregar la pizza al carrito
-			carritoService.agregarPizzaAlCarrito(carrito.getId(), id_pizza, 1); // Asumimos que la cantidad es 1
+			carritoService.agregarPizzaAlCarrito(carrito.getId(), id_pizza, 1);
+		}
+		return "redirect:/carrito";
+	}
+
+	@PostMapping(path = "/agregarExtraAlCarrito")
+	public String agregarExtraAlCarrito(@RequestParam int id_extra, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("user");
+		if (usuario != null) {
+			Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
+			carritoService.agregarExtraAlCarrito(carrito.getId(), id_extra, 1);
 		}
 		return "redirect:/carrito";
 	}
@@ -67,25 +72,13 @@ public class ControladorCarrito {
 			HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("user");
 		if (usuario != null) {
-			// Obtener el carrito del usuario
 			Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
 
-			// Actualizar la cantidad según la acción
 			if ("agregar".equals(accion)) {
-				carritoService.actualizarCantidadPizza(carrito.getId(), pizza_id, 1); // Sumar 1
+				carritoService.actualizarCantidadPizza(carrito.getId(), pizza_id, 1);
 			} else if ("restar".equals(accion)) {
-				carritoService.actualizarCantidadPizza(carrito.getId(), pizza_id, -1); // Restar 1
+				carritoService.actualizarCantidadPizza(carrito.getId(), pizza_id, -1);
 			}
-		}
-		return "redirect:/carrito";
-	}
-
-	@PostMapping(path = "/agregarExtraAlCarrito")
-	public String agregarExtraAlCarrito(@RequestParam int id_extra, HttpSession session) {
-		Usuario usuario = (Usuario) session.getAttribute("user");
-		if (usuario != null) {
-			Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
-			carritoService.agregarExtraAlCarrito(carrito.getId(), id_extra, 1);
 		}
 		return "redirect:/carrito";
 	}
@@ -99,7 +92,7 @@ public class ControladorCarrito {
 		if (carritoPizza != null) {
 			servicioCarrito.eliminarPizzaDelCarrito(carritoPizza);
 		}
-		return new ModelAndView("redirect:/vistaCarrito");
+		return new ModelAndView("redirect:/carrito");
 	}
 
 }

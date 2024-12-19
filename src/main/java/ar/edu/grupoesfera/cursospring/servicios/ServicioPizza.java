@@ -8,6 +8,7 @@ public interface ServicioPizza {
     List<Pizza> getPizza();
 
     Pizza buscarPizzaPorId(int id);
+
     void actualizarPizza(int idPizza, String nombre, String descripcion, Double precio);
 
     void savePizza(Pizza pizza);
