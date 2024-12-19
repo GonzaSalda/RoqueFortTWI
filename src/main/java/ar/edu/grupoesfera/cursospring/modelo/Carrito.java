@@ -3,29 +3,25 @@ package ar.edu.grupoesfera.cursospring.modelo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Setter
 @Getter
 @Entity
-@Table(name="Carritos")
+@Table(name = "Carritos")
 public class Carrito {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	
-	@Column(name="cantidad")
-	private Integer cantidad;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
-	
 
-	public Carrito() { 
-		this.cantidad = 0;
-	}
-
+	@OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL)
+	private List<Carrito_Pizza> carritoPizzas;
 
 }

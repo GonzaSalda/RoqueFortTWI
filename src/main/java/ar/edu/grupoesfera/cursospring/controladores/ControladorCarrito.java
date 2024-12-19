@@ -6,10 +6,13 @@ import ar.edu.grupoesfera.cursospring.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
 
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
@@ -23,6 +26,9 @@ public class ControladorCarrito {
 	private ServicioExtra servicioExtra;
 
 	@Autowired
+	private CarritoService carritoService;
+
+	@Autowired
 	public ControladorCarrito(ServicioPizza servicioPizza, ServicioCarrito servicioCarrito,
 			ServicioExtra servicioExtra) {
 		this.servicioPizza = servicioPizza;
@@ -30,70 +36,58 @@ public class ControladorCarrito {
 		this.servicioExtra = servicioExtra;
 	}
 
-	@RequestMapping(path = "/agregarPizzaAlCarrito", method = RequestMethod.POST)
-	public ModelAndView agregarPizzaAlCarrito(@RequestParam("id_pizza") int idPizza, HttpSession session) {
-		ModelMap model = new ModelMap();
-		if (session.getAttribute("idUsuario") != null) {
-			int id_user = Integer.parseInt(session.getAttribute("idUsuario").toString());
-			Pizza pizza_obtenida = servicioPizza.buscarPizzaPorId(idPizza);
-			Carrito carrito = servicioCarrito.obtenerCarritoPorIdUsuario(id_user);
-			servicioCarrito.agregarPizzaAlCarrito(pizza_obtenida, carrito);
-			model.put("msj_exito", "Se agrego la pizza al carrito con exito!");
-		} else {
-			model.addAttribute("msj_error", "Para comprar necesitas ingresar a tu cuenta.");
-		}
+	@PostMapping("/agregarPizzaAlCarrito")
+	public String agregarPizzaAlCarrito(@RequestParam int id_pizza, @RequestParam double precio, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("user");
+		if (usuario != null) {
+			// Usar el servicio para obtener o crear el carrito
+			Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
 
-		return new ModelAndView("redirect:/verListaPizzas", model);
+			// Llamar al servicio para agregar la pizza al carrito
+			carritoService.agregarPizzaAlCarrito(carrito.getId(), id_pizza, 1); // Asumimos que la cantidad es 1
+		}
+		return "redirect:/carrito";
 	}
 
-	@RequestMapping(path = "/agregarExtraAlCarrito", method = RequestMethod.POST)
-	public ModelAndView agregarPizzaAlCarrito(@RequestParam("id_extra") Long idExtra, HttpSession session) {
-		ModelMap model = new ModelMap();
-		if (session.getAttribute("idUsuario") != null) {
-			int id_user = Integer.parseInt(session.getAttribute("idUsuario").toString());
-			Extra extra_obtenido = servicioExtra.buscarPorId(idExtra);
-			Carrito carrito = servicioCarrito.obtenerCarritoPorIdUsuario(id_user);
-			servicioCarrito.agregarExtraAlCarrito(extra_obtenido, carrito);
-			model.put("msj_exito", "Se agrego extra al carrito con exito!");
-		} else {
-			model.addAttribute("msj_error", "Para comprar necesitas ingresar a tu cuenta.");
-		}
+	@GetMapping("/carrito")
+	public String verCarrito(Model model, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("user");
+		if (usuario != null) {
+			Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
 
-		return new ModelAndView("redirect:/verListaPizzas", model);
+			model.addAttribute("carrito", carrito);
+			model.addAttribute("carritoPizzas", carrito.getCarritoPizzas());
+			return "carrito";
+		}
+		return "redirect:/login";
 	}
 
-	@RequestMapping(path = "/vistaCarrito", method = RequestMethod.GET)
-	public ModelAndView vistaCarrito(HttpSession sesion) {
-		ModelMap model = new ModelMap();
-		String view = "";
-		if (sesion.getAttribute("idUsuario") != null) {
-			try {
-				int id_user = (int) sesion.getAttribute("idUsuario");
-				Carrito carrito = servicioCarrito.obtenerCarritoPorIdUsuario(id_user);
-				List<Pizza> pizzas = servicioCarrito.obtenerPizzasDelCarrito(carrito);
-				List<Extra> extrass = servicioCarrito.obtenerExtrasDelCarrito(carrito);
+	@GetMapping("/actualizarCantidadPizza")
+	public String actualizarCantidadPizza(@RequestParam int pizza_id, @RequestParam String accion,
+			HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("user");
+		if (usuario != null) {
+			// Obtener el carrito del usuario
+			Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
 
-				double preciosTotal = servicioCarrito.getTotalDePrecios(pizzas);
-				model.put("lista_pizzas_carrito", pizzas);
-				model.put("lista_extras_carrito", extrass);
-
-				List<Extra> extras = servicioExtra.listarTodos();
-				double totalExtras = extras.stream().mapToDouble(Extra::getStock).sum();
-				double totalFinalizado = totalExtras + preciosTotal;
-				/* Datos para la vista */
-				model.put("lista_pizzas_carrito", pizzas);
-				model.put("extra", totalExtras);
-				model.put("precio_total", preciosTotal);
-				model.put("totalFinalizado", totalFinalizado);
-				view = "carrito";
-			} catch (Exception e) {
-				model.put("msj", "El carrito se encuentra vacio.");
-				view = "carrito";
+			// Actualizar la cantidad según la acción
+			if ("agregar".equals(accion)) {
+				carritoService.actualizarCantidadPizza(carrito.getId(), pizza_id, 1); // Sumar 1
+			} else if ("restar".equals(accion)) {
+				carritoService.actualizarCantidadPizza(carrito.getId(), pizza_id, -1); // Restar 1
 			}
-		} else {
-			view = "redirect:/";
 		}
-		return new ModelAndView(view, model);
+		return "redirect:/carrito";
+	}
+
+	@PostMapping(path = "/agregarExtraAlCarrito")
+	public String agregarExtraAlCarrito(@RequestParam int id_extra, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("user");
+		if (usuario != null) {
+			Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
+			carritoService.agregarExtraAlCarrito(carrito.getId(), id_extra, 1);
+		}
+		return "redirect:/carrito";
 	}
 
 	@RequestMapping(path = "/eliminarPizzaDeListaCarrito", method = RequestMethod.GET)

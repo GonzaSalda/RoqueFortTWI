@@ -24,7 +24,7 @@ public class Pizza {
     @Column(name = "Precio")
     private Double precio;
 
-    @Column(name = "Imagen")
+    @Column(name = "Imagen", nullable = true)
     private String imagen;
 
 

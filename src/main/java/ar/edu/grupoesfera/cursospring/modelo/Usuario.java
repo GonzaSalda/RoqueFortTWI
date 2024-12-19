@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
-
 @Getter
 @Setter
 @Entity
@@ -23,7 +22,9 @@ public class Usuario {
     private String password;
     @Column(name = "Rol")
     private String rol;
- 
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Carrito carrito;
 
     public Usuario(String nombre, String email, String password, String rol) {
         this.nombre = nombre;
@@ -36,4 +37,3 @@ public class Usuario {
 
     }
 }
-

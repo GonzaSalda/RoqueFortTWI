@@ -66,7 +66,7 @@
 
                                             <!-- Cliente -->
                                             <c:if test='<%=session.getAttribute("ROL").equals("cliente")%>'>
-                                                <form action="agregarPizzaAlCarrito" method="POST">
+                                                <form action="/agregarPizzaAlCarrito" method="POST">
                                                     <input type="hidden" name="id_pizza" value="${pizza.id}">
                                                     <input type="hidden" name="precio" value="${pizza.precio}">
                                                     <input

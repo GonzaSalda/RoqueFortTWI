@@ -117,7 +117,7 @@
                                     <c:if test='<%=session.getAttribute("ROL").equals("cliente")%>'>
                                         <%-- Carrito --%>
                                             <div>
-                                                <a class="text-white w-[15px]" href="vistaCarrito">
+                                                <a class="text-white w-[15px]" href="carrito">
                                                     <p>Carrito</p>
                                                 </a>
                                             </div>
