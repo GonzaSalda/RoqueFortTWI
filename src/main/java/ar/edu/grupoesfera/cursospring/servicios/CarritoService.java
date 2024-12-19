@@ -137,18 +137,15 @@ public class CarritoService {
         }
 
         if (nuevaCantidad > 0) {
-            // Actualizar la cantidad si es válida
             carritoExtra.setCantidadExtra(nuevaCantidad);
-            extra.setStock(extra.getStock() - cantidad); // Ajustar el stock correctamente
+            extra.setStock(extra.getStock() - cantidad);
             carritoPizzaRepository.save(carritoExtra);
             extraRepository.save(extra);
         } else if (nuevaCantidad == 0) {
-            // Si la cantidad llega a 0, eliminar del carrito y restaurar el stock
             carritoPizzaRepository.delete(carritoExtra);
             extra.setStock(extra.getStock() + carritoExtra.getCantidadExtra());
             extraRepository.save(extra);
         } else {
-            // Si la nueva cantidad es menor a 0, lanzar una excepción
             throw new RuntimeException("Cantidad inválida. No se puede tener una cantidad negativa en el carrito.");
         }
     }

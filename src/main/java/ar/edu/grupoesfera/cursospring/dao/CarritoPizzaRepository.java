@@ -14,4 +14,27 @@ public interface CarritoPizzaRepository extends JpaRepository<Carrito_Pizza, Int
 
     Optional<Carrito_Pizza> findByCarritoIdAndExtraId(int carritoId, int extraId);
 
+    /*
+     * Forma con SQL atómicas
+     * 
+     * @Modifying
+     * 
+     * @Transactional
+     * 
+     * @Query(value = "UPDATE carrito_pizza cp\n" +
+     * "JOIN extras e ON cp.extra_id = e.id\n" +
+     * "SET \n" +
+     * "    cp.cantidad_extra = cp.cantidad_extra + :cantidad,\n" +
+     * "    e.stock = e.stock - :cantidad\n" +
+     * "WHERE \n" +
+     * "    cp.carrito_id = :carritoId \n" +
+     * "    AND cp.extra_id = :extraId\n" +
+     * "    AND (e.stock - :cantidad) >= 0\n" +
+     * "    AND (cp.cantidad_extra + :cantidad) >= 0", nativeQuery = true)
+     * int actualizarCantidadExtra(@Param("carritoId") int carritoId,
+     * 
+     * @Param("extraId") int extraId,
+     * 
+     * @Param("cantidad") int cantidad);
+     */
 }
