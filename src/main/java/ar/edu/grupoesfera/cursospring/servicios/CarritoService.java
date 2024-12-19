@@ -125,4 +125,15 @@ public class CarritoService {
         return total;
     }
 
+    public void eliminarPizzaDelCarrito(int carritoId, int pizzaId) {
+        Carrito_Pizza carritoPizza = carritoPizzaRepository.findByCarritoIdAndPizzaId(carritoId, pizzaId)
+                .orElseThrow(() -> new RuntimeException("Carrito y Pizza no encontrados"));
+        carritoPizzaRepository.delete(carritoPizza);
+    }
+
+    public void eliminarExtraDelCarrito(int carritoId, int extraId){
+        Carrito_Pizza carrito_Pizza = carritoPizzaRepository.findByCarritoIdAndExtraId(carritoId, extraId)
+        .orElseThrow( () -> new RuntimeException("Carrito y Extra no encontrados"));
+        carritoPizzaRepository.delete(carrito_Pizza);
+    }
 }

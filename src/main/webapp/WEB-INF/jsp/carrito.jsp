@@ -55,7 +55,7 @@
                                                 <!-- Botón de eliminar -->
                                                 <div>
                                                     <a class="text-red-400 font-semibold hover:text-red-600"
-                                                        href="eliminarPizzaDeListaCarrito?pizza_id=${carritoPizza.pizza.id}">
+                                                        href="eliminarPizzaDeCarrito?pizza_id=${carritoPizza.pizza.id}">
                                                         Sacar del carrito
                                                     </a>
                                                 </div>
@@ -73,6 +73,13 @@
                                                 </div>
                                                 <div class="mt-2">
                                                     <p class="text-white">Cantidad: ${carritoPizza.cantidadExtra}</p>
+                                                </div>
+                                                <!-- Botón de eliminar -->
+                                                <div>
+                                                    <a class="text-red-400 font-semibold hover:text-red-600"
+                                                        href="eliminarExtraDeCarrito?extra_id=${carritoPizza.extra.id}">
+                                                        Sacar del carrito
+                                                    </a>
                                                 </div>
                                             </div>
                                         </c:if>
