@@ -71,8 +71,16 @@
                                                     </p>
                                                     <p>$${carritoPizza.extra.precio}</p>
                                                 </div>
-                                                <div class="mt-2">
+                                                <div class="flex items-center gap-4">
+                                                    <a href="actualizarCantidadExtra?extra_id=${carritoPizza.extra.id}&accion=restar"
+                                                        class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
+                                                        -
+                                                    </a>
                                                     <p class="text-white">Cantidad: ${carritoPizza.cantidadExtra}</p>
+                                                    <a href="actualizarCantidadExtra?extra_id=${carritoPizza.extra.id}&accion=sumar"
+                                                        class="bg-green-500 text-white px-2 py-1 rounded  hover:bg-green-600">
+                                                        +
+                                                    </a>
                                                 </div>
                                                 <!-- Botón de eliminar -->
                                                 <div>
@@ -80,6 +88,7 @@
                                                         href="eliminarExtraDeCarrito?extra_id=${carritoPizza.extra.id}">
                                                         Sacar del carrito
                                                     </a>
+
                                                 </div>
                                             </div>
                                         </c:if>
@@ -115,12 +124,11 @@
                         </div>
 
 
-                        <c:if test="${not empty msj}">
-                            <div class="h-[30vh] w-full flex justify-center items-center">
-                                <p class=" tracking-[0.10em] text-white font-bold text-[30px] " id="msj_error_carrito">
-                                    ${msj}</p>
-                            </div>
+                        <!-- Mostrar el mensaje de error -->
+                        <c:if test="${not empty errorMessage}">
+                            <div class="alert alert-danger">${errorMessage}</div>
                         </c:if>
+
                         </div>
 
                 </body>

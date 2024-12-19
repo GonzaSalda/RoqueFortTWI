@@ -42,6 +42,11 @@ public class ControladorCarrito {
 
 	@GetMapping("/carrito")
 	public String verCarrito(Model model, HttpSession session) {
+
+		String errorMessage = (String) session.getAttribute("errorMessage");
+		model.addAttribute("errorMessage", errorMessage);
+		session.removeAttribute("errorMessage");
+
 		Usuario usuario = (Usuario) session.getAttribute("user");
 		if (usuario != null) {
 			Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
@@ -76,6 +81,27 @@ public class ControladorCarrito {
 		return "redirect:/carrito";
 	}
 
+	@GetMapping("/actualizarCantidadExtra")
+	public String actualizarCantidadExtra(@RequestParam int extra_id, @RequestParam String accion,
+			HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("user");
+		if (usuario != null) {
+			try {
+				Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
+				if ("sumar".equals(accion)) {
+					carritoService.actualizarCantidadExtra(carrito.getId(), extra_id, 1);
+				} else if ("restar".equals(accion)) {
+					carritoService.actualizarCantidadExtra(carrito.getId(), extra_id, -1);
+				}
+			} catch (RuntimeException e) {
+				// Guardar el mensaje de error en la sesión
+				session.setAttribute("errorMessage", e.getMessage());
+				return "redirect:/carrito";
+			}
+		}
+		return "redirect:/carrito";
+	}
+
 	@GetMapping("/eliminarPizzaDeCarrito")
 	public String eliminarPizzaDeCarrito(@RequestParam int pizza_id, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("user");
@@ -87,14 +113,13 @@ public class ControladorCarrito {
 	}
 
 	@GetMapping("/eliminarExtraDeCarrito")
-	public String eliminarExtraDeCarrito(@RequestParam int extra_id, HttpSession session){
+	public String eliminarExtraDeCarrito(@RequestParam int extra_id, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("user");
-		if(usuario != null){
+		if (usuario != null) {
 			Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
 			carritoService.eliminarExtraDelCarrito(carrito.getId(), extra_id);
 		}
 		return "redirect:/carrito";
 	}
 
-	
 }

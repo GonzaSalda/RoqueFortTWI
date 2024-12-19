@@ -17,6 +17,7 @@ import ar.edu.grupoesfera.cursospring.modelo.Carrito_Pizza;
 import ar.edu.grupoesfera.cursospring.modelo.Extra;
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
 import ar.edu.grupoesfera.cursospring.modelo.Usuario;
+import jakarta.transaction.Transactional;
 
 @Service
 public class CarritoService {
@@ -70,29 +71,35 @@ public class CarritoService {
         }
     }
 
+    @Transactional
     public void agregarExtraAlCarrito(int carritoId, int extraId, int cantidad) {
         Carrito carrito = carritoRepository.findById(carritoId)
                 .orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
         Extra extra = extraRepository.findById(extraId)
                 .orElseThrow(() -> new RuntimeException("Extra no encontrado"));
 
-        // Buscar si ya existe una entrada para esta combinación de carrito y extra
+        if (extra.getStock() < cantidad) {
+            throw new RuntimeException("Stock insuficiente para el extra solicitado.");
+        }
+
         Optional<Carrito_Pizza> carritoExtraOptional = carritoPizzaRepository.findByCarritoIdAndExtraId(carritoId,
                 extraId);
 
+        Carrito_Pizza carritoExtra;
+
         if (carritoExtraOptional.isPresent()) {
-            // Si existe, sumar la cantidad
-            Carrito_Pizza carritoExtra = carritoExtraOptional.get();
+            carritoExtra = carritoExtraOptional.get();
             carritoExtra.setCantidadExtra(carritoExtra.getCantidadExtra() + cantidad);
-            carritoPizzaRepository.save(carritoExtra);
         } else {
-            // Si no existe, crear una nueva entrada
-            Carrito_Pizza carritoExtra = new Carrito_Pizza();
+            carritoExtra = new Carrito_Pizza();
             carritoExtra.setCarrito(carrito);
             carritoExtra.setExtra(extra);
             carritoExtra.setCantidadExtra(cantidad);
-            carritoPizzaRepository.save(carritoExtra);
         }
+        extra.setStock(extra.getStock() - cantidad);
+
+        carritoPizzaRepository.save(carritoExtra);
+        extraRepository.save(extra);
     }
 
     public List<Carrito_Pizza> obtenerPizzasDelCarrito(int carritoId) {
@@ -113,6 +120,36 @@ public class CarritoService {
         } else {
             // Si la cantidad llega a 0, elimina la pizza del carrito
             carritoPizzaRepository.delete(carritoPizza);
+        }
+    }
+
+    @Transactional
+    public void actualizarCantidadExtra(int carrito_id, int extraId, int cantidad) {
+        Carrito_Pizza carritoExtra = carritoPizzaRepository.findByCarritoIdAndExtraId(carrito_id, extraId)
+                .orElseThrow(() -> new RuntimeException("Carrito y Extra no encontrados"));
+        Extra extra = extraRepository.findById(extraId).orElseThrow(() -> new RuntimeException("Extra no encontrado"));
+
+        int nuevaCantidad = carritoExtra.getCantidadExtra() + cantidad;
+
+        // Validar si hay suficiente stock antes de sumar
+        if (cantidad > 0 && cantidad > extra.getStock()) {
+            throw new RuntimeException("Stock insuficiente para agregar esta cantidad.");
+        }
+
+        if (nuevaCantidad > 0) {
+            // Actualizar la cantidad si es válida
+            carritoExtra.setCantidadExtra(nuevaCantidad);
+            extra.setStock(extra.getStock() - cantidad); // Ajustar el stock correctamente
+            carritoPizzaRepository.save(carritoExtra);
+            extraRepository.save(extra);
+        } else if (nuevaCantidad == 0) {
+            // Si la cantidad llega a 0, eliminar del carrito y restaurar el stock
+            carritoPizzaRepository.delete(carritoExtra);
+            extra.setStock(extra.getStock() + carritoExtra.getCantidadExtra());
+            extraRepository.save(extra);
+        } else {
+            // Si la nueva cantidad es menor a 0, lanzar una excepción
+            throw new RuntimeException("Cantidad inválida. No se puede tener una cantidad negativa en el carrito.");
         }
     }
 
@@ -144,9 +181,14 @@ public class CarritoService {
         carritoPizzaRepository.delete(carritoPizza);
     }
 
+    @Transactional
     public void eliminarExtraDelCarrito(int carritoId, int extraId) {
         Carrito_Pizza carrito_Pizza = carritoPizzaRepository.findByCarritoIdAndExtraId(carritoId, extraId)
                 .orElseThrow(() -> new RuntimeException("Carrito y Extra no encontrados"));
+        Extra extra = extraRepository.findById(extraId).orElseThrow(() -> new RuntimeException("Extra no encontrado"));
+
         carritoPizzaRepository.delete(carrito_Pizza);
+        extra.setStock(extra.getStock() + carrito_Pizza.getCantidadExtra());
+        extraRepository.save(extra);
     }
 }
