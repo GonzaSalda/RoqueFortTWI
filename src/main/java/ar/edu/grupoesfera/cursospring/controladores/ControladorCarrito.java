@@ -46,8 +46,15 @@ public class ControladorCarrito {
 		if (usuario != null) {
 			Carrito carrito = carritoService.obtenerOCrearCarrito(usuario.getId());
 
+			Double totalPizza = carritoService.calcularTotalPizzas(carrito.getId());
+			Double totalExtra = carritoService.calcularTotalExtras(carrito.getId());
+			Double totalFinalizado = totalPizza + totalExtra;
+
 			model.addAttribute("carrito", carrito);
 			model.addAttribute("carritoPizzas", carrito.getCarritoPizzas());
+			model.addAttribute("totalPizza", totalPizza);
+			model.addAttribute("totalExtra", totalExtra);
+			model.addAttribute("totalFinalizado", totalFinalizado);
 			return "carrito";
 		}
 		return "redirect:/login";
@@ -88,4 +95,6 @@ public class ControladorCarrito {
 		}
 		return "redirect:/carrito";
 	}
+
+	
 }

@@ -29,7 +29,7 @@
                                         <c:if test="${not empty carritoPizza.pizza}">
                                             <div class="flex flex-col items-center gap-y-2">
                                                 <!-- Imagen -->
-                                                <img class="w-48 h-48 object-cover rounded-lg"
+                                                <img class="w-36 h-36 md:w-48 md:h-48 object-cover rounded-lg"
                                                     src="imagenes/pizzas/${carritoPizza.pizza.imagen}"
                                                     alt="${carritoPizza.pizza.nombre}">
 
@@ -97,7 +97,7 @@
                                 class="text-white font-bold w-full h-full flex flex-col gap-y-4 justify-center items-center">
                                 <h2 class="tracking-[0.12em] h-full flex items-start">TOTAL DEL CARRITO</h2>
                                 <div class="h-full flex flex-col gap-y-2" id="total-precio">
-                                    <p>Extra: $${extra}</p>
+                                    <p>Extra: $${totalExtra}</p>
                                     <p>Pizza: $${totalPizza} </p>
                                     <p>Total: $${totalFinalizado}</p>
                                     <a class="font-normal text-[15px] p-2 rounded text-white bg-red-400 hover:text-black hover:bg-gray-100 flex items-center justify-center w-[250px]"

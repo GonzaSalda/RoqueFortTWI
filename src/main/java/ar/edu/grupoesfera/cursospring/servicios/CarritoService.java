@@ -120,7 +120,20 @@ public class CarritoService {
         List<Carrito_Pizza> carritoPizzas = carritoPizzaRepository.findByCarritoId(carritoId);
         Double total = 0.0;
         for (Carrito_Pizza carritoPizza : carritoPizzas) {
-            total += carritoPizza.getPizza().getPrecio() * carritoPizza.getCantidad();
+            if (carritoPizza.getPizza() != null) {
+                total += carritoPizza.getPizza().getPrecio() * carritoPizza.getCantidad();
+            }
+        }
+        return total;
+    }
+
+    public Double calcularTotalExtras(int carritoId) {
+        List<Carrito_Pizza> carritoExtras = carritoPizzaRepository.findByCarritoId(carritoId);
+        Double total = 0.0;
+        for (Carrito_Pizza carritoExtra : carritoExtras) {
+            if (carritoExtra.getExtra() != null) {
+                total += carritoExtra.getExtra().getPrecio() * carritoExtra.getCantidadExtra();
+            }
         }
         return total;
     }
@@ -131,9 +144,9 @@ public class CarritoService {
         carritoPizzaRepository.delete(carritoPizza);
     }
 
-    public void eliminarExtraDelCarrito(int carritoId, int extraId){
+    public void eliminarExtraDelCarrito(int carritoId, int extraId) {
         Carrito_Pizza carrito_Pizza = carritoPizzaRepository.findByCarritoIdAndExtraId(carritoId, extraId)
-        .orElseThrow( () -> new RuntimeException("Carrito y Extra no encontrados"));
+                .orElseThrow(() -> new RuntimeException("Carrito y Extra no encontrados"));
         carritoPizzaRepository.delete(carrito_Pizza);
     }
 }
