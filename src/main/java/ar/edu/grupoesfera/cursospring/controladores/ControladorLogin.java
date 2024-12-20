@@ -18,10 +18,9 @@ public class ControladorLogin {
 
     @Autowired
     private PizzaService PizzaService;
-    
 
     @Autowired
-    public ControladorLogin(ServicioLogin servicioLogin, ServicioPizza servicioPizza) {
+    public ControladorLogin(ServicioLogin servicioLogin) {
         this.servicioLogin = servicioLogin;
     }
 
