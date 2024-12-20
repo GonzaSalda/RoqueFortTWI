@@ -54,13 +54,18 @@
                                         </div>
 
                                         <!-- Botones -->
-                                        <div class="w-full flex justify-center">
+                                        <div class="w-full flex items-center gap-4 justify-center">
                                             <!-- Admin -->
                                             <c:if test='<%=session.getAttribute("ROL").equals("admin")%>'>
                                                 <form action="editarPizza" method="get">
                                                     <input type="hidden" name="id_pizza" value="${pizza.id}">
-                                                    <input class="btn-login cursor-pointer w-[120px] sm:w-[150px]"
-                                                        type="submit" name="editarPizza" value="Editar pizza">
+                                                    <input class="btn-login cursor-pointer" type="submit"
+                                                        name="editarPizza" value="Editar pizza">
+                                                </form>
+                                                <form action="eliminarPizza" method="POST">
+                                                    <input type="hidden" name="id_pizza" value="${pizza.id}">
+                                                    <input type="submit" name="eliminarPizza" value="Eliminar pizza"
+                                                        class="btn-login cursor-pointer">
                                                 </form>
                                             </c:if>
 

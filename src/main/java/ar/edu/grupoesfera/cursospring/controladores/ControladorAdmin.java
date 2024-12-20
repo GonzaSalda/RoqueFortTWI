@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class ControladorAdmin {
@@ -50,13 +51,23 @@ public class ControladorAdmin {
     }
 
     @PostMapping(path = "/crearPizza")
-    public String crearPizza(@ModelAttribute Pizza pizza, @RequestParam MultipartFile imagen) {
+    public String crearPizza(@RequestParam String nombre,
+            @RequestParam String descripcion,
+            @RequestParam double precio,
+            @RequestParam MultipartFile imagen) {
         try {
-            pizzaService.crearPizza(pizza.getNombre(), pizza.getDescripcion(), pizza.getPrecio(), imagen);
+            pizzaService.crearPizza(nombre, descripcion, precio, imagen);
         } catch (IOException e) {
             e.printStackTrace();
             return "error";
         }
         return "redirect:/menu";
     }
+
+    @PostMapping(path = "/eliminarPizza")
+    public String eliminarPizza(@RequestParam int id_pizza) {
+        pizzaService.eliminarPizza(id_pizza);
+        return "redirect:/menu";
+    }
+
 }

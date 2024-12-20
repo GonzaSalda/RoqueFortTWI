@@ -80,4 +80,7 @@ public class PizzaService {
         return nombreArchivo;
     }
 
+    public void eliminarPizza(int id) {
+        pizzaRepository.deleteById(id);
+    }
 }

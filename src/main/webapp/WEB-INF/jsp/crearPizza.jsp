@@ -23,8 +23,7 @@
                             <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold m-4 text-center">Crear
                                 Pizza</h1>
 
-                            <form:form action="/crearPizza" method="POST" modelAttribute="pizza"
-                                enctype="multipart/form-data">
+                            <form:form action="/crearPizza" method="POST" enctype="multipart/form-data">
                                 <div class="flex flex-col gap-2 w-full">
                                     <label for="nombre" class="text-sm sm:text-base">Nombre de la pizza</label>
                                     <input class="input rounded-xl outline-0 text-black p-2" id="nombre" type="text"
@@ -37,17 +36,15 @@
                                     <label for="precio" class="text-sm sm:text-base">Precio</label>
                                     <input class="input rounded-xl outline-0 text-black p-2" id="precio" type="number"
                                         name="precio">
-                                        
+
                                     <label for="imagen" class="text-sm sm:text-base">Imagen de la pizza</label>
                                     <input id="imagen" type="file" name="imagen"
                                         class="text-black rounded-xl outline-0 p-2">
-
                                 </div>
 
                                 <div class="flex items-center justify-end gap-x-2 mt-6">
                                     <input class="btn-primary " id="guarda" type="submit" value="Guardar">
                                 </div>
-
                             </form:form>
                         </div>
                     </div>
