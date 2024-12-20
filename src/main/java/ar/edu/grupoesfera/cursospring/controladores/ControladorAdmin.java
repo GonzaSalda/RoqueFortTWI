@@ -1,48 +1,62 @@
 package ar.edu.grupoesfera.cursospring.controladores;
 
-import ar.edu.grupoesfera.cursospring.modelo.DatosCreacionPizza;
 import ar.edu.grupoesfera.cursospring.modelo.Pizza;
-import ar.edu.grupoesfera.cursospring.servicios.ServicioPizza;
+import ar.edu.grupoesfera.cursospring.servicios.PizzaService;
+
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class ControladorAdmin {
 
     @Autowired
-    private ServicioPizza servicioPizza;
+    private PizzaService pizzaService;
 
-    @RequestMapping("/editarPizza")
-    public ModelAndView irAEditarPizza(@RequestParam("id_pizza") int pizzaId) {
-        Pizza pizza = servicioPizza.buscarPizzaPorId(pizzaId);
-
-        ModelMap modelo = new ModelMap();
-        DatosCreacionPizza datosCrearPizza = new DatosCreacionPizza();
-        modelo.put("datosCrearPizza", datosCrearPizza);
-        modelo.put("nombrePizza", pizza.getNombre());
-        modelo.put("descPizza", pizza.getDescripcion());
-        modelo.put("precioPizza", pizza.getPrecio());
-        modelo.put("pizzaId", pizza.getId());
-        return new ModelAndView("editarPizza", modelo);
-
+    @GetMapping("/editarPizza")
+    public String mostrarFormularioEdicion(@RequestParam int id_pizza, Model model) {
+        Pizza pizza = pizzaService.buscarPizzaPorId(id_pizza);
+        if (pizza == null) {
+            throw new RuntimeException("Pizza no encontrada.");
+        }
+        model.addAttribute("pizza", pizza);
+        return "/editarPizza";
     }
 
-    @RequestMapping(path = "/pizzaActualizado", method = RequestMethod.POST)
-    public ModelAndView actualizarPizza(@RequestParam("id_pizza") int idPizza,
-            @ModelAttribute("datosCrearPizza") DatosCreacionPizza datosCrearPizza) {
-        ModelMap modelo = new ModelMap();
-
-        servicioPizza.actualizarPizza(idPizza, datosCrearPizza.getNombre(), datosCrearPizza.getDescripcion(),
-                datosCrearPizza.getPrecio());
-        modelo.put("datosCrearCurso", new DatosCreacionPizza());
-
-        return new ModelAndView("pizzaActualizado", modelo);
+    @PostMapping(path = "/actualizarPizza")
+    public String actualizarPizza(@RequestParam int id_pizza,
+            @RequestParam String nombre,
+            @RequestParam String descripcion,
+            @RequestParam double precio,
+            @RequestParam MultipartFile imagen) {
+        pizzaService.actualizarPizza(id_pizza, nombre, descripcion, precio, imagen);
+        return "redirect:/menu";
     }
 
+    @GetMapping("/crearPizza")
+    public String mostrarFormularioCreacion(Model model) {
+        Pizza pizza = new Pizza();
+        model.addAttribute("pizza", pizza);
+        return "crearPizza";
+    }
+
+    @PostMapping(path = "/crearPizza")
+    public String crearPizza(@ModelAttribute Pizza pizza, @RequestParam MultipartFile imagen) {
+        try {
+            pizzaService.crearPizza(pizza.getNombre(), pizza.getDescripcion(), pizza.getPrecio(), imagen);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "error";
+        }
+        return "redirect:/menu";
+    }
 }

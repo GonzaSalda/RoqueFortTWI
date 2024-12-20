@@ -13,11 +13,7 @@ public class ServicioPizzaImpl implements ServicioPizza {
     @Autowired
     private PizzaDao pizzaDao;
 
-    @Override
-    public List<Pizza> getPizza() {
-        List<Pizza> lista_pizzas = pizzaDao.obtenerListaTotalPizzas();
-        return lista_pizzas;
-    }
+
     @Override
     public Pizza buscarPizzaPorId(int id){
        if (pizzaDao.obtenerPizzaPorID(id) != null) {

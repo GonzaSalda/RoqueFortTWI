@@ -52,7 +52,6 @@ public class CarritoService {
                 .orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
         Pizza pizza = pizzaRepository.findById(pizzaId)
                 .orElseThrow(() -> new RuntimeException("Pizza no encontrada"));
-
         // Buscar si ya existe una entrada para esta combinación de carrito y pizza
         Optional<Carrito_Pizza> carritoPizzaOptional = carritoPizzaRepository.findByCarritoIdAndPizzaId(carritoId,
                 pizzaId);

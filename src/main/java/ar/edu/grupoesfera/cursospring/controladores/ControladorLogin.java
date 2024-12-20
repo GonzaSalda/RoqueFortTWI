@@ -15,12 +15,14 @@ import java.util.List;
 public class ControladorLogin {
 
     private final ServicioLogin servicioLogin;
-    private final ServicioPizza servicioPizza;
+
+    @Autowired
+    private PizzaService PizzaService;
+    
 
     @Autowired
     public ControladorLogin(ServicioLogin servicioLogin, ServicioPizza servicioPizza) {
         this.servicioLogin = servicioLogin;
-        this.servicioPizza = servicioPizza;
     }
 
     @GetMapping("/")
@@ -71,7 +73,7 @@ public class ControladorLogin {
             session.setAttribute("user", usuarioBuscado);
 
             // Obtener pizzas para mostrar
-            List<Pizza> pizzas = servicioPizza.getPizza();
+            List<Pizza> pizzas = PizzaService.getPizza();
             model.addAttribute("lista_pizzas", pizzas);
 
             return "seccionPizzas";

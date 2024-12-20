@@ -5,7 +5,6 @@ import ar.edu.grupoesfera.cursospring.modelo.Pizza;
 import java.util.List;
 
 public interface ServicioPizza {
-    List<Pizza> getPizza();
 
     Pizza buscarPizzaPorId(int id);
 
